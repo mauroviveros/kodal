@@ -2,8 +2,13 @@
   "name": "koda-pet",
   "description": "the simplest and safest way to identify your pet.",
   "author": "Mauro Daniel Viveros <maurod.viveros@gmail.com> (TRY Ubbe)",
+  "license": "MIT",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauroviveros/koda-pet.git"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
