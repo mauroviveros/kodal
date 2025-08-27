@@ -1,29 +1,24 @@
-# Astro Starter Kit: Minimal
+<div align="center">
 
-```sh
-npm create astro@latest -- --template minimal
-```
+<!-- ![Koda.Pet](URL) -->
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+# [Koda.Pet](https://mauroviveros.com.ar/)
 
-## 🚀 Project Structure
+Smart collars with QR codes to identify and protect your pet.
+Scan the code, access the profile, and make sure your best friend always finds the way back home.
 
-Inside of your Astro project, you'll see the following folders and files:
+![GitHub last commit](https://img.shields.io/github/last-commit/mauroviveros/koda-pet?logo=git)
+![GitHub License](https://img.shields.io/github/license/mauroviveros/koda-pet?logo=github)
+![GitHub Repo stars](https://img.shields.io/github/stars/mauroviveros/koda-pet)
+![GitHub watchers](https://img.shields.io/github/watchers/mauroviveros/koda-pet)
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+[![Astro][astro-badge]][astro-link]
+[![TailwindCSS][tailwind-badge]][tailwind-link]
+</div>
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
+## 📦 Requirements
+- [NodeJS][nodejs-link] _v22.17.0_
+- [PNPM][pnpm-link] _v10.15.0_
 
 ## 🧞 Commands
 
@@ -38,6 +33,10 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+[astro-link]: https://astro.build/
+[nodejs-link]: https://nodejs.org/
+[pnpm-link]: https://pnpm.io/
+[tailwind-link]: https://tailwindcss.com/
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+[astro-badge]: https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white
+[tailwind-badge]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
