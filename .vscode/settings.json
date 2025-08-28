@@ -1,5 +1,6 @@
 {
   "workbench.editor.customLabels.patterns": {
+    "**/src/layouts/**/*.astro": "${filename} -  layout 🏗️",
     "**/src/**/*.astro": "${filename} -  components 🧩",
     "**/*.css": "${filename} -  styles 🎨",
   }
