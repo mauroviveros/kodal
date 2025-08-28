@@ -1,0 +1,51 @@
+---
+import { Avatar, Card, Button } from "@components";
+import Layout from "@layout";
+import { Icon } from "astro-icon/components";
+import type { Pet } from "@types";
+import { getTimeSince } from "utils";
+
+const response = await fetch(`${import.meta.env.API_URL}/pets/${Astro.params.id}`);
+if(response.status === 404) return Astro.rewrite('/404');
+const pet = await response.json() as Pet;
+---
+<Layout>
+  <article slot="actions">
+    <Button variant="outline">
+      <Icon name="lucide:edit"/>
+      <span>Editar</span>
+    </Button>
+  </article>
+
+  <Card>
+    <article class="p-8 text-center bg-gradient-to-br from-primary/10 to-secondary/10">
+      <Avatar src={pet.avatarUrl} alt={pet.name} />
+      <h1 class="text-3xl font-bold mb-2 text-balance">{pet.name}</h1>
+      <Button>Enviar Whatsapp</Button>
+    </article>
+
+    <article class="flex flex-col p-6 gap-6">
+      {
+        pet.message && (
+          <blockquote class="p-4 rounded-lg bg-primary/5 border border-primary/20">
+            <p class="text-sm text-on-muted text-center">{pet.message}</p>
+          </blockquote>
+        )
+      }
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {
+          [
+            { label: 'Raza', value: pet.breed },
+            { label: 'Edad', value: getTimeSince(pet.birthdate) },
+            { label: 'Peso', value: `${pet.weight} kg` }
+          ].map(({ label, value }) => (
+            <div class="flex flex-col justify-center items-center text-center p-4 rounded-lg bg-muted/50">
+              <p class="text-2xl font-bold text-primary">{value}</p>
+              <p class="text-sm text-on-muted">{label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </article>
+  </Card>
+</Layout>

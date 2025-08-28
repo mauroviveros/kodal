@@ -1,4 +1,11 @@
+---
+export interface Props { src?: string; alt: string; }
+const { src, alt } = Astro.props;
+---
 <figure class="flex relative shrink-0 size-32 mx-auto mb-6 ring-4 rounded-full ring-primary/20 overflow-hidden">
-  <!-- <img src="/samira.jpg" alt="Foto de Samira" class="size-full aspect-square"/> -->
-  <span class="flex items-center justify-center size-full text-4xl font-bold text-on-primary bg-primary">S</span>
+  { src ? (
+    <img src={src} alt={`Foto de ${alt}`} class="size-full aspect-square"/>
+  ) : (
+    <span class="flex items-center justify-center size-full text-4xl font-bold text-on-primary bg-primary">{alt.charAt(0)}</span>
+  )}
 </figure>
