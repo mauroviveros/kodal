@@ -17,6 +17,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@astrojs/vercel": "^8.2.6",
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.4",
     "astro-icon": "^1.1.5",
