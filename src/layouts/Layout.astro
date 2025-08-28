@@ -16,5 +16,17 @@ import SEO from "@components/SEO.astro";
     </header>
 
     <slot/>
+
+    <footer class="flex flex-col justify-center grow border-t bg-muted/30">
+      <div class="container mx-auto px-4 py-6 text-center">
+        <article class="flex items-center justify-center gap-6 text-sm text-on-muted [&>a:hover]:underline [&>a:hover]:text-on-background">
+          <a>Política de Privacidad</a>
+          <a>Términos de Servicio</a>
+          <a>Soporte</a>
+        </article>
+
+        <p class="text-xs text-on-muted mt-4">© 2025 Koda. Manteniendo a las mascotas seguras y conectadas.</p>
+      </div>
+    </footer>
   </body>
 </html>
