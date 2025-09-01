@@ -1,3 +1,8 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Props extends HTMLAttributes<'section'> {};
+const { class: className, ...props } = Astro.props;
+---
 <div class="border rounded-xl shadow-lg bg-card text-on-card">
   {
     Astro.slots.header && (
@@ -7,7 +12,7 @@
     )
   }
 
-  <section class="flex flex-col p-6 gap-6">
+  <section class={`flex flex-col p-6 gap-6 ${className}`} {...props}>
     <slot/>
   </section>
 </div>

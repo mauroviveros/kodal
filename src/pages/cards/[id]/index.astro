@@ -11,15 +11,17 @@ const pet = await response.json() as Pet;
 ---
 <Layout>
   <article slot="actions">
-    <Button variant="outline">
-      <Icon name="lucide:edit"/>
-      <span>Editar</span>
-    </Button>
+    <a href={`/cards/${pet.id}/edit`}>
+      <Button variant="outline">
+        <Icon name="lucide:edit"/>
+        <span>Editar</span>
+      </Button>
+    </a>
   </article>
 
   <Card>
     <header slot="header">
-      <Avatar src={pet.avatarUrl} alt={pet.name} />
+      <Avatar src={pet.avatarUrl} alt={pet.name} class="mx-auto mb-6 size-32"/>
       <h1 class="text-3xl font-bold mb-2 text-balance">{pet.name}</h1>
       <Button>Enviar Whatsapp</Button>
     </header>

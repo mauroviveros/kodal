@@ -1,8 +1,9 @@
 ---
-export interface Props { src?: string; alt: string; }
-const { src, alt } = Astro.props;
+import type { HTMLAttributes } from 'astro/types';
+export interface Props extends HTMLAttributes<'figure'> { src?: string; alt: string; }
+const { src, alt, class: className, ...props} = Astro.props;
 ---
-<figure class="flex relative shrink-0 size-32 mx-auto mb-6 ring-4 rounded-full ring-primary/20 overflow-hidden">
+<figure class={`flex relative shrink-0 ring-4 rounded-full ring-primary/20 overflow-hidden ${className}`} {...props}>
   { src ? (
     <img src={src} alt={`Foto de ${alt}`} class="size-full aspect-square"/>
   ) : (
