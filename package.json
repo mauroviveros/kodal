@@ -1,5 +1,5 @@
 {
-  "name": "koda-pet",
+  "name": "kodal",
   "description": "the simplest and safest way to identify your pet.",
   "author": "Mauro Daniel Viveros <maurod.viveros@gmail.com> (TRY Ubbe)",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mauroviveros/koda-pet.git"
+    "url": "git+https://github.com/mauroviveros/kodal.git"
   },
   "scripts": {
     "dev": "astro dev",
@@ -18,7 +18,7 @@
     "db": "json-server db.json"
   },
   "dependencies": {
-    "@astrojs/vercel": "^8.2.6",
+    "@astrojs/vercel": "^8.2.7",
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.4",
     "astro-icon": "^1.1.5",

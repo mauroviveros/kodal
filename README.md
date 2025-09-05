@@ -7,10 +7,10 @@
 Smart collars with QR codes to identify and protect your pet.
 Scan the code, access the profile, and make sure your best friend always finds the way back home.
 
-![GitHub last commit](https://img.shields.io/github/last-commit/mauroviveros/koda-pet?logo=git)
-![GitHub License](https://img.shields.io/github/license/mauroviveros/koda-pet?logo=github)
-![GitHub Repo stars](https://img.shields.io/github/stars/mauroviveros/koda-pet)
-![GitHub watchers](https://img.shields.io/github/watchers/mauroviveros/koda-pet)
+![GitHub last commit](https://img.shields.io/github/last-commit/mauroviveros/kodal?logo=git)
+![GitHub License](https://img.shields.io/github/license/mauroviveros/kodal?logo=github)
+![GitHub Repo stars](https://img.shields.io/github/stars/mauroviveros/kodal)
+![GitHub watchers](https://img.shields.io/github/watchers/mauroviveros/kodal)
 
 [![Astro][astro-badge]][astro-link]
 [![TailwindCSS][tailwind-badge]][tailwind-link]
