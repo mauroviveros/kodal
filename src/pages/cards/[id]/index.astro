@@ -2,12 +2,13 @@
 import { Avatar, Card, Button } from "@components";
 import Layout from "@layout";
 import { Icon } from "astro-icon/components";
-import type { Pet } from "@types";
+// import type { Pet } from "@types";
 import { getTimeSince } from "utils";
+import { db, eq, Pet } from "astro:db";
 
-const response = await fetch(`${import.meta.env.API_URL}/pets/${Astro.params.id}`);
-if(response.status === 404) return Astro.rewrite('/404');
-const pet = await response.json() as Pet;
+if(!Astro.params.id) return Astro.redirect('/404');
+const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
+if(!pet) return Astro.rewrite('/404');
 ---
 <Layout>
   <article slot="actions">
@@ -21,7 +22,7 @@ const pet = await response.json() as Pet;
 
   <Card>
     <header slot="header">
-      <Avatar src={pet.avatarUrl} alt={pet.name} class="mx-auto mb-6 size-32"/>
+      <Avatar alt={pet.name} class="mx-auto mb-6 size-32"/>
       <h1 class="text-3xl font-bold mb-2 text-balance">{pet.name}</h1>
       <Button>Enviar Whatsapp</Button>
     </header>
