@@ -26,7 +26,7 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
     </a>
   </article>
 
-  <hgroup class="flex flex-col gap-2 mb-4">
+  <hgroup class="flex flex-col gap-2 mb-6">
     <h1 class="text-3xl font-bold">Editar información de <span class="text-primary">{pet.name}</span></h1>
     <p class="text-on-muted">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
@@ -54,13 +54,13 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
         </article>
 
         <article>
-          <label for="animal" class="text-sm">Animal<span class="text-primary">*</span></label>
-          <input type="text" name="animal" id="animal" required>
+          <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
+          <input type="text" name="species" id="species" value={pet.species} required>
         </article>
 
         <article>
-          <label for="species" class="text-sm">Especie</label>
-          <input type="text" name="species" id="species" value={pet.species}>
+          <label for="breed" class="text-sm">Raza</label>
+          <input type="text" name="breed" id="breed" value={pet.breed}>
         </article>
 
         <article>
