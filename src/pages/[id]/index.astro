@@ -2,7 +2,6 @@
 import { Avatar, Card, Button } from "@components";
 import Layout from "@layout";
 import { Icon } from "astro-icon/components";
-// import type { Pet } from "@types";
 import { getTimeSince } from "utils";
 import { db, eq, Pet } from "astro:db";
 
@@ -12,7 +11,7 @@ if(!pet) return Astro.rewrite('/404');
 ---
 <Layout>
   <article slot="actions">
-    <a href={`/cards/${pet.id}/edit`}>
+    <a href={`/${pet.id}/edit`}>
       <Button variant="outline">
         <Icon name="lucide:edit"/>
         <span>Editar</span>

@@ -1,12 +1,12 @@
 ---
 import { Avatar, Button, Card } from "@components";
 import Layout from "@layout";
-import type { Pet } from "@types";
 import { Icon } from "astro-icon/components";
+import { db, eq, Pet } from "astro:db";
 
-const response = await fetch(`${import.meta.env.API_URL}/pets/${Astro.params.id}`);
-if(response.status === 404) return Astro.rewrite('/404');
-const pet = await response.json() as Pet;
+if(!Astro.params.id) return Astro.redirect('/404');
+const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
+if(!pet) return Astro.redirect('/404');
 
 // Date formatter for displaying the birthdate in input:date
 const formatter = new Intl.DateTimeFormat('sv-SE', {
@@ -18,7 +18,7 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
 
 <Layout>
   <article slot="actions">
-    <a href={`/cards/${pet.id}`}>
+    <a href={`/${pet.id}`}>
       <Button variant="outline">
         <Icon name="lucide:arrow-left"/>
         <span>Ver perfil</span>
@@ -36,7 +36,7 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
       <h4 class="text-lg font-bold">Foto de perfil</h4>
 
       <div class="flex items-center gap-4">
-        <Avatar src={pet.avatarUrl} alt={pet.name} class="size-24"/>
+        <Avatar alt={pet.name} class="size-24"/>
         <div class="flex flex-col grow gap-2 overflow-hidden">
           <label for="avatar" class="text-sm">Subir foto de perfil<span class="text-primary">*</span></label>
           <input type="file" name="avatar" id="avatar">
@@ -70,7 +70,7 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
 
         <article>
           <label for="weight" class="text-sm">Peso<span class="text-primary">*</span></label>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1">
             <input type="number" name="weight" id="weight" value={pet.weight} class="grow" required>
             <span>kg</span>
           </div>
