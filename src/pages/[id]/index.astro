@@ -1,19 +1,20 @@
 ---
-import { Avatar, Card, Button } from "@components";
-import Layout from "@layout";
-import { Icon } from "astro-icon/components";
-import { getTimeSince } from "utils";
-import { db, eq, Pet } from "astro:db";
+import { Avatar, Card, Button } from '@components';
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+import { getTimeSince } from 'utils';
+import { db, eq, Pet } from 'astro:db';
 
-if(!Astro.params.id) return Astro.redirect('/404');
+if (!Astro.params.id) return Astro.redirect('/404');
 const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
-if(!pet) return Astro.rewrite('/404');
+if (!pet) return Astro.rewrite('/404');
 ---
+
 <Layout>
   <article slot="actions">
     <a href={`/${pet.id}/edit`}>
       <Button variant="outline">
-        <Icon name="lucide:edit"/>
+        <Icon name="lucide:edit" />
         <span>Editar</span>
       </Button>
     </a>
@@ -21,28 +22,28 @@ if(!pet) return Astro.rewrite('/404');
 
   <Card>
     <header slot="header">
-      <Avatar alt={pet.name} class="mx-auto mb-6 size-32"/>
-      <h1 class="text-3xl font-bold mb-2 text-balance">{pet.name}</h1>
+      <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
+      <h1 class="mb-2 text-3xl font-bold text-balance">{pet.name}</h1>
       <Button>Enviar Whatsapp</Button>
     </header>
 
     {
       pet.message && (
-        <blockquote class="p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p class="text-sm text-on-muted text-center">{pet.message}</p>
+        <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
+          <p class="text-on-muted text-center text-sm">{pet.message}</p>
         </blockquote>
       )
     }
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
       {
         [
           { label: 'Raza', value: pet.breed },
           { label: 'Edad', value: getTimeSince(pet.birthdate) },
-          { label: 'Peso', value: `${pet.weight} kg` }
+          { label: 'Peso', value: `${pet.weight} kg` },
         ].map(({ label, value }) => (
-          <div class="flex flex-col justify-center items-center text-center p-4 rounded-lg bg-muted/50">
-            <p class="text-2xl font-bold text-primary">{value}</p>
-            <p class="text-sm text-on-muted">{label}</p>
+          <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
+            <p class="text-primary text-2xl font-bold">{value}</p>
+            <p class="text-on-muted text-sm">{label}</p>
           </div>
         ))
       }

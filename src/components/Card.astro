@@ -1,18 +1,19 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-interface Props extends HTMLAttributes<'section'> {};
+interface Props extends HTMLAttributes<'section'> {}
 const { class: className, ...props } = Astro.props;
 ---
-<div class="border rounded-xl shadow-lg bg-card text-on-card">
+
+<div class="bg-card text-on-card rounded-xl border shadow-lg">
   {
     Astro.slots.header && (
-      <header class="p-8 text-center bg-gradient-to-br from-primary/10 to-secondary/10">
-        <slot name="header"/>
+      <header class="from-primary/10 to-secondary/10 bg-gradient-to-br p-8 text-center">
+        <slot name="header" />
       </header>
     )
   }
 
   <section class={`flex flex-col p-6 gap-6 ${className}`} {...props}>
-    <slot/>
+    <slot />
   </section>
 </div>

@@ -12,6 +12,6 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [icon(), db()],
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });

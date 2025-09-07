@@ -1,4 +1,11 @@
 {
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "workbench.editor.customLabels.patterns": {
     "**/src/layouts/**/*.astro": "${filename} - layout 🏗️",
     "**/src/**/*.astro": "${filename} - components 🧩",

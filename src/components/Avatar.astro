@@ -1,12 +1,23 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-export interface Props extends HTMLAttributes<'figure'> { src?: string; alt: string; }
-const { src, alt, class: className, ...props} = Astro.props;
+export interface Props extends HTMLAttributes<'figure'> {
+  src?: string;
+  alt: string;
+}
+const { src, alt, class: className, ...props } = Astro.props;
 ---
-<figure class={`flex relative shrink-0 ring-4 rounded-full ring-primary/20 overflow-hidden ${className}`} {...props}>
-  { src ? (
-    <img src={src} alt={`Foto de ${alt}`} class="size-full aspect-square"/>
-  ) : (
-    <span class="flex items-center justify-center size-full text-4xl font-bold text-on-primary bg-primary">{alt.charAt(0)}</span>
-  )}
+
+<figure
+  class={`flex relative shrink-0 ring-4 rounded-full ring-primary/20 overflow-hidden ${className}`}
+  {...props}
+>
+  {
+    src ? (
+      <img src={src} alt={`Foto de ${alt}`} class="aspect-square size-full" />
+    ) : (
+      <span class="text-on-primary bg-primary flex size-full items-center justify-center text-4xl font-bold">
+        {alt.charAt(0)}
+      </span>
+    )
+  }
 </figure>

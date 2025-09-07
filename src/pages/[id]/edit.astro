@@ -1,12 +1,12 @@
 ---
-import { Avatar, Button, Card } from "@components";
-import Layout from "@layout";
-import { Icon } from "astro-icon/components";
-import { db, eq, Pet } from "astro:db";
+import { Avatar, Button, Card } from '@components';
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+import { db, eq, Pet } from 'astro:db';
 
-if(!Astro.params.id) return Astro.redirect('/404');
+if (!Astro.params.id) return Astro.redirect('/404');
 const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
-if(!pet) return Astro.redirect('/404');
+if (!pet) return Astro.redirect('/404');
 
 // Date formatter for displaying the birthdate in input:date
 const formatter = new Intl.DateTimeFormat('sv-SE', {
@@ -20,14 +20,16 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
   <article slot="actions">
     <a href={`/${pet.id}`}>
       <Button variant="outline">
-        <Icon name="lucide:arrow-left"/>
+        <Icon name="lucide:arrow-left" />
         <span>Ver perfil</span>
       </Button>
     </a>
   </article>
 
-  <hgroup class="flex flex-col gap-2 mb-6">
-    <h1 class="text-3xl font-bold">Editar información de <span class="text-primary">{pet.name}</span></h1>
+  <hgroup class="mb-6 flex flex-col gap-2">
+    <h1 class="text-3xl font-bold">
+      Editar información de <span class="text-primary">{pet.name}</span>
+    </h1>
     <p class="text-on-muted">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
 
@@ -36,10 +38,12 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
       <h4 class="text-lg font-bold">Foto de perfil</h4>
 
       <div class="flex items-center gap-4">
-        <Avatar alt={pet.name} class="size-24"/>
-        <div class="flex flex-col grow gap-2 overflow-hidden">
-          <label for="avatar" class="text-sm">Subir foto de perfil<span class="text-primary">*</span></label>
-          <input type="file" name="avatar" id="avatar">
+        <Avatar alt={pet.name} class="size-24" />
+        <div class="flex grow flex-col gap-2 overflow-hidden">
+          <label for="avatar" class="text-sm"
+            >Subir foto de perfil<span class="text-primary">*</span></label
+          >
+          <input type="file" name="avatar" id="avatar" />
         </div>
       </div>
     </Card>
@@ -47,36 +51,52 @@ const formatter = new Intl.DateTimeFormat('sv-SE', {
     <Card class="">
       <h4 class="text-lg font-bold">Información Básica</h4>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 [&>article]:flex [&>article]:flex-col [&>article]:gap-2">
+      <div
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
+      >
         <article class="md:col-span-2">
           <label for="name" class="text-sm">Nombre<span class="text-primary">*</span></label>
-          <input type="text" name="name" id="name" value={pet.name} required>
+          <input type="text" name="name" id="name" value={pet.name} required />
         </article>
 
         <article>
           <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
-          <input type="text" name="species" id="species" value={pet.species} required>
+          <input type="text" name="species" id="species" value={pet.species} required />
         </article>
 
         <article>
           <label for="breed" class="text-sm">Raza</label>
-          <input type="text" name="breed" id="breed" value={pet.breed}>
+          <input type="text" name="breed" id="breed" value={pet.breed} />
         </article>
 
         <article>
-          <label for="age" class="text-sm">Fecha de nacimiento<span class="text-primary">*</span></label>
-          <input type="date" name="age" id="age" value={formatter.format(new Date(pet.birthdate))} required>
+          <label for="age" class="text-sm"
+            >Fecha de nacimiento<span class="text-primary">*</span></label
+          >
+          <input
+            type="date"
+            name="age"
+            id="age"
+            value={formatter.format(new Date(pet.birthdate))}
+            required
+          />
         </article>
 
         <article>
           <label for="weight" class="text-sm">Peso<span class="text-primary">*</span></label>
           <div class="flex items-center gap-1">
-            <input type="number" name="weight" id="weight" value={pet.weight} class="grow" required>
+            <input
+              type="number"
+              name="weight"
+              id="weight"
+              value={pet.weight}
+              class="grow"
+              required
+            />
             <span>kg</span>
           </div>
         </article>
       </div>
-
     </Card>
   </form>
 </Layout>

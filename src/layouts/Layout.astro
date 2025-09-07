@@ -1,40 +1,44 @@
 ---
-import { Brand, SEO } from "@components";
+import { Brand, SEO } from '@components';
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
-    <SEO/>
+    <SEO />
   </head>
   <body>
-    <header class="fixed border-b top-0 z-50 w-full backdrop-blur-sm bg-card/50">
-      <div class="container mx-auto p-4 flex items-center justify-between">
-        <Brand/>
-        <slot name="actions"/>
+    <header class="bg-card/50 fixed top-0 z-50 w-full border-b backdrop-blur-sm">
+      <div class="container mx-auto flex items-center justify-between p-4">
+        <Brand />
+        <slot name="actions" />
       </div>
     </header>
 
-    <main class="container mx-auto grow mt-16 px-4 py-8 max-w-2xl">
-      <slot/>
+    <main class="container mx-auto mt-16 max-w-2xl grow px-4 py-8">
+      <slot />
     </main>
 
-    <footer class="flex flex-col justify-center border-t bg-muted/30">
+    <footer class="bg-muted/30 flex flex-col justify-center border-t">
       <div class="container mx-auto px-4 py-6 text-center">
-        <article class="flex items-center justify-center gap-6 text-sm text-on-muted [&>a]:flex-1 md:[&>a]:flex-none [&>a:hover]:underline [&>a:hover]:text-on-background">
+        <article
+          class="text-on-muted [&>a:hover]:text-on-background flex items-center justify-center gap-6 text-sm [&>a]:flex-1 md:[&>a]:flex-none [&>a:hover]:underline"
+        >
           <a>Política de Privacidad</a>
           <a>Términos de Servicio</a>
           <a>Soporte</a>
         </article>
 
-        <p class="text-xs text-on-muted mt-4">© 2025 Koda. Manteniendo a las mascotas seguras y conectadas.</p>
-        <p class="text-xs text-on-muted mt-2">
-          Diseñado y construido con ❤️ por <br/>
+        <p class="text-on-muted mt-4 text-xs">
+          © 2025 Koda. Manteniendo a las mascotas seguras y conectadas.
+        </p>
+        <p class="text-on-muted mt-2 text-xs">
+          Diseñado y construido con ❤️ por <br />
           <a
             href="https://mauroviveros.com.ar/"
             target="_blank"
             rel="noopener noreferrer"
-            class="transition-colors text-primary hover:underline hover:text-primary/80"
+            class="text-primary hover:text-primary/80 transition-colors hover:underline"
           >
             Mauro Daniel viveros
           </a>
