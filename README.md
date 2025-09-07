@@ -2,7 +2,7 @@
 
 <!-- ![Koda.Pet](URL) -->
 
-# [Koda.Pet](https://mauroviveros.com.ar/)
+# [Kodal.Pet](https://mauroviveros.com.ar/)
 
 Smart collars with QR codes to identify and protect your pet.
 Scan the code, access the profile, and make sure your best friend always finds the way back home.
