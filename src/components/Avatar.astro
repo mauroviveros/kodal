@@ -16,7 +16,7 @@ const { src, alt, class: className, ...props } = Astro.props;
       <img src={src} alt={`Foto de ${alt}`} class="aspect-square size-full" />
     ) : (
       <span class="text-on-primary bg-primary flex size-full items-center justify-center text-4xl font-bold">
-        {alt.charAt(0)}
+        {(alt || '').charAt(0)}
       </span>
     )
   }

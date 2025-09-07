@@ -1,0 +1,18 @@
+---
+import { Avatar, Card } from '@components';
+const { pet } = Astro.props;
+---
+
+<Card>
+  <h4 class="text-lg font-bold">Foto de perfil</h4>
+
+  <div class="flex items-center gap-4">
+    <Avatar alt={pet.name} class="size-24" />
+    <div class="flex grow flex-col gap-2 overflow-hidden">
+      <label for="avatar" class="text-sm"
+        >Subir foto de perfil<span class="text-primary">*</span></label
+      >
+      <input type="file" name="avatar" id="avatar" accept="image/jpg, image/jpeg, image/png" />
+    </div>
+  </div>
+</Card>

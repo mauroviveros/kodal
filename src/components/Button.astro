@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from 'astro/types';
 interface Props extends HTMLAttributes<'button'> {
   variant?: 'outline' | 'filled';
+  size?: 'sm' | 'md' | 'lg';
 }
 const props = Astro.props;
 props.variant = props.variant ?? 'filled';
@@ -9,9 +10,13 @@ props.variant = props.variant ?? 'filled';
 
 <button
   class:list={[
-    'hover:bg-accent hover:text-on-accent inline-flex h-8 cursor-pointer items-center gap-1 rounded-md px-3 text-sm transition-all disabled:pointer-events-none disabled:opacity-50',
+    'hover:bg-accent hover:text-on-accent cursor-pointer items-center gap-1 rounded-md px-3 transition-all disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex items-center justify-center',
     props.variant === 'outline' && 'bg-background text-on-background border',
     props.variant === 'filled' && 'bg-primary text-on-primary',
+    props.size === 'sm' && 'h-6 text-xs',
+    (!props.size || props.size === 'md') && 'h-8 px-2 text-sm',
+    props.size === 'lg' && 'h-10 px-4 text-base',
     props.class,
   ]}
   {...props}

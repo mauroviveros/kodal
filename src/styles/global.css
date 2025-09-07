@@ -32,12 +32,16 @@
     @apply flex flex-col min-h-dvh bg-background text-on-background;
   }
 
-  input {
+  input, select {
     @apply [&~label]:after:content-['*'];
     @apply p-1 text-sm leading-8 border rounded-lg cursor-pointer bg-black/5;
 
     &[type="file"] {
       @apply file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-lg file:text-sm file:bg-primary/10 file:text-primary hover:file:bg-primary/20 hover:file:text-primary/90;
     }
+  }
+
+  select {
+    @apply h-full;
   }
 }

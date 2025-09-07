@@ -8,6 +8,13 @@ import { db, eq, Pet } from 'astro:db';
 if (!Astro.params.id) return Astro.redirect('/404');
 const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
 if (!pet) return Astro.rewrite('/404');
+if (!pet.name) return Astro.redirect(`/${pet.id}/edit`);
+
+const info = [
+  { label: 'Raza', value: pet.breed, display: pet.breed || 'Desconocida' },
+  { label: 'Edad', value: pet.birthdate, display: pet.birthdate && getTimeSince(pet.birthdate) },
+  { label: 'Peso', value: pet.weight, display: `${pet.weight} kg` },
+].filter(({ value }) => value);
 ---
 
 <Layout>
@@ -23,7 +30,7 @@ if (!pet) return Astro.rewrite('/404');
   <Card>
     <header slot="header">
       <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
-      <h1 class="mb-2 text-3xl font-bold text-balance">{pet.name}</h1>
+      <h1 class="mb-2 text-3xl font-bold text-balance break-all">{pet.name}</h1>
       <Button>Enviar Whatsapp</Button>
     </header>
 
@@ -34,15 +41,17 @@ if (!pet) return Astro.rewrite('/404');
         </blockquote>
       )
     }
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div
+      class:list={[
+        'grid grid-cols-1 gap-4',
+        info.length === 2 && 'md:grid-cols-2',
+        info.length > 2 && 'md:grid-cols-3',
+      ]}
+    >
       {
-        [
-          { label: 'Raza', value: pet.breed },
-          { label: 'Edad', value: getTimeSince(pet.birthdate) },
-          { label: 'Peso', value: `${pet.weight} kg` },
-        ].map(({ label, value }) => (
+        info.map(({ label, display }) => (
           <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
-            <p class="text-primary text-2xl font-bold">{value}</p>
+            <p class="text-primary text-2xl font-bold text-balance break-all">{display}</p>
             <p class="text-on-muted text-sm">{label}</p>
           </div>
         ))
