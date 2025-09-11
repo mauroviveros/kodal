@@ -1,9 +1,11 @@
 import eslintPluginAstro from 'eslint-plugin-astro';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
-export default [
+export default defineConfig([
   ...eslintPluginAstro.configs.recommended,
   eslintPluginPrettierRecommended,
+  globalIgnores(['.vercel/']),
   {
     files: ['*.astro'],
     languageOptions: {
@@ -16,4 +18,4 @@ export default [
       'prettier/prettier': 'error',
     },
   },
-];
+]);
