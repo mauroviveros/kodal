@@ -1,0 +1,24 @@
+---
+import { Button } from '@components/ui';
+import { Icon } from 'astro-icon/components';
+---
+
+<section class="relative flex min-h-dvh items-center pt-16">
+  <div class="container mx-auto flex flex-col items-center justify-center p-4">
+    <div class="from-primary/5 to-primary/5 absolute inset-0 bg-gradient-to-br"></div>
+    <div class="mx-auto max-w-4xl text-center">
+      <h1 class="mb-6 text-4xl font-bold text-balance lg:text-6xl">
+        Mantén a tu mascota <br /><span class="text-primary">segura y conectada</span> siempre.
+      </h1>
+      <p class="text-on-muted mx-auto mb-8 max-w-xl text-xl text-pretty">
+        Medallas inteligentes con tecnología digital que permiten a cualquier persona contactarte
+        inmediatamente si encuentran a tu mascota perdida.
+      </p>
+
+      <Button size="lg">
+        Consigue tu Medalla
+        <Icon name="lucide:shopping-cart" />
+      </Button>
+    </div>
+  </div>
+</section>

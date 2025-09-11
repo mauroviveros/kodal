@@ -1,49 +1,29 @@
 ---
-import { Brand, SEO } from '@components';
+import styles from '@styles/global.css?url';
+import { Footer, Header } from '@components';
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
-    <SEO />
+    <title>Kodal</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preload" href={styles} as="style" />
+    <link rel="stylesheet" href={styles} />
   </head>
   <body>
-    <header class="bg-card/50 fixed top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div class="container mx-auto flex items-center justify-between p-4">
-        <Brand />
-        <slot name="actions" />
-      </div>
-    </header>
+    <Header />
 
     <main class="container mx-auto mt-16 max-w-2xl grow px-4 py-8">
       <slot />
     </main>
 
-    <footer class="bg-muted/30 flex flex-col justify-center border-t">
-      <div class="container mx-auto px-4 py-6 text-center">
-        <article
-          class="text-on-muted [&>a:hover]:text-on-background flex items-center justify-center gap-6 text-sm [&>a]:flex-1 md:[&>a]:flex-none [&>a:hover]:underline"
-        >
-          <a>Política de Privacidad</a>
-          <a>Términos de Servicio</a>
-          <a>Soporte</a>
-        </article>
-
-        <p class="text-on-muted mt-4 text-xs">
-          © 2025 Kodal. Manteniendo a las mascotas seguras y conectadas.
-        </p>
-        <p class="text-on-muted mt-2 text-xs">
-          Diseñado y construido con ❤️ por
-          <a
-            href="https://mauroviveros.com.ar/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-primary hover:text-primary/80 transition-colors hover:underline"
-          >
-            Mauro Daniel viveros
-          </a>
-        </p>
-      </div>
-    </footer>
+    <Footer />
   </body>
 </html>

@@ -7,6 +7,7 @@
     "paths": {
       "@layout": ["./layouts/Layout.astro"],
       "@components": ["./components/index.ts"],
+      "@components/*": ["./components/*"],
       "@types": ["./types/index.ts"],
       "@utils": ["./utils/index.ts"],
       "@styles/*": ["./styles/*"]

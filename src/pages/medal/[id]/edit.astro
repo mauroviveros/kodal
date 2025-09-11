@@ -1,9 +1,10 @@
 ---
-import { Button, BasicForm } from '@components';
+import { BasicForm } from '@components';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 import { db, eq, Pet } from 'astro:db';
 import { Pet as Schema } from '@types';
+import { Button } from '@components/ui';
 
 if (!Astro.params.id) return Astro.redirect('/404');
 if (Astro.request.method === 'POST') {
