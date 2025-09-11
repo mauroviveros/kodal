@@ -15,23 +15,22 @@ const info = [
   { label: 'Edad', value: pet.birthdate, display: pet.birthdate && getTimeSince(pet.birthdate) },
   { label: 'Peso', value: pet.weight, display: `${pet.weight} kg` },
 ].filter(({ value }) => value);
+
+const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;
 ---
 
 <Layout>
-  <article slot="actions">
-    <a href={`/${pet.id}/edit`}>
-      <Button variant="outline">
-        <Icon name="lucide:edit" />
-        <span>Editar</span>
-      </Button>
-    </a>
-  </article>
-
   <Card>
     <header slot="header">
       <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
       <h1 class="mb-2 text-3xl font-bold text-balance break-all">{pet.name}</h1>
-      <Button>Enviar Whatsapp</Button>
+      <a
+        href={`https://wa.me/${pet.owner_phone}?text=${encodeURIComponent(phone_message)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button>Enviar Whatsapp</Button>
+      </a>
     </header>
 
     {

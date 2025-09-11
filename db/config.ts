@@ -11,6 +11,12 @@ const Pet = defineTable({
     weight: column.number({ optional: true }),
     gender: column.text({ enum: Schema.shape.gender.removeDefault().options, optional: true }),
     message: column.text({ optional: true }),
+
+    owner_name: column.text({ optional: true }),
+    owner_relationship: column.text({ optional: true }),
+    owner_phone: column.text(),
+    owner_email: column.text(),
+    owner_address: column.text({ optional: true }),
   }
 });
 

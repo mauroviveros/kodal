@@ -18,4 +18,12 @@ export const Pet = z.object({
   ),
   gender: z.enum(['male', 'female', 'unknown']).default('unknown'),
   message: z.string().optional(),
+
+
+
+  owner_name: z.string(),
+  owner_relationship: z.string().optional(),
+  owner_phone: z.string(),
+  owner_email: z.string().email(),
+  owner_address: z.string().optional(),
 });

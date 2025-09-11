@@ -1,6 +1,6 @@
 ---
 import styles from '@styles/global.css?url';
-import { Footer, Header } from '@components';
+import { Brand } from '@components';
 import { Hero } from '@components/landing';
 ---
 
@@ -19,12 +19,15 @@ import { Hero } from '@components/landing';
     <link rel="stylesheet" href={styles} />
   </head>
   <body>
-    <Header />
+    <header class="bg-card/50 fixed top-0 z-50 w-full border-b backdrop-blur-sm">
+      <div class="container mx-auto flex items-center justify-between p-4">
+        <Brand />
+        <slot name="actions" />
+      </div>
+    </header>
 
     <main>
       <Hero />
     </main>
-
-    <Footer />
   </body>
 </html>

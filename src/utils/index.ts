@@ -4,3 +4,13 @@ export const getTimeSince = (birthdate: Date) : string =>  {
   const since = rtf.format(-Math.floor(diff / 1000 / 60 / 60 / 24 / 365), 'years');
   return since.replace('hace ', ''); // elimina "hace " para que quede solo "X años"
 };
+
+// Date formatter for displaying the birthdate in input:date
+export const toInputDateValue = (date: Date | string): string => {
+  return new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'UTC',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date(date));
+}

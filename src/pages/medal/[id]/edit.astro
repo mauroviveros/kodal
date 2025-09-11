@@ -1,10 +1,10 @@
 ---
-import { BasicForm } from '@components';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 import { db, eq, Pet } from 'astro:db';
 import { Pet as Schema } from '@types';
-import { Button } from '@components/ui';
+import { Button, Card } from '@components/ui';
+import { toInputDateValue } from '@utils';
 
 if (!Astro.params.id) return Astro.redirect('/404');
 if (Astro.request.method === 'POST') {
@@ -12,7 +12,7 @@ if (Astro.request.method === 'POST') {
     const formData = await Astro.request.formData();
     const data = Schema.parse(Object.fromEntries(formData.entries()));
     await db.update(Pet).set(data).where(eq(Pet.id, Astro.params.id)).run();
-    return Astro.redirect(`/${Astro.params.id}`);
+    return Astro.redirect(`/medal/${Astro.params.id}`);
   } catch (error) {
     console.log(error);
   }
@@ -23,15 +23,6 @@ if (!pet) return Astro.redirect('/404');
 ---
 
 <Layout>
-  <article slot="actions">
-    <a href={`/${pet.id}`}>
-      <Button variant="outline">
-        <Icon name="lucide:arrow-left" />
-        <span>Ver perfil</span>
-      </Button>
-    </a>
-  </article>
-
   <hgroup class="mb-6 flex flex-col gap-2">
     <h1 class="text-3xl font-bold">
       {
@@ -49,17 +40,104 @@ if (!pet) return Astro.redirect('/404');
 
   <form method="POST" class="flex flex-col gap-6">
     <!-- <AvatarForm pet={pet} /> -->
-    <BasicForm pet={pet} />
+    <Card>
+      <h4 class="text-lg font-bold">Información Básica</h4>
+
+      <div
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
+      >
+        <fieldset class="flex flex-col gap-2 md:col-span-2">
+          <label for="name" class="text-sm">Nombre<span class="text-primary">*</span></label>
+          <input type="text" name="name" id="name" value={pet.name} maxlength="25" required />
+        </fieldset>
+
+        <fieldset class="flex flex-col gap-2">
+          <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
+          <!-- <input type="text" name="species" id="species" value={pet.species} required /> -->
+          <select name="species" id="species" value={pet.species} required>
+            <option value="cat">Gato</option>
+            <option value="dog">Perro</option>
+            <option value="other">Otro</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="flex flex-col gap-2">
+          <label for="breed" class="text-sm">Raza</label>
+          <input type="text" name="breed" id="breed" value={pet.breed} maxlength="25" />
+        </fieldset>
+
+        <fieldset class="flex flex-col gap-2">
+          <label for="birthdate" class="text-sm">
+            Fecha de nacimiento<span class="text-primary">*</span>
+          </label>
+          <input
+            type="date"
+            name="birthdate"
+            id="birthdate"
+            value={pet.birthdate && toInputDateValue(pet.birthdate)}
+            max={toInputDateValue(new Date())}
+            required
+          />
+        </fieldset>
+
+        <fieldset class="flex flex-col gap-2">
+          <label for="weight" class="text-sm">Peso</label>
+          <div class="flex items-center gap-1">
+            <input
+              type="number"
+              name="weight"
+              id="weight"
+              class="grow"
+              value={pet.weight}
+              min="0"
+              max="99"
+              step="0.1"
+            />
+            <span>kg</span>
+          </div>
+        </fieldset>
+      </div>
+    </Card>
+
+    <Card>
+      <h4 class="text-lg font-bold">Mensaje de Emergencia</h4>
+      <fieldset class="flex flex-col">
+        <label for="message" class="mb-2">Mensaje para quien encuentre a tu mascota</label>
+        <textarea name="message" id="message" maxlength="250" required>{pet.message}</textarea>
+        <p class="text-on-muted text-xs">
+          Este mensaje aparecerá en el perfil público de tu mascota
+        </p>
+      </fieldset>
+    </Card>
+
+    <Card>
+      <h4 class="text-lg font-bold">Información de contacto</h4>
+
+      <fieldset class="flex flex-col">
+        <label for="owner_name" class="mb-2">Nombre</label>
+        <input type="text" name="owner_name" id="owner_name" value={pet.owner_name} />
+      </fieldset>
+
+      <fieldset class="flex flex-col">
+        <label for="owner_phone" class="mb-2">Teléfono<span class="text-primary">*</span></label>
+        <input type="tel" name="owner_phone" id="owner_phone" value={pet.owner_phone} required />
+      </fieldset>
+
+      <fieldset class="flex flex-col">
+        <label for="owner_email" class="mb-2">Email<span class="text-primary">*</span></label>
+        <input type="email" name="owner_email" id="owner_email" value={pet.owner_email} required />
+      </fieldset>
+    </Card>
 
     <div class="flex gap-4">
       <Button size="lg" type="submit" class="flex-1">
         <Icon name="lucide:save" />
-        {pet.name ? 'Guardar cambios' : 'Crear perfil'}
+        {pet.name ? 'Guardar' : 'Crear'}
       </Button>
 
       {
         pet.name && (
-          <a href={`/${pet.id}`} class="flex flex-1">
+          <a href={`/medal/${pet.id}`} class="flex flex-1">
             <Button variant="outline" size="lg" class="flex-1" type="button">
               Cancelar
             </Button>
