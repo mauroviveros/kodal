@@ -65,40 +65,61 @@ const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, 
 
     <div class="space-y-4">
       {
-        [
-          {
-            label: 'Teléfono',
-            icon: 'lucide:phone',
-            value: pet.owner_phone,
-            display: pet.owner_phone || 'Desconocido',
-          },
-          {
-            label: 'Email',
-            icon: 'lucide:mail',
-            value: pet.owner_email,
-            display: pet.owner_email || 'Desconocido',
-          },
-          {
-            label: 'Dirección',
-            icon: 'lucide:map-pin',
-            value: pet.owner_address,
-            display: pet.owner_address || 'Desconocida',
-          },
-        ].map(
-          ({ label, icon, value, display }) =>
-            value && (
-              <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
-                <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
-                  <Icon name={icon} class="text-primary size-5" />
-                </div>
-                <div class="flex-1">
-                  <p class="font-medium">{label}</p>
-                  <p class="text-primary break-all">{display}</p>
-                </div>
-              </div>
-            ),
+        pet.owner_phone && (
+          <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
+            <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
+              <Icon name="lucide:phone" class="text-primary size-5" />
+            </div>
+            <div class="flex-1">
+              <p class="font-medium">Teléfono</p>
+              <p class="text-primary break-all">{pet.owner_phone}</p>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        pet.owner_email && (
+          <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
+            <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
+              <Icon name="lucide:mail" class="text-primary size-5" />
+            </div>
+            <div class="flex-1">
+              <p class="font-medium">Email</p>
+              <p class="text-primary break-all">{pet.owner_email}</p>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        pet.owner_address && (
+          <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
+            <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
+              <Icon name="lucide:map-pin" class="text-primary size-5" />
+            </div>
+            <div class="flex-1">
+              <p class="font-medium">Dirección</p>
+              <p class="text-primary break-all">{pet.owner_address}</p>
+            </div>
+          </div>
         )
       }
     </div>
+  </Card>
+
+  <Card>
+    <article class="flex flex-col items-center p-6 text-center">
+      <h3 class="mb-3 text-xl font-bold">¿Te gusta esta medalla inteligente?</h3>
+      <p class="text-on-muted mb-6 text-pretty">
+        Protege a tu mascota con nuestra tecnología de identificación digital. Fácil de usar,
+        siempre actualizada y disponible 24/7.
+      </p>
+
+      <Button type="button" size="lg" disabled>
+        Consigue tu Medalla
+        <Icon name="lucide:shopping-cart" />
+      </Button>
+    </article>
   </Card>
 </Layout>

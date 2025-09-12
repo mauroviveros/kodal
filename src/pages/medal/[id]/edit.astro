@@ -121,11 +121,6 @@ if (!pet) return Astro.redirect('/404');
       <h4 class="text-lg font-bold">Información de contacto</h4>
 
       <fieldset class="flex flex-col">
-        <label for="owner_name" class="mb-2">Nombre</label>
-        <input type="text" name="owner_name" id="owner_name" value={pet.owner_name} />
-      </fieldset>
-
-      <fieldset class="flex flex-col">
         <label for="owner_phone" class="mb-2">Teléfono<span class="text-primary">*</span></label>
         <input type="tel" name="owner_phone" id="owner_phone" value={pet.owner_phone} required />
       </fieldset>
