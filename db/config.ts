@@ -14,8 +14,8 @@ const Pet = defineTable({
 
     owner_name: column.text({ optional: true }),
     owner_relationship: column.text({ optional: true }),
-    owner_phone: column.text(),
-    owner_email: column.text(),
+    owner_phone: column.text({ optional: true }),
+    owner_email: column.text({ optional: true }),
     owner_address: column.text({ optional: true }),
   }
 });

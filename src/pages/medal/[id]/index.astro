@@ -8,8 +8,7 @@ import { db, eq, Pet } from 'astro:db';
 if (!Astro.params.id) return Astro.redirect('/404');
 const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
 if (!pet) return Astro.rewrite('/404');
-if (!pet.name) return Astro.redirect(`/${pet.id}/edit`);
-
+if (!pet.name) return Astro.redirect(`${Astro.url}/edit`);
 const info = [
   { label: 'Raza', value: pet.breed, display: pet.breed || 'Desconocida' },
   { label: 'Edad', value: pet.birthdate, display: pet.birthdate && getTimeSince(pet.birthdate) },
@@ -54,6 +53,51 @@ const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, 
             <p class="text-on-muted text-sm">{label}</p>
           </div>
         ))
+      }
+    </div>
+  </Card>
+
+  <Card>
+    <h2 class="mb-4 flex items-center gap-2 text-xl font-bold">
+      <Icon name="lucide:user" class="text-primary size-5" />
+      Información de contacto
+    </h2>
+
+    <div class="space-y-4">
+      {
+        [
+          {
+            label: 'Teléfono',
+            icon: 'lucide:phone',
+            value: pet.owner_phone,
+            display: pet.owner_phone || 'Desconocido',
+          },
+          {
+            label: 'Email',
+            icon: 'lucide:mail',
+            value: pet.owner_email,
+            display: pet.owner_email || 'Desconocido',
+          },
+          {
+            label: 'Dirección',
+            icon: 'lucide:map-pin',
+            value: pet.owner_address,
+            display: pet.owner_address || 'Desconocida',
+          },
+        ].map(
+          ({ label, icon, value, display }) =>
+            value && (
+              <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
+                <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
+                  <Icon name={icon} class="text-primary size-5" />
+                </div>
+                <div class="flex-1">
+                  <p class="font-medium">{label}</p>
+                  <p class="text-primary break-all">{display}</p>
+                </div>
+              </div>
+            ),
+        )
       }
     </div>
   </Card>

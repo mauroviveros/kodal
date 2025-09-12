@@ -53,11 +53,18 @@ if (!pet) return Astro.redirect('/404');
 
         <fieldset class="flex flex-col gap-2">
           <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
-          <!-- <input type="text" name="species" id="species" value={pet.species} required /> -->
-          <select name="species" id="species" value={pet.species} required>
-            <option value="cat">Gato</option>
-            <option value="dog">Perro</option>
-            <option value="other">Otro</option>
+          <select name="species" id="species" required>
+            {
+              [
+                { value: 'cat', label: 'Gato' },
+                { value: 'dog', label: 'Perro' },
+                { value: 'other', label: 'Otro' },
+              ].map(({ value, label }) => (
+                <option value={value} selected={(pet.species || 'other') === value}>
+                  {label}
+                </option>
+              ))
+            }
           </select>
         </fieldset>
 
