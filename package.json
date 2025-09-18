@@ -10,7 +10,7 @@
     "url": "git+https://github.com/mauroviveros/kodal.git"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "dev": "astro dev",
     "build": "astro build --remote",
     "preview": "astro preview",
