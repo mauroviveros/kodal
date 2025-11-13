@@ -21,7 +21,7 @@
     "@astrojs/db": "0.17.2",
     "@astrojs/vercel": "8.2.7",
     "@tailwindcss/vite": "4.1.13",
-    "astro": "5.13.8",
+    "astro": "5.15.6",
     "astro-icon": "1.1.5",
     "crypto-js": "4.2.0",
     "tailwindcss": "4.1.13",
