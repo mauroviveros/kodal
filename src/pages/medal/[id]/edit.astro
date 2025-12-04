@@ -3,7 +3,7 @@ import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 import { db, eq, Pet } from 'astro:db';
 import { Pet as Schema } from '@types';
-import { Button, Card } from '@components/ui';
+import { Button, Card, Input } from '@components/ui';
 import { toInputDateValue } from '@utils';
 
 if (!Astro.params.id) return Astro.redirect('/404');
@@ -14,19 +14,25 @@ if (Astro.request.method === 'POST') {
     await db.update(Pet).set(data).where(eq(Pet.id, Astro.params.id)).run();
     return Astro.redirect(`/medal/${Astro.params.id}`);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
 const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
 if (!pet) return Astro.redirect('/404');
+const isNew = !pet.name;
+
+// // if hash doesn't exists
+// if (Astro.url.searchParams.get('hash') !== 'testing')
+//   return Astro.rewrite(`/medal/${Astro.params.id}`);
+// // if(pet.hash !== Astro.url.searchParams.get('hash')) return Astro.rewrite(`/medal/${Astro.params.id}`);
 ---
 
 <Layout>
   <hgroup class="mb-6 flex flex-col gap-2">
     <h1 class="text-3xl font-bold">
       {
-        pet.name ? (
+        !isNew ? (
           <>
             Editar información de <span class="text-primary">{pet.name}</span>
           </>
@@ -46,10 +52,16 @@ if (!pet) return Astro.redirect('/404');
       <div
         class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
       >
-        <fieldset class="flex flex-col gap-2 md:col-span-2">
-          <label for="name" class="text-sm">Nombre<span class="text-primary">*</span></label>
-          <input type="text" name="name" id="name" value={pet.name} maxlength="25" required />
-        </fieldset>
+        <Input
+          type="text"
+          name="name"
+          id="name"
+          class="md:col-span-2"
+          aria-label="Nombre"
+          value={pet.name}
+          maxlength="25"
+          required
+        />
 
         <fieldset class="flex flex-col gap-2">
           <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
@@ -68,41 +80,36 @@ if (!pet) return Astro.redirect('/404');
           </select>
         </fieldset>
 
-        <fieldset class="flex flex-col gap-2">
-          <label for="breed" class="text-sm">Raza</label>
-          <input type="text" name="breed" id="breed" value={pet.breed} maxlength="25" />
-        </fieldset>
+        <Input
+          type="text"
+          name="breed"
+          id="breed"
+          aria-label="Raza"
+          value={pet.breed}
+          maxlength="25"
+        />
 
-        <fieldset class="flex flex-col gap-2">
-          <label for="birthdate" class="text-sm">
-            Fecha de nacimiento<span class="text-primary">*</span>
-          </label>
-          <input
-            type="date"
-            name="birthdate"
-            id="birthdate"
-            value={pet.birthdate && toInputDateValue(pet.birthdate)}
-            max={toInputDateValue(new Date())}
-            required
-          />
-        </fieldset>
+        <Input
+          type="date"
+          name="birthdate"
+          id="birthdate"
+          aria-label="Fecha de nacimiento"
+          value={pet.birthdate && toInputDateValue(pet.birthdate)}
+          max={toInputDateValue(new Date())}
+        />
 
-        <fieldset class="flex flex-col gap-2">
-          <label for="weight" class="text-sm">Peso</label>
-          <div class="flex items-center gap-1">
-            <input
-              type="number"
-              name="weight"
-              id="weight"
-              class="grow"
-              value={pet.weight}
-              min="0"
-              max="99"
-              step="0.1"
-            />
-            <span>kg</span>
-          </div>
-        </fieldset>
+        <Input
+          type="number"
+          name="weight"
+          id="weight"
+          aria-label="Peso"
+          value={pet.weight}
+          min="0"
+          max="99"
+          step="0.1"
+        >
+          <span>kg</span>
+        </Input>
       </div>
     </Card>
 
@@ -120,25 +127,34 @@ if (!pet) return Astro.redirect('/404');
     <Card>
       <h4 class="text-lg font-bold">Información de contacto</h4>
 
-      <fieldset class="flex flex-col">
-        <label for="owner_phone" class="mb-2">Teléfono<span class="text-primary">*</span></label>
-        <input type="tel" name="owner_phone" id="owner_phone" value={pet.owner_phone} required />
-      </fieldset>
+      <Input
+        type="tel"
+        name="owner_phone"
+        id="owner_phone"
+        value={pet.owner_phone}
+        aria-label="Teléfono"
+        maxlength="15"
+      />
 
-      <fieldset class="flex flex-col">
-        <label for="owner_email" class="mb-2">Email<span class="text-primary">*</span></label>
-        <input type="email" name="owner_email" id="owner_email" value={pet.owner_email} required />
-      </fieldset>
+      <Input
+        type="email"
+        name="owner_email"
+        id="owner_email"
+        value={pet.owner_email}
+        aria-label="Email"
+        maxlength="254"
+        required
+      />
     </Card>
 
     <div class="flex gap-4">
       <Button size="lg" type="submit" class="flex-1">
         <Icon name="lucide:save" />
-        {pet.name ? 'Guardar' : 'Crear'}
+        {!isNew ? 'Guardar' : 'Crear'}
       </Button>
 
       {
-        pet.name && (
+        !isNew && (
           <a href={`/medal/${pet.id}`} class="flex flex-1">
             <Button variant="outline" size="lg" class="flex-1" type="button">
               Cancelar

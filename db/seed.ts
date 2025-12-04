@@ -17,8 +17,6 @@ export default async function seed() {
     },
     {
       id: '2',
-      owner_email: 'maurod.viveros@gmail.com',
-      owner_phone: '+5491151423888'
     }
   ]);
 }

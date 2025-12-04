@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'input'> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<fieldset class:list={[`flex flex-col gap-2`, className]}>
+  <label for="owner_email" class="text-sm">
+    {props['aria-label']}
+    {props.required && <span class="text-primary">*</span>}
+  </label>
+  <div class="flex items-center gap-1">
+    <input class="grow" {...props} />
+    <slot />
+  </div>
+</fieldset>
