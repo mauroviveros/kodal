@@ -17,8 +17,8 @@ Scan the code, access the profile, and make sure your best friend always finds t
 </div>
 
 ## 📦 Requirements
-- [NodeJS][nodejs-link] _v22.17.0_
-- [PNPM][pnpm-link] _v10.15.0_
+- [NodeJS][nodejs-link] _v24.11.1_
+- [PNPM][pnpm-link] _v10.24.0_
 
 ## 🧞 Commands
 
