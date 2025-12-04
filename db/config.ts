@@ -1,5 +1,5 @@
 import { column, defineDb, defineTable } from 'astro:db';
-import { Pet as Schema } from '@types';
+import { PetSchema as Schema } from '@types';
 
 const Pet = defineTable({
   columns: {

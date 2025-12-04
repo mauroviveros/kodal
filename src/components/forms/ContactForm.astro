@@ -1,0 +1,33 @@
+---
+import { Card, Input } from '@components/ui';
+import type { Pet } from '@types';
+
+interface Props {
+  pet: Pet;
+}
+
+const { pet } = Astro.props;
+---
+
+<Card>
+  <h4 class="text-lg font-bold">Información de contacto</h4>
+
+  <Input
+    type="tel"
+    name="owner_phone"
+    id="owner_phone"
+    value={pet.owner_phone}
+    aria-label="Teléfono"
+    maxlength="15"
+  />
+
+  <Input
+    type="email"
+    name="owner_email"
+    id="owner_email"
+    value={pet.owner_email}
+    aria-label="Email"
+    maxlength="254"
+    required
+  />
+</Card>

@@ -1,6 +1,7 @@
 import { z } from "astro/zod";
 
-export const Pet = z.object({
+export const PetSchema = z.object({
+  id: z.string().uuid(),
   name: z.string(),
   species: z.enum(['dog', 'cat', 'other']),
   breed: z.string().optional(),
@@ -27,3 +28,4 @@ export const Pet = z.object({
   owner_email: z.string().email(),
   owner_address: z.string().optional(),
 });
+export type Pet = z.infer<typeof PetSchema>;

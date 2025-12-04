@@ -1,24 +1,24 @@
 ---
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
-import { db, eq, Pet } from 'astro:db';
-import { Pet as Schema } from '@types';
-import { Button, Card, Input } from '@components/ui';
-import { toInputDateValue } from '@utils';
+import { db, eq, Pet as Table } from 'astro:db';
+import { PetSchema as Schema, type Pet } from '@types';
+import { Button } from '@components/ui';
+import { BasicForm, ContactForm, EmergencyForm } from '@components/forms';
 
 if (!Astro.params.id) return Astro.redirect('/404');
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
     const data = Schema.parse(Object.fromEntries(formData.entries()));
-    await db.update(Pet).set(data).where(eq(Pet.id, Astro.params.id)).run();
+    await db.update(Table).set(data).where(eq(Table.id, Astro.params.id)).run();
     return Astro.redirect(`/medal/${Astro.params.id}`);
   } catch (error) {
     console.error(error);
   }
 }
 
-const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
+const pet = (await db.select().from(Table).where(eq(Table.id, Astro.params.id)).get()) as Pet;
 if (!pet) return Astro.redirect('/404');
 const isNew = !pet.name;
 
@@ -46,106 +46,9 @@ const isNew = !pet.name;
 
   <form method="POST" class="flex flex-col gap-6">
     <!-- <AvatarForm pet={pet} /> -->
-    <Card>
-      <h4 class="text-lg font-bold">Información Básica</h4>
-
-      <div
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
-      >
-        <Input
-          type="text"
-          name="name"
-          id="name"
-          class="md:col-span-2"
-          aria-label="Nombre"
-          value={pet.name}
-          maxlength="25"
-          required
-        />
-
-        <fieldset class="flex flex-col gap-2">
-          <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
-          <select name="species" id="species" required>
-            {
-              [
-                { value: 'cat', label: 'Gato' },
-                { value: 'dog', label: 'Perro' },
-                { value: 'other', label: 'Otro' },
-              ].map(({ value, label }) => (
-                <option value={value} selected={(pet.species || 'other') === value}>
-                  {label}
-                </option>
-              ))
-            }
-          </select>
-        </fieldset>
-
-        <Input
-          type="text"
-          name="breed"
-          id="breed"
-          aria-label="Raza"
-          value={pet.breed}
-          maxlength="25"
-        />
-
-        <Input
-          type="date"
-          name="birthdate"
-          id="birthdate"
-          aria-label="Fecha de nacimiento"
-          value={pet.birthdate && toInputDateValue(pet.birthdate)}
-          max={toInputDateValue(new Date())}
-        />
-
-        <Input
-          type="number"
-          name="weight"
-          id="weight"
-          aria-label="Peso"
-          value={pet.weight}
-          min="0"
-          max="99"
-          step="0.1"
-        >
-          <span>kg</span>
-        </Input>
-      </div>
-    </Card>
-
-    <Card>
-      <h4 class="text-lg font-bold">Mensaje de Emergencia</h4>
-      <fieldset class="flex flex-col">
-        <label for="message" class="mb-2">Mensaje para quien encuentre a tu mascota</label>
-        <textarea name="message" id="message" maxlength="250" required>{pet.message}</textarea>
-        <p class="text-on-muted text-xs">
-          Este mensaje aparecerá en el perfil público de tu mascota
-        </p>
-      </fieldset>
-    </Card>
-
-    <Card>
-      <h4 class="text-lg font-bold">Información de contacto</h4>
-
-      <Input
-        type="tel"
-        name="owner_phone"
-        id="owner_phone"
-        value={pet.owner_phone}
-        aria-label="Teléfono"
-        maxlength="15"
-      />
-
-      <Input
-        type="email"
-        name="owner_email"
-        id="owner_email"
-        value={pet.owner_email}
-        aria-label="Email"
-        maxlength="254"
-        required
-      />
-    </Card>
+    <BasicForm pet={pet} />
+    <EmergencyForm pet={pet} />
+    <ContactForm pet={pet} />
 
     <div class="flex gap-4">
       <Button size="lg" type="submit" class="flex-1">
