@@ -4,38 +4,43 @@ import type { Pet } from '@types';
 import { getTimeSince } from '@utils';
 
 interface Props {
-  pet: Pet;
+  medal: any;
 }
 
-const { pet } = Astro.props;
-const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;
+const { medal } = Astro.props;
+const phone_message = `Hola, he encontrado a tu mascota ${medal.name}. Por favor, contáctame.`;
 const info = [
-  { label: 'Raza', value: pet.breed, display: pet.breed || 'Desconocida' },
-  { label: 'Edad', value: pet.birthdate, display: pet.birthdate && getTimeSince(pet.birthdate) },
-  { label: 'Peso', value: pet.weight, display: `${pet.weight} kg` },
+  { label: 'Raza', value: medal.breed, display: medal.breed || 'Desconocida' },
+  {
+    label: 'Edad',
+    value: medal.birthdate,
+    display: medal.birthdate && getTimeSince(medal.birthdate),
+  },
+  { label: 'Peso', value: medal.weight, display: `${medal.weight} kg` },
 ].filter(({ value }) => value);
 ---
 
 <Card>
   <header slot="header">
-    <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
-    <h1 class="mb-2 text-3xl font-bold text-balance break-all">{pet.name}</h1>
-    <a
-      href={`https://wa.me/${pet.owner_phone}?text=${encodeURIComponent(phone_message)}`}
+    <Avatar alt={medal.name} class="mx-auto mb-6 size-32" />
+    <h1 class="mb-2 text-3xl font-bold text-balance break-all">{medal.name}</h1>
+    <!-- <a
+      href={`https://wa.me/${medal.owner_phone}?text=${encodeURIComponent(phone_message)}`}
       target="_blank"
       rel="noopener noreferrer"
     >
       <Button>Enviar Whatsapp</Button>
-    </a>
+    </a> -->
   </header>
 
   {
-    pet.message && (
+    medal.message && (
       <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
-        <p class="text-on-muted text-center text-sm">{pet.message}</p>
+        <p class="text-on-muted text-center text-sm">{medal.message}</p>
       </blockquote>
     )
   }
+
   <div
     class:list={[
       'grid grid-cols-1 gap-4',

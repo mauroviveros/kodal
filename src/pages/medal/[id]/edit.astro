@@ -1,40 +1,64 @@
 ---
-import Layout from '@layout';
-import { Icon } from 'astro-icon/components';
-import { db, eq, Pet as Table } from 'astro:db';
-import { PetSchema as Schema, type Pet } from '@types';
+import { BasicForm } from '@components/forms';
 import { Button } from '@components/ui';
-import { BasicForm, ContactForm, EmergencyForm } from '@components/forms';
+import Layout from '@layout';
+import { MedalSchema } from '@types';
+import { Icon } from 'astro-icon/components';
+import { and, db, eq, gt, isNull, Medal, Slot, Token } from 'astro:db';
 
 if (!Astro.params.id) return Astro.redirect('/404');
+
+const medal = await db.select().from(Medal).where(eq(Medal.id, Astro.params.id)).get();
+const slot = await db.select().from(Slot).where(eq(Slot.id, Astro.params.id)).get();
+const token = await db
+  .select()
+  .from(Token)
+  .where(
+    and(
+      eq(Token.medal_id, Astro.params.id),
+      eq(Token.token, `${Astro.url.searchParams.get('token')}`),
+      isNull(Token.used_at),
+      gt(Token.expires_at, new Date()),
+    ),
+  )
+  .get();
+
+if (medal && !token) return Astro.redirect(`/medal/${medal.id}`);
+if (!medal && !slot) return Astro.redirect('/404');
+
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
-    const data = Schema.parse(Object.fromEntries(formData.entries()));
-    await db.update(Table).set(data).where(eq(Table.id, Astro.params.id)).run();
+    const entries = formData.entries().map(([key, val]) => [key, val || undefined]);
+    const data = MedalSchema.parse(Object.fromEntries(entries));
+
+    if (token) {
+      await db.update(Token).set({ used_at: new Date() }).where(eq(Token.id, token.id)).run();
+    }
+    if (!slot?.used_at) {
+      await db
+        .insert(Medal)
+        .values({ id: Astro.params.id, ...data })
+        .run();
+      await db.update(Slot).set({ used_at: new Date() }).where(eq(Slot.id, Astro.params.id)).run();
+    } else {
+      await db.update(Medal).set(data).where(eq(Medal.id, Astro.params.id)).run();
+    }
+
     return Astro.redirect(`/medal/${Astro.params.id}`);
   } catch (error) {
     console.error(error);
   }
 }
-
-const pet = (await db.select().from(Table).where(eq(Table.id, Astro.params.id)).get()) as Pet;
-if (!pet) return Astro.redirect('/404');
-const isNew = !pet.name;
-
-// // if hash doesn't exists
-// if (Astro.url.searchParams.get('hash') !== 'testing')
-//   return Astro.rewrite(`/medal/${Astro.params.id}`);
-// // if(pet.hash !== Astro.url.searchParams.get('hash')) return Astro.rewrite(`/medal/${Astro.params.id}`);
 ---
 
 <Layout container>
   <hgroup class="mb-6 flex flex-col gap-2">
     <h1 class="text-3xl font-bold">
       {
-        !isNew ? (
+        slot?.used_at ? (
           <>
-            Editar información de <span class="text-primary">{pet.name}</span>
+            Editar información de <span class="text-primary">{medal?.name}</span>
           </>
         ) : (
           <>Crear información de tu mascota</>
@@ -45,20 +69,17 @@ const isNew = !pet.name;
   </hgroup>
 
   <form method="POST" class="flex flex-col gap-6">
-    <!-- <AvatarForm pet={pet} /> -->
-    <BasicForm pet={pet} />
-    <EmergencyForm pet={pet} />
-    <ContactForm pet={pet} />
+    <BasicForm medal={medal as typeof Medal.$inferSelect} />
 
     <div class="flex gap-4">
       <Button size="lg" type="submit" class="flex-1">
         <Icon name="lucide:save" />
-        {!isNew ? 'Guardar' : 'Crear'}
+        {slot?.used_at ? 'Guardar' : 'Crear'}
       </Button>
 
       {
-        !isNew && (
-          <a href={`/medal/${pet.id}`} class="flex flex-1">
+        slot?.used_at && (
+          <a href={`/medal/${medal?.id}`} class="flex flex-1">
             <Button variant="outline" size="lg" class="flex-1" type="button">
               Cancelar
             </Button>

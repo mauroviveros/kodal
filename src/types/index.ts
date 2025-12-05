@@ -1,5 +1,13 @@
 import { z } from "astro/zod";
 
+export const MedalSchema = z.object({
+  name: z.string(),
+  species: z.enum(['dog', 'cat', 'other']),
+  breed: z.string().max(25).optional(),
+  birthdate: z.coerce.date().optional(),
+  weight: z.coerce.number().min(0).max(200).optional(),
+})
+
 export const PetSchema = z.object({
   id: z.string().uuid(),
   name: z.string(),
@@ -20,12 +28,11 @@ export const PetSchema = z.object({
   gender: z.enum(['male', 'female', 'unknown']).default('unknown'),
   message: z.string().optional(),
 
-
-
   owner_name: z.string(),
   owner_relationship: z.string().optional(),
   owner_phone: z.string(),
   owner_email: z.string().email(),
   owner_address: z.string().optional(),
 });
+
 export type Pet = z.infer<typeof PetSchema>;

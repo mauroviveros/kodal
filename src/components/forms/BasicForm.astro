@@ -1,13 +1,13 @@
 ---
 import { Card, Input } from '@components/ui';
-import type { Pet } from '@types';
 import { toInputDateValue } from '@utils';
+import { Medal } from 'astro:db';
 
 interface Props {
-  pet: Pet;
+  medal?: typeof Medal.$inferSelect;
 }
 
-const { pet } = Astro.props;
+const { medal } = Astro.props;
 ---
 
 <Card>
@@ -22,7 +22,7 @@ const { pet } = Astro.props;
       id="name"
       class="md:col-span-2"
       aria-label="Nombre"
-      value={pet.name}
+      value={medal?.name}
       maxlength="25"
       required
     />
@@ -36,7 +36,7 @@ const { pet } = Astro.props;
             { value: 'dog', label: 'Perro' },
             { value: 'other', label: 'Otro' },
           ].map(({ value, label }) => (
-            <option value={value} selected={(pet.species || 'other') === value}>
+            <option value={value} selected={(medal?.species || 'other') === value}>
               {label}
             </option>
           ))
@@ -44,14 +44,21 @@ const { pet } = Astro.props;
       </select>
     </fieldset>
 
-    <Input type="text" name="breed" id="breed" aria-label="Raza" value={pet.breed} maxlength="25" />
+    <Input
+      type="text"
+      name="breed"
+      id="breed"
+      aria-label="Raza"
+      value={medal?.breed}
+      maxlength="25"
+    />
 
     <Input
       type="date"
       name="birthdate"
       id="birthdate"
       aria-label="Fecha de nacimiento"
-      value={pet.birthdate && toInputDateValue(pet.birthdate)}
+      value={medal?.birthdate && toInputDateValue(medal.birthdate)}
       max={toInputDateValue(new Date())}
     />
 
@@ -60,7 +67,7 @@ const { pet } = Astro.props;
       name="weight"
       id="weight"
       aria-label="Peso"
-      value={pet.weight}
+      value={medal?.weight}
       min="0"
       max="99"
       step="0.1"

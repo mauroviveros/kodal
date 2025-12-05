@@ -7,13 +7,13 @@ const { class: className, ...props } = Astro.props;
 <div class="bg-card text-on-card rounded-xl border shadow-lg">
   {
     Astro.slots.header && (
-      <header class="from-primary/10 to-secondary/10 bg-gradient-to-br p-8 text-center">
+      <header class="from-primary/10 to-secondary/10 bg-linear-to-br p-8 text-center">
         <slot name="header" />
       </header>
     )
   }
 
-  <section class={`flex flex-col p-6 gap-6 ${className}`} {...props}>
+  <section class:list={['flex flex-col gap-6 p-6', className]} {...props}>
     <slot />
   </section>
 </div>

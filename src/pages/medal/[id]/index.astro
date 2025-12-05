@@ -1,17 +1,22 @@
 ---
 import Layout from '@layout';
-import { db, eq, Pet as Table } from 'astro:db';
+// import { db, eq, Pet as Table } from 'astro:db';
 import { BasicCard, ContactCard, PromoCard } from '@components/cards';
-import type { Pet } from '@types';
-
+import { eq, db, Medal, Slot } from 'astro:db';
+// import type { Pet } from '@types';
 if (!Astro.params.id) return Astro.redirect('/404');
-const pet = (await db.select().from(Table).where(eq(Table.id, Astro.params.id)).get()) as Pet;
-if (!pet) return Astro.rewrite('/404');
-if (!pet.name) return Astro.redirect(`${Astro.url}/edit`);
+
+const medal = await db.select().from(Medal).where(eq(Medal.id, Astro.params.id)).get();
+if (!medal) {
+  const slot = await db.select().from(Slot).where(eq(Slot.id, Astro.params.id)).get();
+
+  console.log({ slot, medal });
+  if (slot) return Astro.redirect(`/medal/${slot.id}/edit`);
+  return Astro.rewrite('/404');
+}
 ---
 
 <Layout container>
-  <BasicCard pet={pet} />
-  <ContactCard pet={pet} />
+  <BasicCard medal={medal} />
   <PromoCard />
 </Layout>
