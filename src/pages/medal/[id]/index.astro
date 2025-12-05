@@ -10,7 +10,7 @@ if (!pet) return Astro.rewrite('/404');
 if (!pet.name) return Astro.redirect(`${Astro.url}/edit`);
 ---
 
-<Layout>
+<Layout container>
   <BasicCard pet={pet} />
   <ContactCard pet={pet} />
   <PromoCard />
