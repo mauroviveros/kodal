@@ -1,6 +1,11 @@
 ---
 import styles from '@styles/global.css?url';
-import { Brand } from '@components';
+import { Footer, Header } from '@components/ui';
+
+interface Props {
+  container?: boolean;
+}
+const { container } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,42 +23,20 @@ import { Brand } from '@components';
     <link rel="stylesheet" href={styles} />
   </head>
   <body>
-    <header class="bg-card/50 fixed top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div class="container mx-auto flex items-center justify-between p-4">
-        <Brand />
-        <slot name="actions" />
-      </div>
-    </header>
+    <slot name="header">
+      <Header />
+    </slot>
 
-    <main class="container mx-auto mt-16 flex max-w-2xl grow flex-col gap-8 px-4 py-8">
+    <main
+      class:list={{
+        'container mx-auto mt-16 flex max-w-2xl grow flex-col gap-8 px-4 py-8': container,
+      }}
+    >
       <slot />
     </main>
 
-    <footer class="bg-muted/30 flex flex-col justify-center border-t">
-      <div class="container mx-auto px-4 py-6 text-center">
-        <article
-          class="text-on-muted [&>a:hover]:text-on-background flex items-center justify-center gap-6 text-sm [&>a]:flex-1 md:[&>a]:flex-none [&>a:hover]:underline"
-        >
-          <a>Política de Privacidad</a>
-          <a>Términos de Servicio</a>
-          <a>Soporte</a>
-        </article>
-
-        <p class="text-on-muted mt-4 text-xs">
-          © 2025 Kodal. Manteniendo a las mascotas seguras y conectadas.
-        </p>
-        <p class="text-on-muted mt-2 text-xs">
-          Diseñado y construido con ❤️ por
-          <a
-            href="https://mauroviveros.com.ar/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-primary hover:text-primary/80 transition-colors hover:underline"
-          >
-            Mauro Daniel viveros
-          </a>
-        </p>
-      </div>
-    </footer>
+    <slot name="footer">
+      <Footer />
+    </slot>
   </body>
 </html>

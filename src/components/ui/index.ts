@@ -2,3 +2,5 @@ export { default as Avatar } from "./Avatar.astro";
 export { default as Button } from "./Button.astro";
 export { default as Card } from "./Card.astro";
 export { default as Input } from "./Input.astro";
+export { default as Header } from "./Header.astro";
+export { default as Footer } from "./Footer.astro";

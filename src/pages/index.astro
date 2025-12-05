@@ -1,33 +1,8 @@
 ---
-import styles from '@styles/global.css?url';
-import { Brand } from '@components';
 import { Hero } from '@components/landing';
+import Layout from '@layout';
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <title>Kodal</title>
-
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <link rel="preload" href={styles} as="style" />
-    <link rel="stylesheet" href={styles} />
-  </head>
-  <body>
-    <header class="bg-card/50 fixed top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div class="container mx-auto flex items-center justify-between p-4">
-        <Brand />
-        <slot name="actions" />
-      </div>
-    </header>
-
-    <main>
-      <Hero />
-    </main>
-  </body>
-</html>
+<Layout>
+  <Hero />
+</Layout>

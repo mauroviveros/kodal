@@ -1,125 +1,17 @@
 ---
-import { Avatar, Card, Button } from '@components/ui';
 import Layout from '@layout';
-import { Icon } from 'astro-icon/components';
-import { getTimeSince } from 'utils';
-import { db, eq, Pet } from 'astro:db';
+import { db, eq, Pet as Table } from 'astro:db';
+import { BasicCard, ContactCard, PromoCard } from '@components/cards';
+import type { Pet } from '@types';
 
 if (!Astro.params.id) return Astro.redirect('/404');
-const pet = await db.select().from(Pet).where(eq(Pet.id, Astro.params.id)).get();
+const pet = (await db.select().from(Table).where(eq(Table.id, Astro.params.id)).get()) as Pet;
 if (!pet) return Astro.rewrite('/404');
 if (!pet.name) return Astro.redirect(`${Astro.url}/edit`);
-const info = [
-  { label: 'Raza', value: pet.breed, display: pet.breed || 'Desconocida' },
-  { label: 'Edad', value: pet.birthdate, display: pet.birthdate && getTimeSince(pet.birthdate) },
-  { label: 'Peso', value: pet.weight, display: `${pet.weight} kg` },
-].filter(({ value }) => value);
-
-const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;
 ---
 
 <Layout>
-  <Card>
-    <header slot="header">
-      <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
-      <h1 class="mb-2 text-3xl font-bold text-balance break-all">{pet.name}</h1>
-      <a
-        href={`https://wa.me/${pet.owner_phone}?text=${encodeURIComponent(phone_message)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Button>Enviar Whatsapp</Button>
-      </a>
-    </header>
-
-    {
-      pet.message && (
-        <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
-          <p class="text-on-muted text-center text-sm">{pet.message}</p>
-        </blockquote>
-      )
-    }
-    <div
-      class:list={[
-        'grid grid-cols-1 gap-4',
-        info.length === 2 && 'md:grid-cols-2',
-        info.length > 2 && 'md:grid-cols-3',
-      ]}
-    >
-      {
-        info.map(({ label, display }) => (
-          <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
-            <p class="text-primary text-2xl font-bold text-balance break-all">{display}</p>
-            <p class="text-on-muted text-sm">{label}</p>
-          </div>
-        ))
-      }
-    </div>
-  </Card>
-
-  <Card>
-    <h2 class="mb-4 flex items-center gap-2 text-xl font-bold">
-      <Icon name="lucide:user" class="text-primary size-5" />
-      Información de contacto
-    </h2>
-
-    <div class="space-y-4">
-      {
-        pet.owner_phone && (
-          <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
-            <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
-              <Icon name="lucide:phone" class="text-primary size-5" />
-            </div>
-            <div class="flex-1">
-              <p class="font-medium">Teléfono</p>
-              <p class="text-primary break-all">{pet.owner_phone}</p>
-            </div>
-          </div>
-        )
-      }
-
-      {
-        pet.owner_email && (
-          <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
-            <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
-              <Icon name="lucide:mail" class="text-primary size-5" />
-            </div>
-            <div class="flex-1">
-              <p class="font-medium">Email</p>
-              <p class="text-primary break-all">{pet.owner_email}</p>
-            </div>
-          </div>
-        )
-      }
-
-      {
-        pet.owner_address && (
-          <div class="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
-            <div class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
-              <Icon name="lucide:map-pin" class="text-primary size-5" />
-            </div>
-            <div class="flex-1">
-              <p class="font-medium">Dirección</p>
-              <p class="text-primary break-all">{pet.owner_address}</p>
-            </div>
-          </div>
-        )
-      }
-    </div>
-  </Card>
-
-  <Card>
-    <article class="flex flex-col items-center p-6 text-center">
-      <h3 class="mb-3 text-xl font-bold">¿Te gusta esta medalla inteligente?</h3>
-      <p class="text-on-muted mb-6 text-pretty">
-        Protege a tu mascota con nuestra tecnología de identificación digital. Fácil de usar,
-        siempre actualizada y disponible 24/7.
-      </p>
-
-      <Button type="button" size="lg" disabled>
-        Consigue tu Medalla
-        <Icon name="lucide:shopping-cart" />
-      </Button>
-    </article>
-  </Card>
+  <BasicCard pet={pet} />
+  <ContactCard pet={pet} />
+  <PromoCard />
 </Layout>
