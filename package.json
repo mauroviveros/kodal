@@ -13,7 +13,7 @@
     "prepare": "husky",
     "dev": "astro dev",
     "build": "astro build --remote",
-    "preview": "astro preview",
+    "preview": "vercel dev",
     "astro": "astro",
     "lint": "eslint"
   },
@@ -25,7 +25,8 @@
     "astro-icon": "1.1.5",
     "crypto-js": "4.2.0",
     "tailwindcss": "4.1.17",
-    "uuid": "13.0.0"
+    "uuid": "13.0.0",
+    "vercel": "^49.1.0"
   },
   "devDependencies": {
     "@iconify-json/lucide": "1.2.78",
