@@ -5,7 +5,7 @@ import { Icon } from 'astro-icon/components';
 
 <section class="relative flex min-h-dvh items-center pt-16">
   <div class="container mx-auto flex flex-col items-center justify-center p-4">
-    <div class="from-primary/5 to-primary/5 absolute inset-0 -z-10 bg-gradient-to-br"></div>
+    <div class="from-primary/5 to-primary/5 absolute inset-0 -z-10 bg-linear-to-br"></div>
     <div class="mx-auto max-w-4xl text-center">
       <h1 class="mb-6 text-4xl font-bold text-balance lg:text-6xl">
         Mantén a tu mascota <br /><span class="text-primary">segura y conectada</span> siempre.
@@ -15,26 +15,10 @@ import { Icon } from 'astro-icon/components';
         inmediatamente si encuentran a tu mascota perdida.
       </p>
 
-      <Button type="button" size="lg" id="generateMedal">
+      <Button type="button" size="lg" disabled>
         Consigue tu Medalla
         <Icon name="lucide:shopping-cart" />
       </Button>
     </div>
   </div>
 </section>
-
-<script type="module">
-  document.querySelector('#generateMedal').addEventListener('click', () => {
-    fetch(`/api/create`, {
-      method: 'POST',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.id);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        console.log('Error generating QR');
-      });
-  });
-</script>
