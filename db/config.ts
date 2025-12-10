@@ -11,9 +11,8 @@ const Medal = defineTable({
     weight: column.number({ optional: true }),
     gender: column.text({ enum: Schema.shape.gender.removeDefault().options, default: 'unknown' }),
     message: column.text({ optional: true }),
-
-    created_at: column.date({ default: new Date() }),
-    updated_at: column.date({ optional: true }),
+    created_at: column.date(),
+    updated_at: column.date(),
   },
 });
 
@@ -21,18 +20,17 @@ const Slot = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     used_at: column.date({ optional: true }),
-    created_at: column.date({ default: new Date() }),
+    created_at: column.date(),
   }
 });
 
 const Token = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
-    medal_id: column.text(),
-    token: column.text(),
+    medal_id: column.text({ references: () => Medal.columns.id }),
     used_at: column.date({ optional: true }),
-    expires_at: column.date({ default: new Date(Date.now() + 1000 * 60 * 5) }), // 5 minutes from now
-    created_at: column.date({ default: new Date() }),
+    expires_at: column.date(),
+    created_at: column.date(),
   }
 });
 

@@ -16,13 +16,14 @@ const token = await db
   .where(
     and(
       eq(Token.medal_id, Astro.params.id),
-      eq(Token.token, `${Astro.url.searchParams.get('token')}`),
+      eq(Token.id, `${Astro.url.searchParams.get('token')}`),
       isNull(Token.used_at),
       gt(Token.expires_at, new Date()),
     ),
   )
   .get();
 
+console.log({ medal, slot, token });
 if (medal && !token) return Astro.redirect(`/medal/${medal.id}`);
 if (!medal && !slot) return Astro.redirect('/404');
 
@@ -38,11 +39,23 @@ if (Astro.request.method === 'POST') {
     if (!slot?.used_at) {
       await db
         .insert(Medal)
-        .values({ id: Astro.params.id, ...data })
+        .values({
+          id: Astro.params.id,
+          ...data,
+          created_at: new Date(),
+          updated_at: new Date(),
+        })
         .run();
       await db.update(Slot).set({ used_at: new Date() }).where(eq(Slot.id, Astro.params.id)).run();
     } else {
-      await db.update(Medal).set(data).where(eq(Medal.id, Astro.params.id)).run();
+      await db
+        .update(Medal)
+        .set({
+          ...data,
+          updated_at: new Date(),
+        })
+        .where(eq(Medal.id, Astro.params.id))
+        .run();
     }
 
     return Astro.redirect(`/medal/${Astro.params.id}`);

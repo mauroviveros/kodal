@@ -12,18 +12,25 @@ export default async function seed() {
       // weight: 4.5,
       // gender: 'female',
       // message: '¡Hola! Si has encontrado a Samira, por favor contacta conmigo lo antes posible. Es muy querida y seguramente está asustada. ¡Gracias por ayudar! 🐈❤️',
+      created_at: new Date(),
+      updated_at: new Date()
     },
   ]);
 
   await db.insert(Slot).values([
-    { id: '1', used_at: new Date() },
-    { id: '2' },
-    { id: '3' },
-    { id: '4' },
-    { id: '5' },
+    { id: '1', used_at: new Date(), created_at: new Date() },
+    { id: '2', created_at: new Date() },
+    { id: '3', created_at: new Date() },
+    { id: '4', created_at: new Date() },
+    { id: '5', created_at: new Date() },
   ]);
 
   await db.insert(Token).values([
-    { id: '1', token: 'prueba', medal_id: '1', expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24) }, // 24 hours from now
+    {
+      id: 'prueba',
+      medal_id: '1',
+      expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24), // 24 hours from now
+      created_at: new Date()
+    },
   ]);
 }

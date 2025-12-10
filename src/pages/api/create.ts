@@ -1,15 +1,19 @@
 import type { APIRoute } from "astro";
-import { v4 as uuid } from 'uuid';
-import sha256 from 'crypto-js/hmac-sha256';
-// import { db, Pet } from "astro:db";
+import { generateUUID } from "@utils";
+import { db, Slot } from "astro:db";
 
 export const POST: APIRoute = async () => {
   try {
-    const id = sha256(uuid() + new Date().toISOString(), 'miclavesecreta').toString();
-    // await db.insert(Pet).values({ id });
+    const result = await db
+      .insert(Slot)
+      .values({
+        id: generateUUID(),
+        created_at: new Date(),
+      })
+      .returning();
 
     return new Response(
-      JSON.stringify({ id, message: 'OK' }),
+      JSON.stringify({ id: result[0].id, message: 'OK' }),
       { status: 200 }
     );
   } catch (error) {
