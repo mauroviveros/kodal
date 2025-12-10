@@ -17,7 +17,10 @@ if (!medal) {
   <Header slot="header">
     <section slot="actions">
       <Button id="generateToken" data-id={Astro.params.id}>Token</Button>
-      <Button id="generateQR" data-id={Astro.params.id}>QR</Button>
+
+      <Button>
+        <a href={`/medal/${Astro.params.id}/qr`} target="_blank" rel="noopener noreferrer">QR</a>
+      </Button>
     </section>
   </Header>
   <BasicCard medal={medal} />
@@ -38,22 +41,6 @@ if (!medal) {
       .catch((error) => {
         console.error('Error:', error);
         console.log('Error generating token');
-      });
-  });
-
-  document.querySelector('#generateQR').addEventListener('click', () => {
-    const id = document.querySelector('#generateQR').dataset.id;
-    fetch(`/medal/${id}/qr`, {
-      method: 'POST',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-        console.log(`http://localhost:4321/medal/${id}/edit?token=${data.token}`);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        console.log('Error generating QR');
       });
   });
 </script>

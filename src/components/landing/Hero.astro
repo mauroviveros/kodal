@@ -15,10 +15,26 @@ import { Icon } from 'astro-icon/components';
         inmediatamente si encuentran a tu mascota perdida.
       </p>
 
-      <Button type="button" size="lg" disabled>
+      <Button type="button" size="lg" id="generateMedal">
         Consigue tu Medalla
         <Icon name="lucide:shopping-cart" />
       </Button>
     </div>
   </div>
 </section>
+
+<script type="module">
+  document.querySelector('#generateMedal').addEventListener('click', () => {
+    fetch(`/api/create`, {
+      method: 'POST',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.id);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        console.log('Error generating QR');
+      });
+  });
+</script>
