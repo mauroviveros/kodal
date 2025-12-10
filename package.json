@@ -31,15 +31,16 @@
   "devDependencies": {
     "@iconify-json/lucide": "1.2.78",
     "@types/crypto-js": "4.2.2",
-    "@typescript-eslint/parser": "8.48.1",
-    "eslint": "9.39.1",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-astro": "1.5.0",
-    "eslint-plugin-prettier": "5.5.4",
+    "@typescript-eslint/parser": "^8.49.0",
+    "astro-eslint-parser": "^1.2.2",
+    "eslint": "^9.39.1",
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.5.4",
     "husky": "9.1.7",
     "lint-staged": "16.2.7",
-    "prettier": "3.7.4",
-    "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.7.2"
+    "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.7.2"
   }
 }

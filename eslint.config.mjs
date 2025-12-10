@@ -1,21 +1,26 @@
-import eslintPluginAstro from 'eslint-plugin-astro';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import astro from 'eslint-plugin-astro';
+import astro_parser from 'astro-eslint-parser';
+import prettier from 'eslint-plugin-prettier/recommended';
+import ts_parser from '@typescript-eslint/parser';
 
 export default defineConfig([
-  ...eslintPluginAstro.configs.recommended,
-  eslintPluginPrettierRecommended,
-  globalIgnores(['.vercel/']),
+  astro.configs.recommended,
+  astro.configs['jsx-a11y-recommended'],
+  prettier,
+  globalIgnores(['.astro/', '.husky/', '.vercel/', '.vscode/', 'db/', 'dist/', 'node_modules/']),
   {
-    files: ['*.astro'],
+    files: ['**/*.astro'],
     languageOptions: {
-      parser: 'astro-eslint-parser',
+      parser: astro_parser,
       parserOptions: {
-        parser: '@typescript-eslint/parser',
+        parser: ts_parser,
+        extraFileExtensions: ['.astro'],
       },
     },
-    rules: {
-      'prettier/prettier': 'error',
-    },
+  },
+  {
+    files: ['**/*.astro/*.ts', '*.astro/*.ts'],
+    rules: { 'prettier/prettier': 'off' },
   },
 ]);
