@@ -4,20 +4,30 @@ interface Props extends HTMLAttributes<'button'> {
   variant?: 'outline' | 'filled';
   size?: 'sm' | 'md' | 'lg';
 }
-const props = Astro.props;
-props.variant = props.variant ?? 'filled';
+const { variant = 'filled', size, class: className, ...props } = Astro.props;
+
+const classes = {
+  variants: {
+    outline: 'bg-background text-on-background border',
+    filled: 'bg-primary text-on-primary',
+  },
+  sizes: {
+    sm: 'h-6 text-xs',
+    md: 'h-8 px-2',
+    lg: 'h-10 gap-2 px-4',
+  },
+};
 ---
 
 <button
   class:list={[
-    'hover:bg-accent hover:text-on-accent cursor-pointer items-center gap-1 rounded-md px-3 text-sm transition-all disabled:pointer-events-none disabled:opacity-50',
+    'hover:bg-accent hover:text-on-accent',
+    'disabled:pointer-events-none disabled:opacity-50',
+    'cursor-pointer gap-1 rounded-md px-3 text-sm transition-all',
     'inline-flex items-center justify-center',
-    props.variant === 'outline' && 'bg-background text-on-background border',
-    props.variant === 'filled' && 'bg-primary text-on-primary',
-    props.size === 'sm' && 'h-6 text-xs',
-    (!props.size || props.size === 'md') && 'h-8 px-2',
-    props.size === 'lg' && 'h-10 gap-2 px-4',
-    props.class,
+    classes.variants[variant],
+    classes.sizes[size || 'md'],
+    className,
   ]}
   {...props}
 >

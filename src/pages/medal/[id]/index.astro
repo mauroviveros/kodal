@@ -3,6 +3,7 @@ import Layout from '@layout';
 import { BasicCard, ContactCard, PromoCard } from '@components/cards';
 import { eq, db, Medal, Slot } from 'astro:db';
 import { Button, Header } from '@components/ui';
+import { Icon } from 'astro-icon/components';
 if (!Astro.params.id) return Astro.redirect('/404');
 
 const medal = await db.select().from(Medal).where(eq(Medal.id, Astro.params.id)).get();
@@ -18,9 +19,16 @@ if (!medal) {
     <section slot="actions">
       <!-- <Button id="generateToken" data-id={Astro.params.id}>Token</Button> -->
 
-      <Button>
-        <a href={`/medal/${Astro.params.id}/qr`} target="_blank" rel="noopener noreferrer">QR</a>
-      </Button>
+      <a
+        href={`/medal/${Astro.params.id}/qr`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block"
+      >
+        <Button>
+          <Icon name="lucide:qr-code" class="h-5 w-5" />
+        </Button>
+      </a>
     </section>
   </Header>
   <BasicCard medal={medal} />
