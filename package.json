@@ -18,8 +18,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@astrojs/db": "0.19.0",
     "@astrojs/vercel": "9.0.4",
+    "@supabase/supabase-js": "^2.93.2",
     "@tailwindcss/vite": "4.1.18",
     "astro": "5.16.16",
     "astro-icon": "1.1.5",
@@ -43,6 +43,7 @@
     "lint-staged": "16.2.7",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.2"
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "supabase": "^2.72.9"
   }
 }

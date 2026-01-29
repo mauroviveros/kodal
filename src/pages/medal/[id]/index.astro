@@ -1,54 +1,29 @@
 ---
 import Layout from '@layout';
-import { BasicCard, ContactCard, PromoCard } from '@components/cards';
-import { eq, db, Medal, Slot } from 'astro:db';
-import { Button, Header } from '@components/ui';
-import { Icon } from 'astro-icon/components';
+import { BasicCard, PromoCard } from '@components/cards';
+import { supabase } from '@lib/supabase';
+
 if (!Astro.params.id) return Astro.redirect('/404');
 
-const medal = await db.select().from(Medal).where(eq(Medal.id, Astro.params.id)).get();
-if (!medal) {
-  const slot = await db.select().from(Slot).where(eq(Slot.id, Astro.params.id)).get();
-  if (slot) return Astro.redirect(`/medal/${slot.id}/edit`);
-  return Astro.rewrite('/404');
-}
+const { data: slot } = await supabase
+  .from('medals_slot')
+  .select('*')
+  .eq('id', Astro.params.id)
+  .single();
+
+if (!slot) return Astro.rewrite('/404');
+if (!slot.medal_id) return Astro.redirect(`/medal/${slot.id}/edit`);
+
+const { data: medal } = await supabase
+  .from('medals')
+  .select('*')
+  .eq('id', slot.medal_id)
+  .maybeSingle();
+
+if (!medal) return Astro.rewrite('/404');
 ---
 
 <Layout container>
-  <Header slot="header">
-    <section slot="actions">
-      <!-- <Button id="generateToken" data-id={Astro.params.id}>Token</Button> -->
-
-      <a
-        href={`/medal/${Astro.params.id}/qr`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="block"
-      >
-        <Button>
-          <Icon name="lucide:qr-code" class="h-5 w-5" />
-        </Button>
-      </a>
-    </section>
-  </Header>
   <BasicCard medal={medal} />
   <PromoCard />
 </Layout>
-
-<script type="module">
-  document.querySelector('#generateToken').addEventListener('click', () => {
-    const id = document.querySelector('#generateToken').dataset.id;
-    fetch(`/medal/${id}/token`, {
-      method: 'POST',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-        console.log(`http://localhost:4321/medal/${id}/edit?token=${data.token}`);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        console.log('Error generating token');
-      });
-  });
-</script>
