@@ -1,0 +1,17 @@
+---
+import { BasicCard, PromoCard } from '@components/cards';
+import Layout from '@layout';
+import type { Response } from '@types';
+
+const response = await fetch(new URL(`/api/slot/${Astro.params.slot_id}/medal`, Astro.request.url));
+const { slot, medal }: Response = await response.json();
+
+if (!slot) return Astro.rewrite('/404');
+if (!slot.medal_id) return Astro.redirect(`/medal/${slot.id}/edit`);
+if (!medal) return Astro.rewrite('/404');
+---
+
+<Layout container>
+  <BasicCard medal={medal} />
+  <PromoCard />
+</Layout>

@@ -1,0 +1,56 @@
+---
+import { BasicForm } from '@components/forms';
+import { Button } from '@components/ui';
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+import type { Response } from '@types';
+
+const response = await fetch(new URL(`/api/slot/${Astro.params.slot_id}/medal`, Astro.request.url));
+const { slot, medal }: Response = await response.json();
+
+if (!slot) return Astro.rewrite('/404');
+---
+
+<Layout container>
+  <hgroup class="mb-6 flex flex-col gap-2">
+    <h1 class="text-3xl font-bold">
+      {
+        slot.medal_id ? (
+          <>
+            Editar información de <span class="text-primary">{medal?.name}</span>
+          </>
+        ) : (
+          'Crear información de tu mascota'
+        )
+      }
+    </h1>
+    <p class="text-on-muted">
+      {
+        slot.medal_id
+          ? 'Actualiza los datos de tu mascota para mantener su perfil al día.'
+          : 'Completa los datos de tu mascota para crear su perfil.'
+      }
+    </p>
+  </hgroup>
+
+  <form action={`/api/slot/${slot.id}/medal`} method="POST" class="flex flex-col gap-6">
+    <BasicForm medal={medal} />
+
+    <div class="flex flex-row-reverse gap-4">
+      <Button size="lg" type="submit" class="flex-1">
+        <Icon name="lucide:save" />
+        {slot.medal_id ? 'Guardar' : 'Crear'}
+      </Button>
+
+      {
+        slot.medal_id && (
+          <a href={`/medal/${medal?.id}`} class="flex flex-1">
+            <Button variant="outline" size="lg" class="flex-1">
+              Cancelar
+            </Button>
+          </a>
+        )
+      }
+    </div>
+  </form>
+</Layout>

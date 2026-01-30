@@ -1,10 +1,12 @@
 ---
 import { Card, Input } from '@components/ui';
 import { toInputDateValue } from '@utils';
-import { Medal } from 'astro:db';
+import type { Database } from '@lib/database';
+
+type Medal = Database['public']['Tables']['medals']['Update'] | null;
 
 interface Props {
-  medal?: typeof Medal.$inferSelect;
+  medal?: Medal;
 }
 
 const { medal } = Astro.props;
@@ -28,15 +30,15 @@ const { medal } = Astro.props;
     />
 
     <fieldset class="flex flex-col gap-2">
-      <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
-      <select name="species" id="species" required>
+      <label for="kind" class="text-sm">Animal<span class="text-primary">*</span></label>
+      <select name="kind" id="kind" required>
         {
           [
-            { value: 'cat', label: 'Gato' },
             { value: 'dog', label: 'Perro' },
+            { value: 'cat', label: 'Gato' },
             { value: 'other', label: 'Otro' },
           ].map(({ value, label }) => (
-            <option value={value} selected={(medal?.species || 'other') === value}>
+            <option value={value} selected={(medal?.kind || 'other') === value}>
               {label}
             </option>
           ))
@@ -53,6 +55,23 @@ const { medal } = Astro.props;
       maxlength="25"
     />
 
+    <fieldset class="flex flex-col gap-2">
+      <label for="gender" class="text-sm">Género<span class="text-primary">*</span></label>
+      <select name="gender" id="gender" required>
+        {
+          [
+            { value: 'male', label: 'Macho' },
+            { value: 'female', label: 'Hembra' },
+            { value: 'unknown', label: 'No especificado' },
+          ].map(({ value, label }) => (
+            <option value={value} selected={(medal?.gender || 'unknown') === value}>
+              {label}
+            </option>
+          ))
+        }
+      </select>
+    </fieldset>
+
     <Input
       type="date"
       name="birthdate"
@@ -62,7 +81,7 @@ const { medal } = Astro.props;
       max={toInputDateValue(new Date())}
     />
 
-    <Input
+    <!-- <Input
       type="number"
       name="weight"
       id="weight"
@@ -73,6 +92,6 @@ const { medal } = Astro.props;
       step="0.1"
     >
       <span>kg</span>
-    </Input>
+    </Input> -->
   </div>
 </Card>
