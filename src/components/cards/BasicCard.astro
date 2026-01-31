@@ -1,60 +1,62 @@
 ---
-import { Avatar, Button, Card } from '@components/ui';
-import type { Pet } from '@types';
+import { Avatar } from '@components/ui';
 import { getTimeSince } from '@utils';
-
 interface Props {
   medal: any;
 }
-
 const { medal } = Astro.props;
 const phone_message = `Hola, he encontrado a tu mascota ${medal.name}. Por favor, contáctame.`;
 const info = [
-  { label: 'Raza', value: medal.breed, display: medal.breed || 'Desconocida' },
+  {
+    label: 'Raza',
+    value: medal.breed,
+    display: medal.breed || 'Desconocida',
+  },
   {
     label: 'Edad',
     value: medal.birthdate,
     display: medal.birthdate && getTimeSince(medal.birthdate),
   },
-  { label: 'Peso', value: medal.weight, display: `${medal.weight} kg` },
+  {
+    label: 'Peso',
+    value: medal.weight,
+    display: `${medal.weight} kg`,
+  },
 ].filter(({ value }) => value);
 ---
 
-<Card>
-  <header slot="header">
+<section class="card">
+  <header class="card-header from-primary/10 to-secondary/10 bg-linear-to-br">
     <Avatar alt={medal.name} class="mx-auto mb-6 size-32" />
     <h1 class="mb-2 text-3xl font-bold text-balance break-all">{medal.name}</h1>
-    <!-- <a
-      href={`https://wa.me/${medal.owner_phone}?text=${encodeURIComponent(phone_message)}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <Button>Enviar Whatsapp</Button>
-    </a> -->
   </header>
 
-  {
-    medal.message && (
-      <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
-        <p class="text-on-muted text-center text-sm">{medal.message}</p>
-      </blockquote>
-    )
-  }
-
-  <div
-    class:list={[
-      'grid grid-cols-1 gap-4',
-      info.length === 2 && 'md:grid-cols-2',
-      info.length > 2 && 'md:grid-cols-3',
-    ]}
-  >
+  <div class="card-content">
     {
-      info.map(({ label, display }) => (
-        <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
-          <p class="text-primary text-2xl font-bold text-balance break-all">{display}</p>
-          <p class="text-on-muted text-sm">{label}</p>
-        </div>
-      ))
+      medal.message && (
+        <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
+          <p class="text-on-muted text-center text-sm">{medal.message}</p>
+        </blockquote>
+      )
     }
+
+    <dl
+      class:list={[
+        'grid grid-cols-1 gap-4',
+        info.length === 2 && 'md:grid-cols-2',
+        info.length > 2 && 'md:grid-cols-3',
+      ]}
+    >
+      {
+        info.map(({ label, display }) => (
+          <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
+            <dt class="text-primary text-2xl font-bold text-balance break-all">{display}</dt>
+            <dd class="text-on-muted text-sm">{label}</dd>
+          </div>
+        ))
+      }
+    </dl>
   </div>
-</Card>
+</section>
+
+<!-- <a href={`https://wa.me/${medal.owner_phone}?text=${encodeURIComponent(phone_message)}`} target="_blank" rel="noopener noreferrer"><Button>Enviar Whatsapp</Button></a> -->

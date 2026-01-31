@@ -69,19 +69,20 @@
   }
 
   .card {
-    @apply bg-card text-on-card flex flex-col gap-6 rounded-xl border py-6 shadow-sm;
-    /* @apply bg-card text-on-card rounded-xl border shadow-lg; */
+    @apply bg-card text-on-card rounded-xl border py-6 shadow-lg;
+    @apply flex flex-col gap-6 text-center;
     & .card-content {
-      @apply p-0;
-      /* @apply flex flex-col gap-6 p-6; */
+      @apply p-6;
+    }
+    & .card-header {
+      @apply p-8 text-center;
     }
   }
 
   .btn {
-    @apply hover:bg-accent hover:text-on-accent;
     @apply disabled:pointer-events-none disabled:opacity-50;
     @apply cursor-pointer gap-1 rounded-md px-3 text-sm transition-all;
-    @apply inline-flex items-center justify-center;
+    @apply inline-flex w-fit items-center justify-center;
 
     &.btn-outline {
       @apply bg-background text-on-background border;
@@ -90,6 +91,8 @@
     &.btn-filled {
       @apply bg-primary text-on-primary;
     }
+
+    @apply hover:bg-accent hover:text-on-accent;
 
     &.btn-sm {
       @apply h-6 text-xs;

@@ -1,10 +1,10 @@
 ---
-import { Avatar, Card } from '@components/ui';
+import { Avatar } from '@components/ui';
 
 const { pet } = Astro.props;
 ---
 
-<Card>
+<article class="card">
   <h4 class="text-lg font-bold">Foto de perfil</h4>
 
   <div class="flex items-center gap-4">
@@ -16,4 +16,4 @@ const { pet } = Astro.props;
       <input type="file" name="avatar" id="avatar" accept="image/jpg, image/jpeg, image/png" />
     </div>
   </div>
-</Card>
+</article>
