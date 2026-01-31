@@ -1,11 +1,12 @@
 ---
-import styles from '@styles/global.css?url';
+import '@styles/global.css';
 import { Footer, Header } from '@components/ui';
+import type { HTMLAttributes } from 'astro/types';
 
-interface Props {
+interface Props extends HTMLAttributes<'main'> {
   container?: boolean;
 }
-const { container } = Astro.props;
+const { container, class: className, ...props } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,28 +17,22 @@ const { container } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <link rel="preload" href={styles} as="style" />
-    <link rel="stylesheet" href={styles} />
   </head>
   <body>
-    <slot name="header">
-      <Header />
-    </slot>
+    <Header />
 
     <main
-      class:list={{
-        'mt-16 flex grow flex-col': true,
-        'container mx-auto max-w-2xl gap-8 px-4 py-8': container,
-      }}
+      class:list={[
+        'mt-16 flex grow flex-col',
+        { 'container mx-auto gap-8 px-4 py-8': container },
+        className,
+      ]}
+      {...props}
     >
       <slot />
     </main>
 
-    <slot name="footer">
-      <Footer />
-    </slot>
+    <Footer />
   </body>
 </html>

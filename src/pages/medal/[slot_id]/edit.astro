@@ -14,7 +14,7 @@ const { slot, medal }: MedalResponse = await response.json();
 if (!slot) return Astro.rewrite('/404');
 ---
 
-<Layout container>
+<Layout class="max-w-2xl" container>
   <hgroup class="mb-6 flex flex-col gap-2">
     <h1 class="text-3xl font-bold">
       {
