@@ -29,7 +29,8 @@ const { container } = Astro.props;
 
     <main
       class:list={{
-        'container mx-auto mt-16 flex max-w-2xl grow flex-col gap-8 px-4 py-8': container,
+        'mt-16 flex grow flex-col': true,
+        'container mx-auto max-w-2xl gap-8 px-4 py-8': container,
       }}
     >
       <slot />

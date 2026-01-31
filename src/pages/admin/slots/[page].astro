@@ -1,0 +1,62 @@
+---
+import Layout from '@layout';
+import type { Slot, SlotPaginationResponse } from '@types';
+import { Icon } from 'astro-icon/components';
+
+enum Status {
+  ACTIVE = 'Activo',
+  INACTIVE = 'Inactivo',
+}
+
+const response = await fetch(new URL(`/api/slots/${Astro.params.page}`, Astro.request.url));
+const { data }: SlotPaginationResponse = await response.json();
+
+const getStatus = (slot: Slot): Status => {
+  return slot.medal_id ? Status.ACTIVE : Status.INACTIVE;
+};
+
+const getDate = (date: string): string => {
+  return Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'short' }).format(
+    new Date(date),
+  );
+};
+---
+
+<Layout container>
+  <section class="card">
+    <article class="card-content">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha Creacion</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.map((slot) => (
+              <tr>
+                <td>{slot.id}</td>
+                <td>{getDate(slot.created_at)}</td>
+                <td>
+                  <span class="badge">
+                    <Icon name="lucide:sparkles" />
+                    NUEVO
+                  </span>
+                </td>
+                <td>
+                  <div class="flex items-center justify-end gap-2">
+                    <button type="button" class="btn btn-sm">
+                      <Icon name="lucide:qr-code" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </article>
+  </section>
+</Layout>

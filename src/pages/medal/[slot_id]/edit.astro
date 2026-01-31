@@ -3,10 +3,13 @@ import { BasicForm } from '@components/forms';
 import { Button } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
-import type { Response } from '@types';
+import type { MedalResponse } from '@types';
 
-const response = await fetch(new URL(`/api/slot/${Astro.params.slot_id}/medal`, Astro.request.url));
-const { slot, medal }: Response = await response.json();
+const response = await fetch(
+  new URL(`/api/slot/${Astro.params.slot_id}/medal`, Astro.request.url),
+  { credentials: 'include' },
+);
+const { slot, medal }: MedalResponse = await response.json();
 
 if (!slot) return Astro.rewrite('/404');
 ---
