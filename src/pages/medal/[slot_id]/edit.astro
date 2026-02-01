@@ -1,8 +1,8 @@
-<!-- ---
+---
 import { BasicForm } from '@components/forms';
 import Layout from '@layout';
-import { Icon } from 'astro-icon/components';
 import type { MedalResponse } from '@types';
+import { Icon } from 'astro-icon/components';
 
 const response = await fetch(
   new URL(`/api/slot/${Astro.params.slot_id}/medal`, Astro.request.url),
@@ -38,21 +38,19 @@ if (!slot) return Astro.rewrite('/404');
   <form action={`/api/slot/${slot.id}/medal`} method="POST" class="flex flex-col gap-6">
     <BasicForm medal={medal} />
 
-    <div class="flex flex-row-reverse gap-4">
-      <Button size="lg" type="submit" class="flex-1">
-        <Icon name="lucide:save" />
-        {slot.medal_id ? 'Guardar' : 'Crear'}
-      </Button>
-
+    <div class="flex gap-4">
       {
         slot.medal_id && (
-          <a href={`/medal/${medal?.id}`} class="flex flex-1">
-            <Button variant="outline" size="lg" class="flex-1">
-              Cancelar
-            </Button>
+          <a href={`/medal/${medal?.id}`} class="btn btn-lg btn-outline flex-1">
+            Cancelar
           </a>
         )
       }
+
+      <button type="submit" class="btn btn-lg btn-filled flex-1">
+        <Icon name="lucide:save" />
+        {slot.medal_id ? 'Guardar' : 'Crear'}
+      </button>
     </div>
   </form>
-</Layout> -->
+</Layout>

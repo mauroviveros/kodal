@@ -69,13 +69,16 @@
   }
 
   .card {
-    @apply bg-card text-on-card rounded-xl border py-6 shadow-lg;
-    @apply flex flex-col gap-6 text-center;
+    @apply bg-card text-on-card flex flex-col gap-6 rounded-xl border py-6 shadow-lg;
     & .card-content {
-      @apply p-6;
+      @apply space-y-4 px-6;
     }
     & .card-header {
-      @apply p-8 text-center;
+      @apply @container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start;
+      @apply gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6;
+      & .card-title {
+        @apply leading-none font-semibold;
+      }
     }
   }
 

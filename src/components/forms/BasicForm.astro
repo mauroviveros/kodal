@@ -1,5 +1,5 @@
 ---
-import { Card, Input } from '@components/ui';
+import { Input } from '@components/ui';
 import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
 
@@ -12,76 +12,78 @@ interface Props {
 const { medal } = Astro.props;
 ---
 
-<Card>
-  <h4 class="text-lg font-bold">Información Básica</h4>
+<article class="card">
+  <header class="card-header">
+    <h4 class="card-title">Información Básica</h4>
+  </header>
+  <div class="card-content">
+    <div
+      class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
+    >
+      <Input
+        type="text"
+        name="name"
+        id="name"
+        class="md:col-span-2"
+        aria-label="Nombre"
+        value={medal?.name}
+        maxlength="25"
+        required
+      />
 
-  <div
-    class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
-  >
-    <Input
-      type="text"
-      name="name"
-      id="name"
-      class="md:col-span-2"
-      aria-label="Nombre"
-      value={medal?.name}
-      maxlength="25"
-      required
-    />
+      <fieldset class="flex flex-col gap-2">
+        <label for="kind" class="text-sm">Animal<span class="text-primary">*</span></label>
+        <select name="kind" id="kind" required>
+          {
+            [
+              { value: 'dog', label: 'Perro' },
+              { value: 'cat', label: 'Gato' },
+              { value: 'other', label: 'Otro' },
+            ].map(({ value, label }) => (
+              <option value={value} selected={(medal?.kind || 'other') === value}>
+                {label}
+              </option>
+            ))
+          }
+        </select>
+      </fieldset>
 
-    <fieldset class="flex flex-col gap-2">
-      <label for="kind" class="text-sm">Animal<span class="text-primary">*</span></label>
-      <select name="kind" id="kind" required>
-        {
-          [
-            { value: 'dog', label: 'Perro' },
-            { value: 'cat', label: 'Gato' },
-            { value: 'other', label: 'Otro' },
-          ].map(({ value, label }) => (
-            <option value={value} selected={(medal?.kind || 'other') === value}>
-              {label}
-            </option>
-          ))
-        }
-      </select>
-    </fieldset>
+      <Input
+        type="text"
+        name="breed"
+        id="breed"
+        aria-label="Raza"
+        value={medal?.breed}
+        maxlength="25"
+      />
 
-    <Input
-      type="text"
-      name="breed"
-      id="breed"
-      aria-label="Raza"
-      value={medal?.breed}
-      maxlength="25"
-    />
+      <fieldset class="flex flex-col gap-2">
+        <label for="gender" class="text-sm">Género<span class="text-primary">*</span></label>
+        <select name="gender" id="gender" required>
+          {
+            [
+              { value: 'male', label: 'Macho' },
+              { value: 'female', label: 'Hembra' },
+              { value: 'unknown', label: 'No especificado' },
+            ].map(({ value, label }) => (
+              <option value={value} selected={(medal?.gender || 'unknown') === value}>
+                {label}
+              </option>
+            ))
+          }
+        </select>
+      </fieldset>
 
-    <fieldset class="flex flex-col gap-2">
-      <label for="gender" class="text-sm">Género<span class="text-primary">*</span></label>
-      <select name="gender" id="gender" required>
-        {
-          [
-            { value: 'male', label: 'Macho' },
-            { value: 'female', label: 'Hembra' },
-            { value: 'unknown', label: 'No especificado' },
-          ].map(({ value, label }) => (
-            <option value={value} selected={(medal?.gender || 'unknown') === value}>
-              {label}
-            </option>
-          ))
-        }
-      </select>
-    </fieldset>
+      <Input
+        type="date"
+        name="birthdate"
+        id="birthdate"
+        aria-label="Fecha de nacimiento"
+        value={medal?.birthdate && toInputDateValue(medal.birthdate)}
+        max={toInputDateValue(new Date())}
+      />
 
-    <Input
-      type="date"
-      name="birthdate"
-      id="birthdate"
-      aria-label="Fecha de nacimiento"
-      value={medal?.birthdate && toInputDateValue(medal.birthdate)}
-      max={toInputDateValue(new Date())}
-    />
-
-    <!-- <Input
+      <!-- <Input
       type="number"
       name="weight"
       id="weight"
@@ -93,5 +95,6 @@ const { medal } = Astro.props;
     >
       <span>kg</span>
     </Input> -->
+    </div>
   </div>
-</Card>
+</article>
