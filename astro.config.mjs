@@ -12,4 +12,8 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  redirects: {
+    '/admin': '/admin/slots',
+    '/admin/slots': '/admin/slots/1',
+  },
 });
