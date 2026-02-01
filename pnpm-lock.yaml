@@ -39,6 +39,9 @@ importers:
         specifier: ^50.8.1
         version: 50.8.1(rollup@4.57.0)(typescript@5.9.3)
     devDependencies:
+      '@iconify-json/devicon':
+        specifier: ^1.2.57
+        version: 1.2.57
       '@iconify-json/lucide':
         specifier: 1.2.87
         version: 1.2.87
@@ -541,6 +544,9 @@ packages:
 
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
+
+  '@iconify-json/devicon@1.2.57':
+    resolution: {integrity: sha512-I8oMarkVgcCtSDzYFTVf7WlKSFAXMh5qECEeXsf5+J/MUSu3t76QsvNolfRVwui9LjJAzrZ7EHQFXXIlQ3hIjw==}
 
   '@iconify-json/lucide@1.2.87':
     resolution: {integrity: sha512-wxYIAp0f8Uw0rJa6BMWMaRbiHk3yV4XczA38GKXFlqyZtTdmHM1QOF4NZw5xpMlRDzbh2MnB7wjteLeFnn/ciQ==}
@@ -4588,6 +4594,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iarna/toml@2.2.5': {}
+
+  '@iconify-json/devicon@1.2.57':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/lucide@1.2.87':
     dependencies:

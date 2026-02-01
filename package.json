@@ -30,6 +30,7 @@
     "vercel": "^50.8.1"
   },
   "devDependencies": {
+    "@iconify-json/devicon": "^1.2.57",
     "@iconify-json/lucide": "1.2.87",
     "@types/crypto-js": "4.2.2",
     "@types/qrcode": "^1.5.6",

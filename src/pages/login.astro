@@ -1,0 +1,45 @@
+---
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout
+  class="from-primary/10 via-background to-secondary/10 items-center justify-center bg-linear-to-br p-4"
+>
+  <article class="card max-w-md">
+    <header class="card-header text-center">
+      <span class="bg-primary text-on-primary mx-auto mb-4 w-fit rounded-full p-4">
+        <Icon name="lucide:shield" class="size-8" />
+      </span>
+      <div>
+        <h2 class="card-title">Panel de Administración</h2>
+        <p class="card-description">Acceso exclusivo para administradores autorizados</p>
+      </div>
+    </header>
+    <div class="card-content space-y-6">
+      <button type="submit" class="btn btn-outline btn-lg h-12 w-full">
+        <Icon name="devicon:github" class="size-5" />
+        <span class="text-base font-medium">Continuar con GitHub</span>
+      </button>
+
+      <div
+        class="before:border-on-muted relative flex justify-center text-xs uppercase before:absolute before:top-1/2 before:w-full before:border-t"
+      >
+        <span class="text-on-muted bg-card z-0 px-2">Acceso restringido</span>
+      </div>
+
+      <div class="bg-muted/50 space-y-2 rounded-lg p-4">
+        <p class="text-on-muted text-center text-sm">
+          Solo los administradores autorizados pueden acceder a este panel. El acceso se verifica
+          mediante tu cuenta de GitHub corporativa.
+        </p>
+      </div>
+
+      <div class="text-center">
+        <a href="/" class="text-muted-foreground hover:text-primary text-sm transition-colors"
+          >Volver al inicio
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>

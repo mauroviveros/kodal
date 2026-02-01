@@ -79,6 +79,9 @@
       & .card-title {
         @apply leading-none font-semibold;
       }
+      & .card-description {
+        @apply text-on-muted text-sm;
+      }
     }
   }
 
