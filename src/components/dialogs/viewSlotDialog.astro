@@ -1,0 +1,47 @@
+---
+import type { Slot } from '@types';
+import { Icon } from 'astro-icon/components';
+interface Props {
+  medalSlot: Slot;
+}
+const { medalSlot: slot } = Astro.props;
+const dialog_id = `dialog-view-${slot.id}`;
+---
+
+<button id={`${dialog_id}-btn`} type="button" class="btn btn-sm">
+  <Icon name="lucide:eye" class="size-4" />
+</button>
+
+<dialog id={dialog_id} closedby="any">
+  <header class="dialog-header">
+    <h2 class="dialog-title">Código QR</h2>
+  </header>
+
+  <section class="dialog-content">
+    <figure class="relative flex w-full flex-col items-center justify-center gap-2 text-center">
+      <div class="border-primary rounded-lg border-4 bg-white">
+        <Icon name="lucide:qr-code" class="size-48 text-black" />
+      </div>
+
+      <figcaption class="text-sm font-medium">
+        <a href={new URL(`/medal/${slot.id}`, Astro.url)} rel="noopener noreferrer" target="_blank">
+          {new URL(`/medal/${slot.id}`, Astro.url)}
+        </a>
+      </figcaption>
+    </figure>
+
+    <button type="button" class="btn btn-filled btn-lg w-full">
+      <Icon name="lucide:download" class="size-4" />
+      Descargar QR
+    </button>
+  </section>
+</dialog>
+
+<script define:vars={{ dialog_id }}>
+  const dialog = document.getElementById(dialog_id);
+  const openBtn = document.getElementById(`${dialog_id}-btn`);
+
+  openBtn.addEventListener('click', () => {
+    dialog.showModal();
+  });
+</script>

@@ -92,7 +92,7 @@
   .btn {
     @apply disabled:pointer-events-none disabled:opacity-50;
     @apply cursor-pointer gap-1 rounded-md px-3 text-sm transition-all;
-    @apply inline-flex w-fit items-center justify-center;
+    @apply inline-flex items-center justify-center;
 
     &.btn-outline {
       @apply bg-background text-on-background border;
@@ -127,6 +127,21 @@
     @apply fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2;
     @apply gap-4 rounded-lg border p-6 shadow-lg;
     @apply w-full max-w-[calc(100%-2rem)] sm:max-w-lg;
+
+    & .dialog-header {
+      @apply flex flex-col gap-2 text-center;
+
+      & .dialog-title {
+        @apply text-lg leading-none font-semibold;
+      }
+      & .dialog-description {
+        @apply text-on-muted text-sm;
+      }
+    }
+
+    & .dialog-content {
+      @apply flex flex-col gap-4 py-4;
+    }
 
     &[open] {
       @apply grid;

@@ -3,8 +3,8 @@ import type { Medal, Slot } from "@types";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ params, request, redirect }) => {
-  let slot_db: Slot = null;
-  let medal_db: Medal = null;
+  let slot_db: Slot | null = null;
+  let medal_db: Medal | null = null;
 
   const formData = await request.formData();
   const entries = formData.entries().map(([key, val]) => [key, val || undefined]);
