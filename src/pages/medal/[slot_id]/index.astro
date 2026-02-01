@@ -14,7 +14,7 @@ if (!slot.medal_id) return Astro.redirect(`/medal/${slot.id}/edit`);
 if (!medal) return Astro.rewrite('/404');
 ---
 
-<Layout class="max-w-2xl" container>
+<Layout class="max-w-2xl">
   <BasicCard medal={medal} />
   <PromoCard />
 </Layout>
