@@ -1,7 +1,6 @@
 {
-  "prettier.documentSelectors": ["**/*.astro"],
   "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
@@ -11,6 +10,6 @@
     "**/src/**/*.astro": "${filename} - components 🧩",
     "**/src/types/**/*.ts": "${filename} - types 🏷️",
     "**/src/utils/**/*.ts": "${filename} - utils 💡",
-    "**/*.css": "${filename} - styles 🎨",
+    "**/*.css": "${filename} - styles 🎨"
   }
 }
