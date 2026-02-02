@@ -9,12 +9,14 @@ interface Props extends HTMLAttributes<'main'> {
   withContainer?: boolean;
   showHeader?: boolean;
   showFooter?: boolean;
+  title?: string;
 }
 const {
   class: className,
   withContainer = true,
   showHeader = true,
   showFooter = true,
+  title = 'Kodal',
   ...props
 } = Astro.props;
 ---
@@ -22,7 +24,7 @@ const {
 <!doctype html>
 <html lang="es">
   <head>
-    <title>Kodal</title>
+    <title>{title}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
