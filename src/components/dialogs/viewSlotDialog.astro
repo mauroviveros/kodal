@@ -18,12 +18,14 @@ const dialog_id = `dialog-view-${slot.id}`;
   </header>
 
   <section class="dialog-content">
-    <figure class="relative flex w-full flex-col items-center justify-center gap-2 text-center">
+    <figure
+      class="relative mx-auto flex w-48 flex-col items-center justify-center gap-2 text-center"
+    >
       <div class="border-primary rounded-lg border-4 bg-white">
         <img src={`/api/admin/slot/${slot.id}/qr`} alt={`Código QR - ${slot.id}`} />
       </div>
 
-      <figcaption class="text-sm font-medium">
+      <figcaption class="w-full truncate text-sm font-medium">
         <a href={new URL(`/medal/${slot.id}`, Astro.url)} rel="noopener noreferrer" target="_blank">
           {new URL(`/medal/${slot.id}`, Astro.url)}
         </a>

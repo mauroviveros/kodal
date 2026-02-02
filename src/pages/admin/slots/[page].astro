@@ -30,8 +30,8 @@ const getDate = (date: string): string => {
     </div>
   </article>
 
-  <article class="card">
-    <table>
+  <article class="card overflow-x-auto">
+    <table class="table-auto">
       <thead>
         <tr>
           <th>ID</th>
@@ -43,7 +43,7 @@ const getDate = (date: string): string => {
         {
           data.map((slot) => (
             <tr>
-              <td>{slot.id}</td>
+              <td class="truncate">{slot.id}</td>
               <td>{getDate(slot.created_at)}</td>
               <td>
                 {slot.medal_id ? (
