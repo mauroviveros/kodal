@@ -1,6 +1,8 @@
 ---
+import AddSlotsDialog from '@components/dialogs/addSlotsDialog.astro';
+import ViewSlotDialog from '@components/dialogs/viewSlotDialog.astro';
 import Layout from '@layout';
-import type { Slot, SlotPaginationResponse } from '@types';
+import { getSlotsPaginated } from '@lib/services/slots';
 import { Icon } from 'astro-icon/components';
 
 enum Status {
@@ -8,11 +10,10 @@ enum Status {
   INACTIVE = 'Inactivo',
 }
 
-const response = await fetch(new URL(`/api/slots/${Astro.params.page}`, Astro.request.url));
-const { data }: SlotPaginationResponse = await response.json();
+const { data } = await getSlotsPaginated(parseInt(Astro.params.page || '1'), 10);
 
-const getStatus = (slot: Slot): Status => {
-  return slot.medal_id ? Status.ACTIVE : Status.INACTIVE;
+const getStatus = (medal_id: string): Status => {
+  return medal_id ? Status.ACTIVE : Status.INACTIVE;
 };
 
 const getDate = (date: string): string => {
@@ -25,10 +26,7 @@ const getDate = (date: string): string => {
 <Layout>
   <article class="card">
     <div class="card-content flex justify-end">
-      <button class="btn btn-filled btn-md">
-        <Icon name="lucide:plus" class="size-4" />
-        Crear slots
-      </button>
+      <AddSlotsDialog />
     </div>
   </article>
 
@@ -55,9 +53,8 @@ const getDate = (date: string): string => {
               </td>
               <td>
                 <div class="flex items-center justify-end gap-2">
-                  <button id={`view-${slot.id}`} type="button" class="btn btn-sm">
-                    <Icon name="lucide:eye" class="size-4" />
-                  </button>
+                  <ViewSlotDialog medalSlot={slot} />
+
                   <button id={`qr-${slot.id}`} type="button" class="btn btn-sm">
                     <Icon name="lucide:qr-code" class="size-4" />
                   </button>
@@ -69,42 +66,4 @@ const getDate = (date: string): string => {
       </tbody>
     </table>
   </article>
-
-  <dialog id="dialog" closedby="any">
-    <header class="flex flex-col gap-2 text-center sm:text-left">
-      <h2 class="text-lg leading-none font-semibold">
-        codigo QR - xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      </h2>
-      <p class="text-on-muted text-sm">Código QR para la medalla MDL-001</p>
-    </header>
-
-    <section class="flex flex-col items-center gap-4 py-4">
-      <figure class="relative flex w-full flex-col items-center justify-center gap-2 text-center">
-        <div class="border-primary rounded-lg border-4 bg-white">
-          <Icon name="lucide:qr-code" class="size-48 text-black" />
-        </div>
-
-        <figcaption class="text-sm font-medium">
-          <a href={new URL('/medal/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', Astro.url)}>
-            {new URL('/medal/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', Astro.url)}
-          </a>
-        </figcaption>
-      </figure>
-
-      <button type="button" class="btn btn-filled btn-lg w-full">
-        <Icon name="lucide:download" class="size-4" />
-        Descargar QR
-      </button>
-    </section>
-  </dialog>
 </Layout>
-
-<script>
-  const dialog = document.getElementById('dialog') as HTMLDialogElement;
-
-  document.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', () => {
-      dialog.showModal();
-    });
-  });
-</script>
