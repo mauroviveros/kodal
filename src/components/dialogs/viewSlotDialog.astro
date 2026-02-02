@@ -20,7 +20,7 @@ const dialog_id = `dialog-view-${slot.id}`;
   <section class="dialog-content">
     <figure class="relative flex w-full flex-col items-center justify-center gap-2 text-center">
       <div class="border-primary rounded-lg border-4 bg-white">
-        <Icon name="lucide:qr-code" class="size-48 text-black" />
+        <img src={`/api/admin/slot/${slot.id}/qr`} alt={`Código QR - ${slot.id}`} />
       </div>
 
       <figcaption class="text-sm font-medium">
@@ -30,10 +30,14 @@ const dialog_id = `dialog-view-${slot.id}`;
       </figcaption>
     </figure>
 
-    <button type="button" class="btn btn-filled btn-lg w-full">
+    <a
+      href={`/api/admin/slot/${slot.id}/qr`}
+      class="btn btn-filled btn-lg w-full"
+      download={`${slot.id}.png`}
+    >
       <Icon name="lucide:download" class="size-4" />
       Descargar QR
-    </button>
+    </a>
   </section>
 </dialog>
 
