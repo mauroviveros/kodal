@@ -9,7 +9,7 @@ interface Props {
 const { pagination, origin } = Astro.props;
 ---
 
-<article class="flex items-center justify-between px-4">
+<article class="flex items-center justify-between px-6">
   <span class="text-md">Página: {pagination.currentPage}/{pagination.lastPage}</span>
   <div class="flex">
     <a aria-disabled={pagination.currentPage === 1} href={`${origin}/1`} class="btn btn-md">

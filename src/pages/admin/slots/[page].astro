@@ -35,12 +35,15 @@ const getSlotQR = async (id: string) => {
 };
 ---
 
-<Layout>
+<Layout showFooter={false}>
+  <div>
+    <h1 class="text-primary text-2xl font-bold">Panel de Administración</h1>
+    <p class="text-on-muted text-sm">Gestión de Medallas Inteligentes</p>
+  </div>
+
   <section class="flex flex-col gap-2">
-    <header class="card">
-      <div class="card-content flex justify-end">
-        <AddSlotsDialog />
-      </div>
+    <header class="card flex-row items-center justify-end px-6">
+      <AddSlotsDialog />
     </header>
 
     <article class="card overflow-x-auto">
