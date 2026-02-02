@@ -1,6 +1,6 @@
 <div align="center">
 
-<!-- ![Koda.Pet](URL) -->
+![Koda.Pet](https://drive.google.com/thumbnail?id=1ZV9hWRPUsCZ_XPdUsrJckuGWlSVeEcvx&sz=w960)
 
 # [Kodal.Pet](https://kodal-pet.vercel.app/)
 
