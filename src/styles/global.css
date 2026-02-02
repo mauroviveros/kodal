@@ -86,7 +86,11 @@
   }
 
   a {
-    @apply text-on-muted hover:text-primary text-sm transition-colors;
+    @apply text-on-muted text-sm transition-colors;
+    @apply hover:text-primary hover:underline;
+    &[aria-disabled='true'] {
+      @apply pointer-events-none opacity-50;
+    }
   }
 
   .btn {
