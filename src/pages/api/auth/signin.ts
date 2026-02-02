@@ -5,19 +5,17 @@ export const POST: APIRoute = async ({ request, cookies, redirect, url }) => {
   const formData = await request.formData();
   const provider = formData.get("provider")?.toString();
   const redirectTo = formData.get("redirectTo")?.toString();
-  const redirectToURL = new URL('/api/auth/callback', url.origin)
-  if (redirectTo) redirectToURL.searchParams.set('redirectTo', redirectTo);
+  const queryParams : { [key: string]: string; } = {};
+
   if (provider !== "github") return new Response("Unsupported provider", { status: 400 });
-
-
-  console.log(new URL('/api/auth/callback', url.origin).toString());
-  console.log(redirectToURL.toString());
+  if (redirectTo) queryParams['redirectTo'] = redirectTo;
 
   const supabase = createClient(request, cookies);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: new URL('/api/auth/callback?redirectTo=%2Fadmin%2Fslots%2F1', url.origin).toString(),
+      redirectTo: new URL('/api/auth/callback', url.origin).toString(),
+      queryParams: queryParams,
     },
   });
 
