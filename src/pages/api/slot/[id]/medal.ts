@@ -1,16 +1,14 @@
 
 import type { Medal, Slot } from "@types";
 import type { APIRoute } from "astro";
+import { schema } from "schemas";
 
 export const POST: APIRoute = async ({ params, request, redirect, locals }) => {
   let slot_db: Slot | null = null;
   let medal_db: Medal | null = null;
-
-  const formData = await request.formData();
-  const entries = formData.entries().map(([key, val]) => [key, val || undefined]);
-  const data = Object.fromEntries(entries);
-
   try {
+    const data = schema.parse(Object.fromEntries((await request.formData())));
+
     if (params.id) {
       const { data, error } = await locals.supabase.from("medals_slot").select("*").eq("id", params.id).maybeSingle();
       if (error) throw error;
