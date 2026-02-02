@@ -49,7 +49,7 @@ const dialog_id = `dialog-add-slots`;
     form.querySelector('button[type="submit"]').disabled = true;
     form.querySelector('button[type="submit"]').innerText = 'Creando...';
 
-    const response = await fetch('/api/slots/bulk', {
+    const response = await fetch('/api/admin/slots/bulk', {
       method: 'POST',
       body: new FormData(form),
     });

@@ -3,7 +3,7 @@ import type { MiddlewareHandler } from "astro";
 import { minimatch } from "minimatch";
 
 const routes = {
-  privates: ["/admin/**", "/api/slots/bulk"],
+  privates: ["/admin/**", "/api/admin/**"],
   prerender: ["/"],
 }
 
