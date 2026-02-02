@@ -1,9 +1,9 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Medal, MedalResponse, Slot, SlotPaginationResponse } from "@types";
+import type { Medal, MedalResponse, Slot, PaginationResponse } from "@types";
 
 export const getSlotsPaginated = (supabase: SupabaseClient) => {
-  return async (page: number = 1, size: number = 10): Promise<SlotPaginationResponse> => {
+  return async (page: number = 1, size: number = 10): Promise<PaginationResponse<Slot>> => {
     const offset = (page - 1) * size;
 
     let { data, error, count } = await supabase

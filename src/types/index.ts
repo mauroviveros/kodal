@@ -8,14 +8,15 @@ export interface MedalResponse {
   slot: Slot | null;
   medal: Medal | null;
 }
-
-export interface SlotPaginationResponse {
-  data: Slot[];
+export interface Pagination {
   total: number;
   size: number;
   start: number;
   end: number;
   currentPage: number;
   lastPage: number;
+}
+export interface PaginationResponse<T> extends Pagination {
+  data: T[];
   error?: PostgrestError
 }

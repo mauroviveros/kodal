@@ -1,0 +1,40 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Pagination } from '@types';
+interface Props {
+  origin: string;
+  pagination: Pagination;
+}
+
+const { pagination, origin } = Astro.props;
+---
+
+<article class="flex items-center justify-between px-4">
+  <span class="text-md">Página: {pagination.currentPage}/{pagination.lastPage}</span>
+  <div class="flex">
+    <a aria-disabled={pagination.currentPage === 1} href={`${origin}/1`} class="btn btn-md">
+      <Icon name="lucide:chevrons-left" />
+    </a>
+    <a
+      aria-disabled={pagination.currentPage === 1}
+      href={`${origin}/${pagination.currentPage - 1}`}
+      class="btn btn-md"
+    >
+      <Icon name="lucide:chevron-left" />
+    </a>
+    <a
+      aria-disabled={pagination.currentPage === pagination.lastPage}
+      href={`${origin}/${pagination.currentPage + 1}`}
+      class="btn btn-md"
+    >
+      <Icon name="lucide:chevron-right" />
+    </a>
+    <a
+      aria-disabled={pagination.currentPage === pagination.lastPage}
+      href={`${origin}/${pagination.lastPage}`}
+      class="btn btn-md"
+    >
+      <Icon name="lucide:chevrons-right" />
+    </a>
+  </div>
+</article>
