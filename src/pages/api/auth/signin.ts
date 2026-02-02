@@ -9,6 +9,10 @@ export const POST: APIRoute = async ({ request, cookies, redirect, url }) => {
   if (redirectTo) redirectToURL.searchParams.set('redirectTo', redirectTo);
   if (provider !== "github") return new Response("Unsupported provider", { status: 400 });
 
+
+  console.log(new URL('/api/auth/callback', url.origin).toString());
+  console.log(redirectToURL.toString());
+
   const supabase = createClient(request, cookies);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
