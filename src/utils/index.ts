@@ -1,6 +1,3 @@
-import { v4 as uuid } from 'uuid';
-import sha256 from 'crypto-js/hmac-sha256';
-
 export const getTimeSince = (birthdate: Date) : string =>  {
   const diff = new Date().getTime() - new Date(birthdate).getTime(); // diferencia en milisegundos
   const rtf = new Intl.RelativeTimeFormat('es-AR', {numeric: 'always', style: 'long' });
@@ -16,8 +13,4 @@ export const toInputDateValue = (date: Date | string): string => {
     month: '2-digit',
     day: '2-digit',
   }).format(new Date(date));
-}
-
-export const generateUUID = () => {
-  return sha256(uuid() + new Date().toISOString(), 'miclavesecreta').toString();
 }
