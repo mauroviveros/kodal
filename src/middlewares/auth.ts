@@ -3,12 +3,16 @@ import type { MiddlewareHandler } from "astro";
 import { minimatch } from "minimatch";
 
 const routes = {
-  privates: ["/admin/**"],
+  privates: ["/admin/**", "/api/slots/bulk"],
   prerender: ["/"],
 }
 
 const isProtected = (pathname: string) => {
   return routes.privates.some(pattern => minimatch(pathname, pattern));
+}
+
+const isAPI = (pathname: string) => {
+  return minimatch(pathname, "/api/**");
 }
 
 const shouldSkipAuth = (pathname: string) => {
@@ -26,6 +30,9 @@ export const middleware: MiddlewareHandler = async ({ request, cookies, locals, 
   locals.session = session;
   locals.supabase = supabase;
 
-  if(isProtected(url.pathname) && !session) return redirect(`/signin?redirectTo=${encodeURIComponent(url.pathname)}`);
+  if(isProtected(url.pathname) && !session){
+    if(isAPI(url.pathname)) return new Response("Unauthorized", { status: 401 });
+    return redirect(`/signin?redirectTo=${encodeURIComponent(url.pathname)}`);
+  }
   return next();
 }
