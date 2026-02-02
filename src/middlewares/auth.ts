@@ -1,28 +1,31 @@
-import { supabase } from "@lib/supabase";
+import { createClient } from "@lib/supabase";
 import type { MiddlewareHandler } from "astro";
+import { minimatch } from "minimatch";
 
-const routes = ["/admin"];
+const routes = {
+  privates: ["/admin/**"],
+  prerender: ["/"],
+}
 
-export const middleware: MiddlewareHandler = async (context, next) => {
-  if(!routes.some(route => context.url.pathname.startsWith(route))) return next();
+const isProtected = (pathname: string) => {
+  return routes.privates.some(pattern => minimatch(pathname, pattern));
+}
 
-  const access_token = context.cookies.get('sb-access-token')?.value;
-  const refresh_token = context.cookies.get('sb-refresh-token')?.value;
+const shouldSkipAuth = (pathname: string) => {
+  return routes.prerender.some(pattern => minimatch(pathname, pattern));
+}
 
-  try {
-    if (!access_token || !refresh_token) throw new Error('No tokens found');
+export const middleware: MiddlewareHandler = async ({ request, cookies, locals, url, redirect }, next) => {
+  if(shouldSkipAuth(url.pathname)) return next();
 
-    const { data: { session, user }, error } = await supabase.auth.setSession({ refresh_token, access_token });
-    if (error) throw error;
+  const supabase = createClient(request, cookies);
+  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    context.locals.session = session;
-    context.locals.user = user;
-  } catch(error) {
-    context.cookies.delete('sb-access-token', { path: '/' });
-    context.cookies.delete('sb-refresh-token', { path: '/' });
+  locals.user = user;
+  locals.session = session;
+  locals.supabase = supabase;
 
-    return context.redirect('/signin?redirectTo=' + encodeURIComponent(context.url.pathname));
-  }
-
+  if(isProtected(url.pathname) && !session) return redirect(`/signin?redirectTo=${encodeURIComponent(url.pathname)}`);
   return next();
 }

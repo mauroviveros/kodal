@@ -9,8 +9,8 @@ enum Status {
   ACTIVE = 'Activo',
   INACTIVE = 'Inactivo',
 }
-
-const { data } = await getSlotsPaginated(parseInt(Astro.params.page || '1'), 10);
+const { locals, params } = Astro;
+const { data } = await getSlotsPaginated(locals.supabase)(parseInt(params.page || '1'), 10);
 
 const getStatus = (medal_id: string): Status => {
   return medal_id ? Status.ACTIVE : Status.INACTIVE;
@@ -46,10 +46,17 @@ const getDate = (date: string): string => {
               <td>{slot.id}</td>
               <td>{getDate(slot.created_at)}</td>
               <td>
-                <span class="badge">
-                  <Icon name="lucide:sparkles" />
-                  NUEVO
-                </span>
+                {slot.medal_id ? (
+                  <span class="badge border-emerald-300 bg-emerald-100 text-emerald-700">
+                    <Icon name="lucide:user-check" />
+                    EN USO
+                  </span>
+                ) : (
+                  <span class="badge border-blue-300 bg-blue-100 text-blue-700">
+                    <Icon name="lucide:sparkles" />
+                    NUEVO
+                  </span>
+                )}
               </td>
               <td>
                 <div class="flex items-center justify-end gap-2">

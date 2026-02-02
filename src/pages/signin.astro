@@ -1,9 +1,6 @@
 ---
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
-
-const actionUrl = new URL(Astro.url);
-actionUrl.pathname = '/api/auth/signin';
 ---
 
 <Layout
@@ -22,8 +19,10 @@ actionUrl.pathname = '/api/auth/signin';
         <p class="card-description">Acceso exclusivo para administradores autorizados</p>
       </div>
     </header>
-    <form action={actionUrl.toString()} method="POST" class="card-content space-y-6">
+    <form action="/api/auth/signin" method="POST" class="card-content space-y-6">
       <input type="hidden" name="provider" value="github" />
+      <input type="hidden" name="redirectTo" value={Astro.url.searchParams.get('redirectTo')} />
+
       <button type="submit" class="btn btn-outline btn-lg h-12 w-full">
         <Icon name="devicon:github" class="size-5" />
         <span class="text-base font-medium">Continuar con GitHub</span>

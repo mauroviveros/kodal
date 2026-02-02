@@ -1,21 +1,25 @@
-import { supabase } from "@lib/supabase";
+import { createClient } from "@lib/supabase";
 import type { APIRoute } from "astro";
 
-export const POST: APIRoute = async ({ request, redirect, url }) => {
+export const POST: APIRoute = async ({ request, cookies, redirect, url }) => {
   const formData = await request.formData();
   const provider = formData.get("provider")?.toString();
+  const redirectTo = formData.get("redirectTo")?.toString();
+  const redirectToURL = new URL('/api/auth/callback', url.origin)
+  if (redirectTo)redirectToURL.searchParams.set('redirectTo', redirectTo);
 
+  console.log(redirectTo);
+  console.log(redirectToURL.toString());
   if (provider !== "github") return new Response("Unsupported provider", { status: 400 });
 
-  const redirectTo = new URL(request.url);
-  redirectTo.pathname = '/api/auth/callback';
+  const supabase = createClient(request, cookies);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: redirectTo.toString(),
+      redirectTo: redirectToURL.toString(),
     },
   });
 
-  if (error) return new Response(error.message, { status: 500 });
+  if (error) return redirect(`/signin?error=${encodeURIComponent(error.message)}`);
   return redirect(data.url);
 }

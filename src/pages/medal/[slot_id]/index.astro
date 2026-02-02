@@ -4,7 +4,7 @@ import Layout from '@layout';
 import { getSlotDetails } from '@lib/services/slots';
 
 if (!Astro.params.slot_id) return Astro.rewrite('/404');
-const { slot, medal } = await getSlotDetails(Astro.params.slot_id);
+const { slot, medal } = await getSlotDetails(Astro.locals.supabase)(Astro.params.slot_id);
 if (!slot) return Astro.rewrite('/404');
 if (!slot.medal_id) return Astro.redirect(`/medal/${slot.id}/edit`);
 if (!medal) return Astro.rewrite('/404');

@@ -19,11 +19,13 @@
   },
   "dependencies": {
     "@astrojs/vercel": "9.0.4",
+    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.93.2",
     "@tailwindcss/vite": "4.1.18",
     "astro": "5.16.16",
     "astro-icon": "1.1.5",
     "crypto-js": "4.2.0",
+    "minimatch": "^10.1.1",
     "qrcode": "^1.5.4",
     "tailwindcss": "4.1.18",
     "uuid": "13.0.0",

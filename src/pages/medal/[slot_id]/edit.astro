@@ -2,10 +2,11 @@
 import { BasicForm } from '@components/forms';
 import Layout from '@layout';
 import { getSlotDetails } from '@lib/services/slots';
+import { createClient } from '@lib/supabase';
 import { Icon } from 'astro-icon/components';
 
 if (!Astro.params.slot_id) return Astro.rewrite('/404');
-const { slot, medal } = await getSlotDetails(Astro.params.slot_id);
+const { slot, medal } = await getSlotDetails(Astro.locals.supabase)(Astro.params.slot_id);
 if (!slot) return Astro.rewrite('/404');
 ---
 
