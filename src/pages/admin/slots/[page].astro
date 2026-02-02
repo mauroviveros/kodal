@@ -1,7 +1,7 @@
 ---
-import AddSlotsDialog from '@components/dialogs/addSlotsDialog.astro';
-import ViewSlotDialog from '@components/dialogs/viewSlotDialog.astro';
+import QRCode from 'qrcode';
 import Layout from '@layout';
+import { AddSlotsDialog, ViewSlotDialog } from '@components/dialogs';
 import { getSlotsPaginated } from '@lib/services/slots';
 import { Icon } from 'astro-icon/components';
 
@@ -20,6 +20,14 @@ const getDate = (date: string): string => {
   return Intl.DateTimeFormat(undefined, { dateStyle: 'short', timeStyle: 'short' }).format(
     new Date(date),
   );
+};
+
+const getSlotQR = async (id: string) => {
+  const QR = await QRCode.toDataURL(new URL(`/medal/${id}`, Astro.url.origin).toString(), {
+    margin: 1,
+  });
+
+  return QR;
 };
 ---
 
@@ -41,38 +49,37 @@ const getDate = (date: string): string => {
       </thead>
       <tbody>
         {
-          data.map((slot) => (
-            <tr>
-              <td class="truncate">{slot.id}</td>
-              <td>{getDate(slot.created_at)}</td>
-              <td>
-                {slot.medal_id ? (
-                  <span class="badge border-emerald-300 bg-emerald-100 text-emerald-700">
-                    <Icon name="lucide:user-check" />
-                    EN USO
-                  </span>
-                ) : (
-                  <span class="badge border-blue-300 bg-blue-100 text-blue-700">
-                    <Icon name="lucide:sparkles" />
-                    NUEVO
-                  </span>
-                )}
-              </td>
-              <td>
-                <div class="flex items-center justify-end gap-2">
-                  <ViewSlotDialog medalSlot={slot} />
+          data.map(async (slot) => {
+            const QRbase64 = await getSlotQR(slot.id);
+            return (
+              <tr>
+                <td class="truncate">{slot.id}</td>
+                <td>{getDate(slot.created_at)}</td>
+                <td>
+                  {slot.medal_id ? (
+                    <span class="badge border-emerald-300 bg-emerald-100 text-emerald-700">
+                      <Icon name="lucide:user-check" />
+                      EN USO
+                    </span>
+                  ) : (
+                    <span class="badge border-blue-300 bg-blue-100 text-blue-700">
+                      <Icon name="lucide:sparkles" />
+                      NUEVO
+                    </span>
+                  )}
+                </td>
+                <td>
+                  <div class="flex items-center justify-end gap-2">
+                    <ViewSlotDialog medalSlot={slot} QRbase64={QRbase64} />
 
-                  <a
-                    href={`/api/admin/slot/${slot.id}/qr`}
-                    class="btn btn-sm"
-                    download={`${slot.id}.png`}
-                  >
-                    <Icon name="lucide:download" class="size-4" />
-                  </a>
-                </div>
-              </td>
-            </tr>
-          ))
+                    <a href={QRbase64} class="btn btn-sm" download={`${slot.id}.png`}>
+                      <Icon name="lucide:download" class="size-4" />
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            );
+          })
         }
       </tbody>
     </table>

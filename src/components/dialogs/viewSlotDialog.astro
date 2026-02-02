@@ -3,9 +3,9 @@ import type { Slot } from '@types';
 import { Icon } from 'astro-icon/components';
 interface Props {
   medalSlot: Slot;
+  QRbase64: string;
 }
-const { medalSlot: slot } = Astro.props;
-const dialog_id = `dialog-view-${slot.id}`;
+const dialog_id = `dialog-view-${Astro.props.medalSlot.id}`;
 ---
 
 <button id={`${dialog_id}-btn`} type="button" class="btn btn-sm">
@@ -22,20 +22,29 @@ const dialog_id = `dialog-view-${slot.id}`;
       class="relative mx-auto flex w-48 flex-col items-center justify-center gap-2 text-center"
     >
       <div class="border-primary rounded-lg border-4 bg-white">
-        <img src={`/api/admin/slot/${slot.id}/qr`} alt={`Código QR - ${slot.id}`} />
+        <img
+          src={Astro.props.QRbase64}
+          alt={`Código QR - ${Astro.props.medalSlot.id}`}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <figcaption class="w-full truncate text-sm font-medium">
-        <a href={new URL(`/medal/${slot.id}`, Astro.url)} rel="noopener noreferrer" target="_blank">
-          {new URL(`/medal/${slot.id}`, Astro.url)}
+        <a
+          href={new URL(`/medal/${Astro.props.medalSlot.id}`, Astro.url)}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {new URL(`/medal/${Astro.props.medalSlot.id}`, Astro.url)}
         </a>
       </figcaption>
     </figure>
 
     <a
-      href={`/api/admin/slot/${slot.id}/qr`}
+      href={Astro.props.QRbase64}
       class="btn btn-filled btn-lg w-full"
-      download={`${slot.id}.png`}
+      download={`${Astro.props.medalSlot.id}.png`}
     >
       <Icon name="lucide:download" class="size-4" />
       Descargar QR
