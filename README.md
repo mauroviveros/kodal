@@ -2,7 +2,7 @@
 
 <!-- ![Koda.Pet](URL) -->
 
-# [Kodal.Pet](https://mauroviveros.com.ar/)
+# [Kodal.Pet](https://kodal-pet.vercel.app/)
 
 Smart collars with QR codes to identify and protect your pet.
 Scan the code, access the profile, and make sure your best friend always finds the way back home.
@@ -12,17 +12,17 @@ Scan the code, access the profile, and make sure your best friend always finds t
 ![GitHub Repo stars](https://img.shields.io/github/stars/mauroviveros/kodal)
 ![GitHub watchers](https://img.shields.io/github/watchers/mauroviveros/kodal)
 
-[![Astro][astro-badge]][astro-link]
-[![TailwindCSS][tailwind-badge]][tailwind-link]
-[![Supabase][supabase-badge]][supabase-link]
-[![Vercel][vercel-badge]][vercel-link]
+[![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
 </div>
 
 ## 📦 Requirements
 
-- [NodeJS][nodejs-link] _v24.13.0_
-- [PNPM][pnpm-link] _v10.28.2_
+- [NodeJS](https://nodejs.org/) _v24.13.0_
+- [PNPM](https://pnpm.io/) _v10.28.2_
 
 ## 🧞 Commands
 
@@ -36,14 +36,3 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-[nodejs-link]: https://nodejs.org/
-[pnpm-link]: https://pnpm.io/
-[astro-link]: https://astro.build/
-[tailwind-link]: https://tailwindcss.com/
-[supabase-link]: https://supabase.com/
-[vercel-link]: https://vercel.com/
-[astro-badge]: https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white
-[tailwind-badge]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
-[supabase-badge]: https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white
-[vercel-badge]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
