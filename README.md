@@ -14,11 +14,15 @@ Scan the code, access the profile, and make sure your best friend always finds t
 
 [![Astro][astro-badge]][astro-link]
 [![TailwindCSS][tailwind-badge]][tailwind-link]
+[![Supabase][supabase-badge]][supabase-link]
+[![Vercel][vercel-badge]][vercel-link]
+
 </div>
 
 ## 📦 Requirements
-- [NodeJS][nodejs-link] _v24.11.1_
-- [PNPM][pnpm-link] _v10.26.1_
+
+- [NodeJS][nodejs-link] _v24.13.0_
+- [PNPM][pnpm-link] _v10.28.2_
 
 ## 🧞 Commands
 
@@ -33,10 +37,13 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-[astro-link]: https://astro.build/
 [nodejs-link]: https://nodejs.org/
 [pnpm-link]: https://pnpm.io/
+[astro-link]: https://astro.build/
 [tailwind-link]: https://tailwindcss.com/
-
+[supabase-link]: https://supabase.com/
+[vercel-link]: https://vercel.com/
 [astro-badge]: https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white
 [tailwind-badge]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
+[supabase-badge]: https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white
+[vercel-badge]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
