@@ -14,76 +14,207 @@ export type Database = {
   }
   public: {
     Tables: {
-      medals: {
+      medal_scans: {
         Row: {
-          birthdate: string | null
-          breed: string | null
-          created_at: string
-          gender: Database["public"]["Enums"]["pet_gender"]
           id: string
-          kind: Database["public"]["Enums"]["pet_kind"]
-          message: string | null
-          name: string
-          updated_at: string | null
-          used_at: string | null
-          weight: number | null
+          ip_address: string
+          location: Json | null
+          medal_id: string
+          scanned_at: string
+          user_agent: string
         }
         Insert: {
-          birthdate?: string | null
-          breed?: string | null
-          created_at?: string
-          gender?: Database["public"]["Enums"]["pet_gender"]
           id?: string
-          kind?: Database["public"]["Enums"]["pet_kind"]
-          message?: string | null
-          name: string
-          updated_at?: string | null
-          used_at?: string | null
-          weight?: number | null
+          ip_address: string
+          location?: Json | null
+          medal_id: string
+          scanned_at?: string
+          user_agent: string
         }
         Update: {
-          birthdate?: string | null
-          breed?: string | null
-          created_at?: string
-          gender?: Database["public"]["Enums"]["pet_gender"]
           id?: string
-          kind?: Database["public"]["Enums"]["pet_kind"]
-          message?: string | null
-          name?: string
-          updated_at?: string | null
-          used_at?: string | null
-          weight?: number | null
-        }
-        Relationships: []
-      }
-      medals_slot: {
-        Row: {
-          created_at: string
-          id: string
-          medal_id: string | null
-          used_at: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          medal_id?: string | null
-          used_at?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          medal_id?: string | null
-          used_at?: string | null
+          ip_address?: string
+          location?: Json | null
+          medal_id?: string
+          scanned_at?: string
+          user_agent?: string
         }
         Relationships: [
           {
-            foreignKeyName: "medals_slot_medal_id_fkey"
+            foreignKeyName: "medal_scans_medal_id_fkey"
             columns: ["medal_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "medals"
             referencedColumns: ["id"]
           },
         ]
+      }
+      medals: {
+        Row: {
+          code: string | null
+          created_at: string
+          id: string
+          manufactured_at: string | null
+          manufactured_by: string | null
+          status: Database["public"]["Enums"]["MEDAL_STATUS"]
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          id?: string
+          manufactured_at?: string | null
+          manufactured_by?: string | null
+          status?: Database["public"]["Enums"]["MEDAL_STATUS"]
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          id?: string
+          manufactured_at?: string | null
+          manufactured_by?: string | null
+          status?: Database["public"]["Enums"]["MEDAL_STATUS"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      owners: {
+        Row: {
+          address: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pet_owners: {
+        Row: {
+          created_at: string
+          id: string
+          owner_id: string
+          pet_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          owner_id: string
+          pet_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          owner_id?: string
+          pet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_owners_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "owners"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pet_owners_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pet_token: {
+        Row: {
+          code: string
+          created_at: string
+          expires_at: string
+          id: string
+          pet_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          pet_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          pet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_token_pet_id_fkey1"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pets: {
+        Row: {
+          birth_date: string | null
+          breed: string | null
+          created_at: string
+          gender: Database["public"]["Enums"]["PET_GENDER"]
+          id: string
+          name: string
+          notes: string | null
+          species: Database["public"]["Enums"]["PET_SPECIES"]
+          status: Database["public"]["Enums"]["PET_STATUS"]
+          updated_at: string
+        }
+        Insert: {
+          birth_date?: string | null
+          breed?: string | null
+          created_at?: string
+          gender: Database["public"]["Enums"]["PET_GENDER"]
+          id?: string
+          name: string
+          notes?: string | null
+          species: Database["public"]["Enums"]["PET_SPECIES"]
+          status?: Database["public"]["Enums"]["PET_STATUS"]
+          updated_at?: string
+        }
+        Update: {
+          birth_date?: string | null
+          breed?: string | null
+          created_at?: string
+          gender?: Database["public"]["Enums"]["PET_GENDER"]
+          id?: string
+          name?: string
+          notes?: string | null
+          species?: Database["public"]["Enums"]["PET_SPECIES"]
+          status?: Database["public"]["Enums"]["PET_STATUS"]
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -93,8 +224,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      MEDAL_STATUS: "CREATED" | "MANUFACTURED" | "ACTIVE" | "LOST" | "DISABLED"
       pet_gender: "male" | "female" | "unknown"
+      PET_GENDER: "MALE" | "GENDER" | "UNKNOWN"
       pet_kind: "dog" | "cat" | "other"
+      PET_SPECIES: "DOG" | "CAT" | "OTHER"
+      PET_STATUS: "ACTIVE" | "LOST" | "DECEASED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -222,8 +357,12 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      MEDAL_STATUS: ["CREATED", "MANUFACTURED", "ACTIVE", "LOST", "DISABLED"],
       pet_gender: ["male", "female", "unknown"],
+      PET_GENDER: ["MALE", "GENDER", "UNKNOWN"],
       pet_kind: ["dog", "cat", "other"],
+      PET_SPECIES: ["DOG", "CAT", "OTHER"],
+      PET_STATUS: ["ACTIVE", "LOST", "DECEASED"],
     },
   },
 } as const
