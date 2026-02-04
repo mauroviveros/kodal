@@ -13,7 +13,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   redirects: {
-    '/admin': '/admin/slots',
-    '/admin/slots': '/admin/slots/1',
+    '/admin': '/admin/medals',
+    '/admin/medals': '/admin/medals/1',
   },
 });

@@ -1,41 +1,37 @@
 ---
 import { Avatar } from '@components/ui';
+import type { Database } from '@lib/database';
 import { getTimeSince } from '@utils';
 interface Props {
-  medal: any;
+  pet: Database['public']['Tables']['pets']['Row'];
 }
-const { medal } = Astro.props;
-const phone_message = `Hola, he encontrado a tu mascota ${medal.name}. Por favor, contáctame.`;
+const { pet } = Astro.props;
+const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;
 const info = [
   {
     label: 'Raza',
-    value: medal.breed,
-    display: medal.breed || 'Desconocida',
+    value: pet.breed,
+    display: pet.breed || 'Desconocida',
   },
   {
     label: 'Edad',
-    value: medal.birthdate,
-    display: medal.birthdate && getTimeSince(medal.birthdate),
-  },
-  {
-    label: 'Peso',
-    value: medal.weight,
-    display: `${medal.weight} kg`,
+    value: pet.birth_date,
+    display: pet.birth_date && getTimeSince(new Date(pet.birth_date)),
   },
 ].filter(({ value }) => value);
 ---
 
 <article class="card">
   <header class="from-primary/10 to-secondary/10 bg-linear-to-br p-8 text-center">
-    <Avatar alt={medal.name} class="mx-auto mb-6 size-32" />
-    <h1 class="mb-2 text-3xl font-bold text-balance break-all">{medal.name}</h1>
+    <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
+    <h1 class="mb-2 text-3xl font-bold text-balance break-all">{pet.name}</h1>
   </header>
 
   <div class="card-content">
     {
-      medal.message && (
+      pet.notes && (
         <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
-          <p class="text-on-muted text-center text-sm">{medal.message}</p>
+          <p class="text-on-muted text-center text-sm">{pet.notes}</p>
         </blockquote>
       )
     }

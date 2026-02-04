@@ -1,0 +1,41 @@
+---
+import { BasicForm } from '@components/forms';
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+import { actions } from 'astro:actions';
+
+if (!Astro.params.medal_id) return Astro.rewrite('/404');
+
+const result = Astro.getActionResult(actions.insertPetForm);
+console.log(result);
+// if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+//TODO handle action errors
+
+const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
+const { medal, pet } = response.data ?? {};
+if (response.error) return Astro.rewrite('/404');
+//TODO handle errors properly
+
+if (pet) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+if (!medal) return Astro.rewrite('/404');
+---
+
+<Layout class="max-w-2xl" title="Kodal - Nueva medalla">
+  <hgroup class="mb-6 flex flex-col gap-2">
+    <h1 class="text-3xl font-bold">Crear información de tu mascota</h1>
+    <p class="text-on-muted">Completa los datos de tu mascota para crear su perfil.</p>
+  </hgroup>
+
+  <form action={actions.insertPetForm} method="POST" class="flex flex-col gap-6">
+    <input type="hidden" name="medal_id" value={medal.id} />
+
+    <BasicForm pet={pet} />
+
+    <div class="flex gap-4">
+      <button type="submit" class="btn btn-lg btn-filled flex-1">
+        <Icon name="lucide:save" />
+        Crear
+      </button>
+    </div>
+  </form>
+</Layout>

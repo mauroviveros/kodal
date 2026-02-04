@@ -145,13 +145,14 @@ export type Database = {
           },
         ]
       }
-      pet_token: {
+      pet_tokens: {
         Row: {
           code: string
           created_at: string
           expires_at: string
           id: string
           pet_id: string
+          revoked_at: string | null
         }
         Insert: {
           code: string
@@ -159,6 +160,7 @@ export type Database = {
           expires_at: string
           id?: string
           pet_id: string
+          revoked_at?: string | null
         }
         Update: {
           code?: string
@@ -166,10 +168,11 @@ export type Database = {
           expires_at?: string
           id?: string
           pet_id?: string
+          revoked_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "pet_token_pet_id_fkey1"
+            foreignKeyName: "pet_token_pet_id_fkey"
             columns: ["pet_id"]
             isOneToOne: false
             referencedRelation: "pets"
@@ -184,6 +187,7 @@ export type Database = {
           created_at: string
           gender: Database["public"]["Enums"]["PET_GENDER"]
           id: string
+          medal_id: string
           name: string
           notes: string | null
           species: Database["public"]["Enums"]["PET_SPECIES"]
@@ -194,11 +198,12 @@ export type Database = {
           birth_date?: string | null
           breed?: string | null
           created_at?: string
-          gender: Database["public"]["Enums"]["PET_GENDER"]
+          gender?: Database["public"]["Enums"]["PET_GENDER"]
           id?: string
+          medal_id: string
           name: string
           notes?: string | null
-          species: Database["public"]["Enums"]["PET_SPECIES"]
+          species?: Database["public"]["Enums"]["PET_SPECIES"]
           status?: Database["public"]["Enums"]["PET_STATUS"]
           updated_at?: string
         }
@@ -208,13 +213,22 @@ export type Database = {
           created_at?: string
           gender?: Database["public"]["Enums"]["PET_GENDER"]
           id?: string
+          medal_id?: string
           name?: string
           notes?: string | null
           species?: Database["public"]["Enums"]["PET_SPECIES"]
           status?: Database["public"]["Enums"]["PET_STATUS"]
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "pets_medal_id_fkey"
+            columns: ["medal_id"]
+            isOneToOne: true
+            referencedRelation: "medals"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -225,9 +239,8 @@ export type Database = {
     }
     Enums: {
       MEDAL_STATUS: "CREATED" | "MANUFACTURED" | "ACTIVE" | "LOST" | "DISABLED"
-      pet_gender: "male" | "female" | "unknown"
-      PET_GENDER: "MALE" | "GENDER" | "UNKNOWN"
-      pet_kind: "dog" | "cat" | "other"
+      PET_GENDER: "MALE" | "FEMALE" | "UNKNOWN"
+      PET_GENDER_old: "MALE" | "GENDER" | "UNKNOWN"
       PET_SPECIES: "DOG" | "CAT" | "OTHER"
       PET_STATUS: "ACTIVE" | "LOST" | "DECEASED"
     }
@@ -358,9 +371,8 @@ export const Constants = {
   public: {
     Enums: {
       MEDAL_STATUS: ["CREATED", "MANUFACTURED", "ACTIVE", "LOST", "DISABLED"],
-      pet_gender: ["male", "female", "unknown"],
-      PET_GENDER: ["MALE", "GENDER", "UNKNOWN"],
-      pet_kind: ["dog", "cat", "other"],
+      PET_GENDER: ["MALE", "FEMALE", "UNKNOWN"],
+      PET_GENDER_old: ["MALE", "GENDER", "UNKNOWN"],
       PET_SPECIES: ["DOG", "CAT", "OTHER"],
       PET_STATUS: ["ACTIVE", "LOST", "DECEASED"],
     },

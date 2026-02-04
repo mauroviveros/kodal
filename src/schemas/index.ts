@@ -12,6 +12,6 @@ export const schema = z.object({
   weight: z.number().min(0).max(999).optional(),
   birthdate: z.string().refine(validDate, { message: "Invalid date" }).optional(),
   breed: z.string().min(1).max(25).optional(),
-  gender: z.enum(Constants.public.Enums.pet_gender).optional(),
-  kind: z.enum(Constants.public.Enums.pet_kind).optional()
+  // gender: z.enum(Constants.public.Enums.pet_gender).optional(),
+  // kind: z.enum(Constants.public.Enums.pet_kind).optional()
 });

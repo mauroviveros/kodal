@@ -1,0 +1,60 @@
+---
+import { BasicForm } from '@components/forms';
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+import { actions } from 'astro:actions';
+
+const token_code = Astro.url.searchParams.get('token');
+if (!Astro.params.medal_id) return Astro.rewrite('/404');
+
+const result = Astro.getActionResult(actions.updatePetForm);
+if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+
+//TODO handle action errors
+
+const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
+const { medal, pet } = response.data ?? {};
+//TODO handle errors properly
+if (response.error || !medal || !pet) return Astro.rewrite('/404');
+
+if (token_code === null) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+const response_token = await Astro.callAction(actions.getToken, { token_code, pet_id: pet.id });
+const { token } = response_token.data || {};
+//TODO handle errors properly
+if (response_token.error || !token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+---
+
+<Layout
+  class="max-w-2xl"
+  title={`Kodal - ${medal.id ? `medalla de ${pet.name}` : 'Nueva medalla'}`}
+>
+  <hgroup class="mb-6 flex flex-col gap-2">
+    <h1 class="text-3xl font-bold">
+      Editar información de <span class="text-primary">{pet.name}</span>
+    </h1>
+    <p class="text-on-muted">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
+  </hgroup>
+
+  <form action={actions.updatePetForm} method="POST" class="flex flex-col gap-6">
+    <input type="hidden" name="id" value={pet.id} />
+    <input type="hidden" name="medal_id" value={medal.id} />
+    <input type="hidden" name="token_code" value={token_code} />
+
+    <BasicForm pet={pet} />
+
+    <div class="flex gap-4">
+      {
+        medal.id && (
+          <a href={`/medal/${medal?.id}`} class="btn btn-lg btn-outline flex-1">
+            Cancelar
+          </a>
+        )
+      }
+
+      <button type="submit" class="btn btn-lg btn-filled flex-1">
+        <Icon name="lucide:save" />
+        {medal.id ? 'Guardar' : 'Crear'}
+      </button>
+    </div>
+  </form>
+</Layout>

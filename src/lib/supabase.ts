@@ -1,5 +1,5 @@
 
-import { createBrowserClient, createServerClient, parseCookieHeader } from "@supabase/ssr";
+import { createServerClient, parseCookieHeader } from "@supabase/ssr";
 import type { Database } from "./database";
 import type { AstroCookies } from "astro";
 
@@ -27,12 +27,19 @@ export function createClient(request: Request, cookies: AstroCookies) {
     }
   );
 }
-export const _supabase = createBrowserClient<Database>(
-  import.meta.env.PUBLIC_SUPABASE_URL,
-  import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-  {
-    auth: {
-      flowType: "pkce",
+
+export function createRoot() {
+  return createServerClient<Database>(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.SUPABASE_SECRET_KEY,
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+      cookies: {
+        getAll() { return []; },
+      }
     },
-  }
-);
+  );
+}

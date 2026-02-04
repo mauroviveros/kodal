@@ -3,13 +3,23 @@ import { Input } from '@components/ui';
 import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
 
-type Medal = Database['public']['Tables']['medals']['Update'] | null;
-
 interface Props {
-  medal?: Medal;
+  pet?: Database['public']['Tables']['pets']['Row'];
 }
 
-const { medal } = Astro.props;
+const ESPECIES = [
+  { value: 'DOG', label: 'Perro' },
+  { value: 'CAT', label: 'Gato' },
+  { value: 'OTHER', label: 'Otro' },
+];
+
+const GENDERS = [
+  { value: 'MALE', label: 'Macho' },
+  { value: 'FEMALE', label: 'Hembra' },
+  { value: 'UNKNOWN', label: 'No especificado' },
+];
+
+const { pet } = Astro.props;
 ---
 
 <article class="card">
@@ -23,24 +33,19 @@ const { medal } = Astro.props;
       <Input
         type="text"
         name="name"
-        id="name"
         class="md:col-span-2"
         aria-label="Nombre"
-        value={medal?.name}
+        value={pet?.name}
         maxlength="25"
         required
       />
 
       <fieldset class="flex flex-col gap-2">
-        <label for="kind" class="text-sm">Animal<span class="text-primary">*</span></label>
-        <select name="kind" id="kind" required>
+        <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
+        <select name="species" required>
           {
-            [
-              { value: 'dog', label: 'Perro' },
-              { value: 'cat', label: 'Gato' },
-              { value: 'other', label: 'Otro' },
-            ].map(({ value, label }) => (
-              <option value={value} selected={(medal?.kind || 'other') === value}>
+            ESPECIES.map(({ value, label }) => (
+              <option value={value} selected={(pet?.species ?? 'OTHER') === value}>
                 {label}
               </option>
             ))
@@ -48,25 +53,14 @@ const { medal } = Astro.props;
         </select>
       </fieldset>
 
-      <Input
-        type="text"
-        name="breed"
-        id="breed"
-        aria-label="Raza"
-        value={medal?.breed}
-        maxlength="25"
-      />
+      <Input type="text" name="breed" aria-label="Raza" value={pet?.breed} maxlength="25" />
 
       <fieldset class="flex flex-col gap-2">
         <label for="gender" class="text-sm">Género<span class="text-primary">*</span></label>
-        <select name="gender" id="gender" required>
+        <select name="gender" required>
           {
-            [
-              { value: 'male', label: 'Macho' },
-              { value: 'female', label: 'Hembra' },
-              { value: 'unknown', label: 'No especificado' },
-            ].map(({ value, label }) => (
-              <option value={value} selected={(medal?.gender || 'unknown') === value}>
+            GENDERS.map(({ value, label }) => (
+              <option value={value} selected={(pet?.gender ?? 'UNKNOWN') === value}>
                 {label}
               </option>
             ))
@@ -76,25 +70,11 @@ const { medal } = Astro.props;
 
       <Input
         type="date"
-        name="birthdate"
-        id="birthdate"
+        name="birth_date"
         aria-label="Fecha de nacimiento"
-        value={medal?.birthdate && toInputDateValue(medal.birthdate)}
+        value={pet?.birth_date && toInputDateValue(pet.birth_date)}
         max={toInputDateValue(new Date())}
       />
-
-      <!-- <Input
-      type="number"
-      name="weight"
-      id="weight"
-      aria-label="Peso"
-      value={medal?.weight}
-      min="0"
-      max="99"
-      step="0.1"
-    >
-      <span>kg</span>
-    </Input> -->
     </div>
   </div>
 </article>

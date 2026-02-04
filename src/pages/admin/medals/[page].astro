@@ -1,0 +1,114 @@
+---
+import QRCode from 'qrcode';
+import Layout from '@layout';
+import { AddMedalsDialog, ViewSlotDialog } from '@components/dialogs';
+import { Icon } from 'astro-icon/components';
+import Pagination from '@components/ui/Pagination.astro';
+import { actions } from 'astro:actions';
+import type { Database } from '@lib/database';
+
+const { data: response, error } = await Astro.callAction(actions.getMedalsPaginated, {
+  page: parseInt(Astro.params.page || '1'),
+  pageSize: 10,
+});
+
+if (error) return Astro.rewrite('/404');
+const { data: medals, pagination } = response;
+
+const getSlotQR = async (id: string) => {
+  const QR = await QRCode.toDataURL(new URL(`/medal/${id}`, Astro.url.origin).toString(), {
+    margin: 1,
+  });
+  return QR;
+};
+
+const STATUS: Record<
+  Database['public']['Enums']['MEDAL_STATUS'],
+  { text: string; icon: string; class: string }
+> = {
+  CREATED: {
+    text: 'Nuevo',
+    icon: 'lucide:sparkles',
+    class: 'text-blue-600 bg-blue-100 border-blue-300',
+  },
+  MANUFACTURED: {
+    text: 'Fabricado',
+    icon: 'lucide:factory',
+    class: 'text-yellow-600 bg-yellow-100 border-yellow-300',
+  },
+  ACTIVE: {
+    text: 'En uso',
+    icon: 'lucide:user-check',
+    class: 'text-emerald-600 bg-emerald-100 border-emerald-300',
+  },
+  LOST: {
+    text: 'Perdido',
+    icon: 'lucide:alert-triangle',
+    class: 'text-red-600 bg-red-100 border-red-300',
+  },
+  DISABLED: {
+    text: 'Desactivado',
+    icon: 'lucide:slash',
+    class: 'text-gray-600 bg-gray-100 border-gray-300',
+  },
+};
+---
+
+<Layout showFooter={false} title="Kodal - Panel de Administración">
+  <div>
+    <h1 class="text-primary text-2xl font-bold">Panel de Administración</h1>
+    <p class="text-on-muted text-sm">Gestión de Medallas Inteligentes</p>
+  </div>
+
+  <section class="flex flex-col gap-2">
+    <header class="card flex-row items-center justify-end px-6">
+      <AddMedalsDialog />
+    </header>
+
+    <article class="card overflow-x-auto">
+      <table class="table-auto">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha creacion</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            medals.map(async (medal) => {
+              const QRbase64 = await getSlotQR(medal.id);
+              const date = new Date(medal.created_at);
+              const status = STATUS[medal.status];
+              return (
+                <tr>
+                  <td class="truncate">{medal.id}</td>
+                  <td>{date.toLocaleString()}</td>
+                  <td>
+                    <span class:list={['badge border', status.class]}>
+                      <Icon name={status.icon} />
+                      {status.text}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="flex items-center justify-end gap-2">
+                      <ViewSlotDialog medalSlot={medal} QRbase64={QRbase64} />
+
+                      <a href={QRbase64} class="btn btn-sm" download={`${medal.id}.png`}>
+                        <Icon name="lucide:download" class="size-4" />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </article>
+
+    <footer class="card">
+      <Pagination origin="/admin/slots" pagination={pagination} />
+    </footer>
+  </section>
+</Layout>

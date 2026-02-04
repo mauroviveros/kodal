@@ -1,0 +1,47 @@
+---
+import { BasicCard, PromoCard } from '@components/cards';
+import Layout from '@layout';
+import { actions } from 'astro:actions';
+
+if (!Astro.params.medal_id) return Astro.rewrite('/404');
+const { data } = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
+if (!data) return Astro.rewrite('/404');
+
+const { medal, pet } = data;
+if (!medal) return Astro.rewrite('/404');
+if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
+---
+
+<Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name}`}>
+  <article slot="actions">
+    <button
+      id="edit-button"
+      type="button"
+      class="btn btn-md"
+      data-pet-id={pet.id}
+      data-medal-id={medal.id}
+    >
+      Editar
+    </button>
+
+    <a href={`/medal/${medal.id}/edit`}>
+      <button type="button" class="btn btn-md btn-outline"> Editar (sin token) </button>
+    </a>
+  </article>
+  <BasicCard pet={pet} />
+  <PromoCard />
+</Layout>
+
+<script>
+  import { actions } from 'astro:actions';
+  const btn = document.getElementById('edit-button');
+  btn?.addEventListener('click', async () => {
+    const { petId, medalId } = btn.dataset;
+    if (!petId) return;
+    const { data } = await actions.generateToken({ pet_id: petId });
+    if (data?.token) {
+      const token = data.token;
+      window.location.href = `/medal/${medalId}/edit?token=${token.code}`;
+    }
+  });
+</script>

@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
       created_at: new Date().toISOString(),
     }));
 
-    const { data, error } = await supabase.from("medals_slot").insert(slots).select();
+    const { data, error } = await supabase.from("medals").insert(slots).select();
     if (error) throw error;
 
     return new Response(JSON.stringify(
