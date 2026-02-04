@@ -20,18 +20,18 @@
   "dependencies": {
     "@astrojs/vercel": "9.0.4",
     "@supabase/ssr": "^0.8.0",
-    "@supabase/supabase-js": "^2.93.2",
+    "@supabase/supabase-js": "^2.94.0",
     "@tailwindcss/vite": "4.1.18",
-    "astro": "5.16.16",
+    "astro": "5.17.1",
     "astro-icon": "1.1.5",
-    "minimatch": "^10.1.1",
+    "minimatch": "^10.1.2",
     "qrcode": "^1.5.4",
     "tailwindcss": "4.1.18",
-    "vercel": "^50.8.1"
+    "vercel": "^50.10.0"
   },
   "devDependencies": {
     "@iconify-json/devicon": "^1.2.57",
-    "@iconify-json/lucide": "1.2.87",
+    "@iconify-json/lucide": "1.2.88",
     "@types/crypto-js": "4.2.2",
     "@types/qrcode": "^1.5.6",
     "@typescript-eslint/parser": "^8.54.0",
@@ -45,6 +45,6 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "supabase": "^2.72.9"
+    "supabase": "^2.75.1"
   }
 }
