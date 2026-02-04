@@ -7,32 +7,44 @@ interface Props {
 }
 
 const { pagination, origin } = Astro.props;
+const isFirst = pagination.currentPage === 1;
+const isLast = pagination.currentPage === pagination.lastPage;
+const prevPage = Math.max(1, pagination.currentPage - 1);
+const nextPage = Math.min(pagination.lastPage, pagination.currentPage + 1);
 ---
 
 <article class="flex items-center justify-between px-6">
   <span class="text-md">Página: {pagination.currentPage}/{pagination.lastPage}</span>
   <div class="flex">
-    <a aria-disabled={pagination.currentPage === 1} href={`${origin}/1`} class="btn btn-md">
+    <a
+      aria-disabled={isFirst}
+      tabindex={isFirst ? -1 : undefined}
+      href={`${origin}/1`}
+      class:list={['btn btn-md', isFirst && 'pointer-events-none opacity-50']}
+    >
       <Icon name="lucide:chevrons-left" />
     </a>
     <a
-      aria-disabled={pagination.currentPage === 1}
-      href={`${origin}/${pagination.currentPage - 1}`}
-      class="btn btn-md"
+      aria-disabled={isFirst}
+      tabindex={isFirst ? -1 : undefined}
+      href={`${origin}/${prevPage}`}
+      class:list={['btn btn-md', isFirst && 'pointer-events-none opacity-50']}
     >
       <Icon name="lucide:chevron-left" />
     </a>
     <a
-      aria-disabled={pagination.currentPage === pagination.lastPage}
-      href={`${origin}/${pagination.currentPage + 1}`}
-      class="btn btn-md"
+      aria-disabled={isLast}
+      tabindex={isLast ? -1 : undefined}
+      href={`${origin}/${nextPage}`}
+      class:list={['btn btn-md', isLast && 'pointer-events-none opacity-50']}
     >
       <Icon name="lucide:chevron-right" />
     </a>
     <a
-      aria-disabled={pagination.currentPage === pagination.lastPage}
+      aria-disabled={isLast}
+      tabindex={isLast ? -1 : undefined}
       href={`${origin}/${pagination.lastPage}`}
-      class="btn btn-md"
+      class:list={['btn btn-md', isLast && 'pointer-events-none opacity-50']}
     >
       <Icon name="lucide:chevrons-right" />
     </a>
