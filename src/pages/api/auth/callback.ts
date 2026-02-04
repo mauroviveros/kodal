@@ -9,5 +9,11 @@ export const GET: APIRoute = async ({ request, url, cookies, redirect }) => {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
   if (error) return new Response(error.message, { status: 500 });
 
-  return redirect(url.searchParams.get("redirectTo") || "/");
+  const redirectTo = url.searchParams.get("redirectTo");
+  const safeRedirect =
+    redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")
+      ? redirectTo
+      : "/";
+
+  return redirect(safeRedirect);
 };
