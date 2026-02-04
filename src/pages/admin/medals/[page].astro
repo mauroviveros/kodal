@@ -52,6 +52,18 @@ const STATUS: Record<
     class: 'text-gray-600 bg-gray-100 border-gray-300',
   },
 };
+
+const ROWS = await Promise.all(
+  medals.map(async (medal) => {
+    const QRbase64 = await getSlotQR(medal.id);
+    return {
+      medal,
+      QRbase64,
+      date: new Date(medal.created_at),
+      status: STATUS[medal.status],
+    };
+  }),
+);
 ---
 
 <Layout showFooter={false} title="Kodal - Panel de Administración">
@@ -76,32 +88,27 @@ const STATUS: Record<
         </thead>
         <tbody>
           {
-            medals.map(async (medal) => {
-              const QRbase64 = await getSlotQR(medal.id);
-              const date = new Date(medal.created_at);
-              const status = STATUS[medal.status];
-              return (
-                <tr>
-                  <td class="truncate">{medal.id}</td>
-                  <td>{date.toLocaleString()}</td>
-                  <td>
-                    <span class:list={['badge border', status.class]}>
-                      <Icon name={status.icon} />
-                      {status.text}
-                    </span>
-                  </td>
-                  <td>
-                    <div class="flex items-center justify-end gap-2">
-                      <ViewSlotDialog medalSlot={medal} QRbase64={QRbase64} />
+            ROWS.map(({ medal, QRbase64, date, status }) => (
+              <tr>
+                <td class="truncate">{medal.id}</td>
+                <td>{date.toLocaleString()}</td>
+                <td>
+                  <span class:list={['badge border', status.class]}>
+                    <Icon name={status.icon} />
+                    {status.text}
+                  </span>
+                </td>
+                <td>
+                  <div class="flex items-center justify-end gap-2">
+                    <ViewSlotDialog medalSlot={medal} QRbase64={QRbase64} />
 
-                      <a href={QRbase64} class="btn btn-sm" download={`${medal.id}.png`}>
-                        <Icon name="lucide:download" class="size-4" />
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })
+                    <a href={QRbase64} class="btn btn-sm" download={`${medal.id}.png`}>
+                      <Icon name="lucide:download" class="size-4" />
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            ))
           }
         </tbody>
       </table>
