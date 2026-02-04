@@ -31,7 +31,7 @@ export default defineAction({
     if (medals_error) throw new Error(`Failed to fetch medals: ${medals_error.message}`);
 
     // 4. Calcular metadatos de paginación
-    const lastPage = Math.ceil(total / pageSize);
+    const lastPage = Math.max(1, Math.ceil(total / pageSize));
     const start = total > 0 ? offset + 1 : 0;
     const end = Math.min(offset + pageSize, total);
 
