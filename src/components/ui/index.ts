@@ -1,3 +1,5 @@
 export { default as Avatar } from './Avatar.astro';
 export { default as Dialog } from './Dialog.astro';
+export { default as Fieldset } from './Fieldset.astro';
 export { default as Input } from './Input.astro';
+export { default as Select } from './Select.astro';

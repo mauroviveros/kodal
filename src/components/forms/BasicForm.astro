@@ -1,5 +1,5 @@
 ---
-import { Input } from '@components/ui';
+import { Input, Select } from '@components/ui';
 import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
 
@@ -26,55 +26,54 @@ const { pet } = Astro.props;
   <header class="card-header">
     <h4 class="card-title">Información Básica</h4>
   </header>
-  <div class="card-content">
-    <div
-      class="grid grid-cols-1 gap-4 md:grid-cols-2 [&>article]:flex [&>article]:flex-col [&>article]:gap-2"
-    >
-      <Input
-        type="text"
-        name="name"
-        class="md:col-span-2"
-        aria-label="Nombre"
-        value={pet?.name}
-        maxlength="25"
-        required
-      />
 
-      <fieldset class="flex flex-col gap-2">
-        <label for="species" class="text-sm">Animal<span class="text-primary">*</span></label>
-        <select name="species" required>
-          {
-            ESPECIES.map(({ value, label }) => (
-              <option value={value} selected={(pet?.species ?? 'OTHER') === value}>
-                {label}
-              </option>
-            ))
-          }
-        </select>
-      </fieldset>
+  <div class:list={['card-content', 'grid grid-cols-1 space-x-2 md:grid-cols-2']}>
+    <Input
+      class:list={'md:col-span-2'}
+      type="text"
+      name="name"
+      id="pet-name-input"
+      label="Nombre"
+      value={pet?.name}
+      maxlength="25"
+      required
+    />
 
-      <Input type="text" name="breed" aria-label="Raza" value={pet?.breed} maxlength="25" />
+    <Select
+      name="species"
+      id="pet-species-select"
+      label="Animal"
+      value={pet?.species ?? 'OTHER'}
+      items={ESPECIES}
+      required
+    />
 
-      <fieldset class="flex flex-col gap-2">
-        <label for="gender" class="text-sm">Género<span class="text-primary">*</span></label>
-        <select name="gender" required>
-          {
-            GENDERS.map(({ value, label }) => (
-              <option value={value} selected={(pet?.gender ?? 'UNKNOWN') === value}>
-                {label}
-              </option>
-            ))
-          }
-        </select>
-      </fieldset>
+    <Input
+      type="text"
+      name="breed"
+      id="pet-breed-input"
+      label="Raza"
+      value={pet?.breed}
+      maxlength="25"
+    />
 
-      <Input
-        type="date"
-        name="birth_date"
-        aria-label="Fecha de nacimiento"
-        value={pet?.birth_date && toInputDateValue(pet.birth_date)}
-        max={toInputDateValue(new Date())}
-      />
-    </div>
+    <Select
+      name="gender"
+      id="pet-gender-select"
+      label="Género"
+      value={pet?.gender ?? 'UNKNOWN'}
+      items={GENDERS}
+      required
+    />
+
+    <Input
+      type="date"
+      name="birth_date"
+      id="pet-birth-date-input"
+      label="Fecha de nacimiento"
+      value={pet?.birth_date && toInputDateValue(pet.birth_date)}
+      min="1900-01-01"
+      max={toInputDateValue(new Date())}
+    />
   </div>
 </article>

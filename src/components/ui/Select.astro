@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Fieldset from './Fieldset.astro';
+
+interface Props extends HTMLAttributes<'select'> {
+  label?: string;
+  description?: string;
+  items?: Array<{ value: string; label: string }>;
+}
+
+const { id, label, description, class: className, items, ...props } = Astro.props;
+---
+
+<Fieldset
+  input={id?.toString()}
+  required={Boolean(props.required)}
+  description={description}
+  label={label}
+  class={className}
+>
+  <select id={id} {...props}>
+    {
+      items?.map(({ value, label }) => (
+        <option value={value} selected={props.value === value}>
+          {label}
+        </option>
+      ))
+    }
+  </select>
+  <slot />
+</Fieldset>
