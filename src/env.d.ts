@@ -2,6 +2,8 @@ interface ImportMetaEnv {
   readonly PUBLIC_SUPABASE_URL: string
   readonly PUBLIC_SUPABASE_PUBLISHABLE_KEY: string
   readonly SUPABASE_SECRET_KEY: string
+  readonly RESEND_API_KEY: string
+  readonly RESEND_TEMPLATE_ID: string
 }
 
 interface ImportMeta {

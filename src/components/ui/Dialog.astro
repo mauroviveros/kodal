@@ -1,0 +1,69 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+
+interface Props extends HTMLAttributes<'dialog'> {
+  title?: string | null;
+  description?: string | null;
+  showClose?: boolean;
+  id?: string | null;
+}
+
+const { title, description, showClose = true, id, class: className, ...props } = Astro.props;
+// const dialogId = id ?? '';
+---
+
+<slot name="button" />
+
+<dialog id={id} class:list={['relative', className]} {...props}>
+  {
+    showClose && (
+      <button
+        type="button"
+        class="btn btn-sm btn-outline absolute top-4 right-4 size-8 p-0"
+        aria-label="Cerrar"
+        data-dialog-close
+      >
+        <Icon name="lucide:x" class="size-4" />
+      </button>
+    )
+  }
+
+  {
+    (title || description || Astro.slots.header) && (
+      <header class="dialog-header text-left">
+        {title && <h2 class="dialog-title">{title}</h2>}
+        {description && <p class="dialog-description">{description}</p>}
+        <slot name="header" />
+      </header>
+    )
+  }
+
+  <section class="dialog-content">
+    <slot />
+  </section>
+
+  {
+    Astro.slots.footer && (
+      <footer class="dialog-content pt-0">
+        <slot name="footer" />
+      </footer>
+    )
+  }
+</dialog>
+
+<script define:vars={{ id }}>
+  const dialog = id ? document.getElementById(id) : null;
+  const openBtn = id ? document.getElementById(`${id}-btn`) : null;
+  const closeBtns = dialog?.querySelectorAll('[data-dialog-close]');
+
+  openBtn?.addEventListener('click', () => {
+    dialog?.showModal();
+  });
+
+  closeBtns?.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      dialog?.close();
+    });
+  });
+</script>

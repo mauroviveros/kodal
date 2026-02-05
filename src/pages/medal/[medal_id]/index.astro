@@ -1,6 +1,8 @@
 ---
 import { BasicCard, PromoCard } from '@components/cards';
+import { DialogIdentityVerification } from '@components/dialogs';
 import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
 
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
@@ -14,19 +16,7 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name}`}>
   <article slot="actions">
-    <button
-      id="edit-button"
-      type="button"
-      class="btn btn-md"
-      data-pet-id={pet.id}
-      data-medal-id={medal.id}
-    >
-      Editar
-    </button>
-
-    <a href={`/medal/${medal.id}/edit`}>
-      <button type="button" class="btn btn-md btn-outline"> Editar (sin token) </button>
-    </a>
+    <DialogIdentityVerification pet={pet} />
   </article>
   <BasicCard pet={pet} />
   <PromoCard />
