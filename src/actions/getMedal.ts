@@ -7,26 +7,22 @@ export default defineAction({
     medal_id: z.string().uuid(),
   }),
   handler: async ({ medal_id }, { request, cookies }) => {
-    try {
-      const supabase = createClient(request, cookies);
-      const { data, error } = await supabase
-        .from('medals')
-        .select('*, pets(*)')
-        .eq('id', medal_id)
-        .limit(1, { foreignTable: 'pets' })
-        .maybeSingle();
+    const supabase = createClient(request, cookies);
 
-      if (error) throw error;
+    // 1. Buscar la medalla con su mascota asociada
+    const { data, error: query_error } = await supabase
+      .from('medals')
+      .select('*, pets(*)')
+      .eq('id', medal_id)
+      .limit(1, { foreignTable: 'pets' })
+      .maybeSingle();
+    if (query_error) throw query_error;
 
-      if (data) {
-        const { pets, ...medal } = data;
-        return { medal, pet: pets};
-      }
-
-      return { medal: null, pet: null };
-    } catch (error) {
-      console.error(error);
-      throw error;
+    if (data) {
+      const { pets, ...medal } = data;
+      return { medal, pet: pets};
     }
+
+    return { medal: null, pet: null };
   },
 });
