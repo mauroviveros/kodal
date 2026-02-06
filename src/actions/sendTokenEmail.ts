@@ -53,8 +53,8 @@ export default defineAction({
 
     // 3. Enviar el correo
     const resend = new Resend(import.meta.env.RESEND_API_KEY);
-    const { data, error } = await resend.emails.send({
-      from: 'Kodal <onboarding@resend.dev>',
+    const { error } = await resend.emails.send({
+      from: import.meta.env.RESEND_FROM_EMAIL,
       to: [medal.email],
       subject: `Verificación de Identidad para ${pet.name}`,
       template: {
@@ -66,11 +66,8 @@ export default defineAction({
         }
       }
     });
-    if (error){
-      console.error(error.message);
-      throw error;
-    }
+    if (error) throw error;
 
-    return { success: true, data: {} };
+    return { success: true };
   }
 })
