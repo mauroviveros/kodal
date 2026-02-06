@@ -59,7 +59,8 @@ const ROWS = await Promise.all(
     return {
       medal,
       QRbase64,
-      date: new Date(medal.created_at),
+      updated_at: medal.pets?.updated_at ? new Date(medal.pets.updated_at) : null,
+      created_at: new Date(medal.created_at),
       status: STATUS[medal.status],
     };
   }),
@@ -81,18 +82,25 @@ const ROWS = await Promise.all(
       <table class="table-auto">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Fecha creacion</th>
-            <th>Estado</th>
+            <th>Mascota</th>
+            <th>Dueño</th>
+            <th>Correo</th>
+            <th class="text-end">Fecha ultima actualización</th>
+            <th class="text-end">Fecha de creación</th>
+            <th class="text-center">Estado</th>
+            <th class="text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {
-            ROWS.map(({ medal, QRbase64, date, status }) => (
+            ROWS.map(({ medal, QRbase64, updated_at, created_at, status }) => (
               <tr>
-                <td class="truncate">{medal.id}</td>
-                <td>{date.toLocaleString()}</td>
-                <td>
+                <td>{medal.pets?.name}</td>
+                <td>{medal.full_name}</td>
+                <td>{medal.email}</td>
+                <td class="text-end">{updated_at ? updated_at.toLocaleString() : ''}</td>
+                <td class="text-end">{created_at.toLocaleString()}</td>
+                <td align="center">
                   <span class:list={['badge border', status.class]}>
                     <Icon name={status.icon} />
                     {status.text}
