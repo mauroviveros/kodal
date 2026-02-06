@@ -26,19 +26,22 @@ export default defineAction({
 
     // 1. Generar token seguro y expiración
     const token_code = crypto.randomUUID();
-    const expires_at = new Date(Date.now() + 1000 * 60 * 30).toISOString(); // 30 min
+    const expires_at = new Date(Date.now() + 1000 * 60 * 15).toISOString(); // 15 min
 
-    // // 2. Validar que el mail se envíe al email registrado en la medalla
-    // const { data: medal, error: medal_error } = await supabase
-    //   .from('medals')
-    //   .select('email')
-    //   .eq('id', pet.id)
-    //   .limit(1)
-    //   .single();
-    // if (medal_error || !medal) throw new Error("Medal not found");
-    // if (medal.email !== to) throw new Error("Email does not match medal record");
+    // 2. Valido que la mascota no tenga un token activo
+    const { data: existing_token, error: token_query_error } = await supabase
+      .from('pet_tokens')
+      .select('code')
+      .eq('pet_id', pet.id)
+      .is('revoked_at', null)
+      .gt('expires_at', new Date().toISOString())
+      .limit(1)
+      .maybeSingle();
 
-    // 2. Guardar el token en la base (para validar luego)
+    if (token_query_error) throw token_query_error;
+    if (existing_token) throw new Error("A valid token already exists for this pet");
+
+    // 3. Guardar el token en la base (para validar luego)
     const { error: token_error } = await supabase
       .from('pet_tokens')
       .insert({
@@ -63,10 +66,8 @@ export default defineAction({
         }
       }
     });
-
-    // 5. Manejo de errores
     if (error) throw error;
 
-    return { success: true, data };
+    return { success: true, data: {} };
   }
 })

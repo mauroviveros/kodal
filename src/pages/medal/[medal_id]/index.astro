@@ -7,7 +7,7 @@ import { actions } from 'astro:actions';
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 
 const result = Astro.getActionResult(actions.sendTokenEmail);
-if (result?.data) return Astro.redirect('/medal/confirmation');
+if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}/email-sent`);
 
 const { data } = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 if (!data) return Astro.rewrite('/404');
