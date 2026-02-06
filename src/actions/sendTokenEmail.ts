@@ -66,7 +66,10 @@ export default defineAction({
         }
       }
     });
-    if (error) throw error;
+    if (error){
+      console.error(error.message);
+      throw error;
+    }
 
     return { success: true, data: {} };
   }
