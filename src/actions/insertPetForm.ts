@@ -5,7 +5,7 @@ import { insertPetSchema } from "./schemas";
 export default defineAction({
   accept: 'form',
   input: insertPetSchema,
-  handler: async ({ medal_id, ...payload }, { request, cookies, params }) => {
+  handler: async ({ medal_id, medal_email, medal_full_name, ...payload }, { request, cookies, params }) => {
     const supabase = createClient(request, cookies);
     const root = createRoot();
 
@@ -31,8 +31,6 @@ export default defineAction({
       .select()
       .single();
 
-    console.log('Insert result:', { pet, pet_error });
-
     if (pet_error || !pet) {
       console.error('Failed to Insert pet:', pet_error);
       throw new Error(`Failed to Insert pet: ${pet_error?.message || 'No data returned'}`);
@@ -42,7 +40,12 @@ export default defineAction({
     // 4. Actualizar el estado de la medalla a ACTIVE (usa admin para garantizar éxito)
     const { error: update_medal_error } = await root
       .from('medals')
-      .update({ status: 'ACTIVE' })
+      .update({
+        email: medal_email,
+        full_name: medal_full_name,
+        status: 'ACTIVE',
+        updated_at: new Date().toISOString()
+      })
       .eq('id', medal_id);
     if (update_medal_error) {
       // Rollback: eliminar el pet si falla activar la medalla

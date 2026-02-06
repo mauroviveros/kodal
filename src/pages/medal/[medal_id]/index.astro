@@ -16,7 +16,7 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name}`}>
   <article slot="actions">
-    <DialogIdentityVerification pet={pet} />
+    <DialogIdentityVerification pet={pet} medal={medal} />
   </article>
   <BasicCard pet={pet} />
   <PromoCard />

@@ -20,8 +20,7 @@ export default defineAction({
 
       if (data) {
         const { pets, ...medal } = data;
-        const pet = Array.isArray(pets) ? pets[0] : pets || null;
-        return { medal, pet};
+        return { medal, pet: pets};
       }
 
       return { medal: null, pet: null };

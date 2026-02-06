@@ -53,6 +53,8 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
+          email: string | null
+          full_name: string | null
           id: string
           manufactured_at: string | null
           manufactured_by: string | null
@@ -62,6 +64,8 @@ export type Database = {
         Insert: {
           code?: string | null
           created_at?: string
+          email?: string | null
+          full_name?: string | null
           id?: string
           manufactured_at?: string | null
           manufactured_by?: string | null
@@ -71,6 +75,8 @@ export type Database = {
         Update: {
           code?: string | null
           created_at?: string
+          email?: string | null
+          full_name?: string | null
           id?: string
           manufactured_at?: string | null
           manufactured_by?: string | null
@@ -86,6 +92,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          pet_id: string
           phone: string | null
           updated_at: string
         }
@@ -95,6 +102,7 @@ export type Database = {
           email: string
           full_name: string
           id?: string
+          pet_id: string
           phone?: string | null
           updated_at?: string
         }
@@ -104,42 +112,15 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          pet_id?: string
           phone?: string | null
           updated_at?: string
         }
-        Relationships: []
-      }
-      pet_owners: {
-        Row: {
-          created_at: string
-          id: string
-          owner_id: string
-          pet_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          owner_id: string
-          pet_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          owner_id?: string
-          pet_id?: string
-        }
         Relationships: [
           {
-            foreignKeyName: "pet_owners_owner_id_fkey"
-            columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "owners"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "pet_owners_pet_id_fkey"
+            foreignKeyName: "owners_pet_id_fkey"
             columns: ["pet_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "pets"
             referencedColumns: ["id"]
           },

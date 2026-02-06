@@ -7,9 +7,9 @@ import { actions } from 'astro:actions';
 
 interface Props extends HTMLAttributes<'dialog'> {
   pet: Database['public']['Tables']['pets']['Row'];
-  email?: string;
+  medal: Database['public']['Tables']['medals']['Row'];
 }
-const { pet, email = 'maurod.viveros@gmail.com', class: className, ...props } = Astro.props;
+const { pet, medal, class: className, ...props } = Astro.props;
 const id = `dialog-identity-verification-${pet.id}`;
 const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
 ---
@@ -32,8 +32,8 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
     method="POST"
     class="bg-muted/40 rounded-xl border p-4"
   >
-    <input type="hidden" name="pet" value={JSON.stringify({ id: pet.id, name: pet.name })} />
-    <input type="hidden" name="to" value={email} />
+    <input type="hidden" name="pet" value={JSON.stringify(pet)} />
+    <input type="hidden" name="medal" value={JSON.stringify(medal)} />
 
     <div class="flex items-center gap-3">
       <div
@@ -50,7 +50,7 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
     <p class="text-on-muted mt-4 text-sm">
       Enviaremos un código de verificación al email registrado:
     </p>
-    <p class="text-on-background mt-1 text-sm font-semibold">{email}</p>
+    <p class="text-on-background mt-1 text-sm font-semibold">{medal.email}</p>
   </form>
 
   <p class="text-on-muted text-sm">

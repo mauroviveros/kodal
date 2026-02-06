@@ -1,5 +1,5 @@
 ---
-import { BasicForm } from '@components/forms';
+import { BasicForm, MedalForm } from '@components/forms';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
@@ -35,12 +35,16 @@ if (response_token.error || !token) return Astro.redirect(`/medal/${Astro.params
     <p class="text-on-muted">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
 
-  <form action={actions.updatePetForm} method="POST" class="flex flex-col gap-6">
-    <input type="hidden" name="id" value={pet.id} />
-    <input type="hidden" name="medal_id" value={medal.id} />
+  <form
+    action={actions.updatePetForm}
+    method="POST"
+    id="update-pet-form"
+    class="flex flex-col gap-6"
+  >
     <input type="hidden" name="token_code" value={token_code} />
 
     <BasicForm pet={pet} />
+    <MedalForm medal={medal} />
 
     <div class="flex gap-4">
       {

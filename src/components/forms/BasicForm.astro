@@ -4,7 +4,7 @@ import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
 
 interface Props {
-  pet?: Database['public']['Tables']['pets']['Row'];
+  pet?: Database['public']['Tables']['pets']['Row'] | null;
 }
 
 const ESPECIES = [
@@ -21,6 +21,8 @@ const GENDERS = [
 
 const { pet } = Astro.props;
 ---
+
+{pet && <input type="hidden" name="id" value={pet.id} />}
 
 <article class="card">
   <header class="card-header">
@@ -72,8 +74,6 @@ const { pet } = Astro.props;
       id="pet-birth-date-input"
       label="Fecha de nacimiento"
       value={pet?.birth_date && toInputDateValue(pet.birth_date)}
-      min="1900-01-01"
-      max={toInputDateValue(new Date())}
     />
   </div>
 </article>

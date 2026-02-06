@@ -1,0 +1,40 @@
+---
+import { Input } from '@components/ui';
+import type { Database } from '@lib/database';
+
+interface Props {
+  medal: Database['public']['Tables']['medals']['Row'];
+}
+
+const { medal } = Astro.props;
+---
+
+<input type="hidden" name="medal_id" value={medal.id} />
+
+<article class="card">
+  <header class="card-header">
+    <h4 class="card-title">Información del Dueño</h4>
+  </header>
+
+  <div class="card-content">
+    <Input
+      type="text"
+      name={`medal_full_name`}
+      id={`medal-full_name-input`}
+      value={medal.full_name}
+      label="Nombre completo"
+      maxlength="50"
+      required
+    />
+
+    <Input
+      type="email"
+      name={`medal_email`}
+      id={`medal-email-input`}
+      value={medal.email}
+      label="Correo electrónico"
+      maxlength="50"
+      required
+    />
+  </div>
+</article>

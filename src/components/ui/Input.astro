@@ -17,7 +17,7 @@ const { id, label, description, class: className, ...props } = Astro.props;
   class:list={[className]}
   label={label}
 >
-  <input {...props} />
+  <input id={id?.toString()} {...props} />
   <slot />
 </Fieldset>
 
