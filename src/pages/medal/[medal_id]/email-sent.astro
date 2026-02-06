@@ -1,0 +1,112 @@
+---
+import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
+import { actions } from 'astro:actions';
+
+if (!Astro.params.medal_id) return Astro.rewrite('/404');
+const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
+const { medal, pet } = response.data ?? {};
+
+if (!pet || !medal) return Astro.rewrite('/404');
+---
+
+<Layout class="max-w-lg">
+  <article slot="actions">
+    <a href={`/medal/${Astro.params.medal_id}`} class="btn btn-md btn-filled text-sm">
+      <Icon name="lucide:arrow-left" class="size-4" />
+      Mascota
+    </a>
+  </article>
+
+  <span
+    class="bg-primary/10 relative mx-auto flex size-24 items-center justify-center rounded-full"
+  >
+    <Icon name="lucide:mail-check" class="text-primary size-12" />
+    <div
+      class="bg-primary absolute -top-1 -right-1 flex size-8 animate-bounce items-center justify-center rounded-full"
+    >
+      <span class="bg-primary text-on-primary text-sm font-bold">1</span>
+    </div>
+  </span>
+
+  <section class="card">
+    <div class="card-content flex flex-col items-center gap-6 px-8">
+      <div class="space-y-2 text-center">
+        <h1 class="text-on-background text-2xl font-bold text-balance">
+          Email de verificación enviado
+        </h1>
+        <p class="text-on-muted text-pretty">
+          Hemos enviado un enlace de verificación para que puedas editar el perfil de
+          <b class="text-on-background">{pet.name}</b>
+        </p>
+      </div>
+
+      <div class="bg-muted/50 inline-flex items-center gap-2 rounded-lg p-4">
+        <Icon name="lucide:mail" class="text-primary size-6" />
+        <span class="text-on-background font-medium">{medal.email}</span>
+      </div>
+
+      <ol class="space-y-4">
+        <li class="relative pl-8">
+          <span
+            class="bg-primary text-on-primary absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold"
+          >
+            1
+          </span>
+          <p class="text-on-background font-medium">Revisa tu bandeja de entrada</p>
+          <p class="text-on-muted text-sm text-balance">
+            Busca un correo de Kodal con el asunto
+            <span>"<u>Verificación de Identidad para {pet.name}</u>"</span>
+          </p>
+        </li>
+        <li class="relative pl-8">
+          <span
+            class="bg-primary text-on-primary absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold"
+          >
+            2
+          </span>
+          <p class="text-on-background font-medium">Haz clic en el enlace</p>
+          <p class="text-on-muted text-sm text-balance">El email contiene un botón directo</p>
+        </li>
+
+        <li class="relative pl-8">
+          <span
+            class="bg-on-muted/20 text-on-muted absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold"
+          >
+            3
+          </span>
+          <p class="text-on-background font-medium">Edita el perfil de {pet.name}</p>
+          <p class="text-on-muted text-sm text-balance">
+            Una vez verificado, podras actualizar toda la información
+          </p>
+        </li>
+      </ol>
+
+      <div
+        class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-2 text-sm text-amber-700"
+      >
+        <Icon name="lucide:clock" class="size-4" />
+        <span>El enlace expira en 15 minutos</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <article class="card-content">
+      <h2 class="text-on-background mb-3 font-semibold">No recibiste el correo?</h2>
+
+      <ul class="marker:text-primary list-inside list-disc">
+        <li>Revisa tu carpeta de spam o correo no deseado</li>
+        <li>Verifica que el email registrado sea correcto</li>
+        <li>Espera unos minutos, a veces puede demorar</li>
+      </ul>
+
+      <div class="mt-4 flex gap-2">
+        <button class="btn btn-lg w-full border">Reenviar correo</button>
+        <button disabled class="btn btn-lg w-full border">Contactar soporte</button>
+      </div>
+    </article>
+  </section>
+</Layout>
+<!-- flex items-start gap-3 -->
+<!-- w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 -->

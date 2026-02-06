@@ -2,10 +2,13 @@
 import { BasicCard, PromoCard } from '@components/cards';
 import { DialogIdentityVerification } from '@components/dialogs';
 import Layout from '@layout';
-import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
 
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
+
+const result = Astro.getActionResult(actions.sendTokenEmail);
+if (result?.data) return Astro.redirect('/medal/confirmation');
+
 const { data } = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 if (!data) return Astro.rewrite('/404');
 
@@ -21,17 +24,3 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
   <BasicCard pet={pet} />
   <PromoCard />
 </Layout>
-
-<script>
-  import { actions } from 'astro:actions';
-  const btn = document.getElementById('edit-button');
-  btn?.addEventListener('click', async () => {
-    const { petId, medalId } = btn.dataset;
-    if (!petId) return;
-    const { data } = await actions.generateToken({ pet_id: petId });
-    if (data?.token) {
-      const token = data.token;
-      window.location.href = `/medal/${medalId}/edit?token=${token.code}`;
-    }
-  });
-</script>
