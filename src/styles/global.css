@@ -63,39 +63,13 @@
     }
   }
 
-  a {
+  /* a {
     @apply text-on-muted text-sm transition-colors;
     @apply hover:text-primary hover:underline;
     &[aria-disabled='true'] {
       @apply pointer-events-none opacity-50;
     }
-  }
-
-  .btn {
-    @apply disabled:pointer-events-none disabled:opacity-50;
-    @apply cursor-pointer gap-1 rounded-md px-3 text-sm transition-all;
-    @apply inline-flex items-center justify-center;
-
-    &.btn-outline {
-      @apply bg-background text-on-background border;
-    }
-
-    &.btn-filled {
-      @apply bg-primary text-on-primary;
-    }
-
-    @apply hover:bg-accent hover:text-on-accent;
-
-    &.btn-sm {
-      @apply h-6 text-xs;
-    }
-    &.btn-md {
-      @apply h-8 px-2;
-    }
-    &.btn-lg {
-      @apply h-10 gap-2 px-4;
-    }
-  }
+  } */
 
   .badge {
     @apply flex w-fit shrink-0 items-center justify-center gap-1 border;
