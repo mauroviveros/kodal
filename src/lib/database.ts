@@ -51,6 +51,7 @@ export type Database = {
       }
       medals: {
         Row: {
+          address: string | null
           code: string | null
           created_at: string
           email: string | null
@@ -58,10 +59,13 @@ export type Database = {
           id: string
           manufactured_at: string | null
           manufactured_by: string | null
+          phone: string | null
+          relation_type: Database["public"]["Enums"]["MEDAL_RELATION"] | null
           status: Database["public"]["Enums"]["MEDAL_STATUS"]
           updated_at: string
         }
         Insert: {
+          address?: string | null
           code?: string | null
           created_at?: string
           email?: string | null
@@ -69,10 +73,13 @@ export type Database = {
           id?: string
           manufactured_at?: string | null
           manufactured_by?: string | null
+          phone?: string | null
+          relation_type?: Database["public"]["Enums"]["MEDAL_RELATION"] | null
           status?: Database["public"]["Enums"]["MEDAL_STATUS"]
           updated_at?: string
         }
         Update: {
+          address?: string | null
           code?: string | null
           created_at?: string
           email?: string | null
@@ -80,51 +87,12 @@ export type Database = {
           id?: string
           manufactured_at?: string | null
           manufactured_by?: string | null
+          phone?: string | null
+          relation_type?: Database["public"]["Enums"]["MEDAL_RELATION"] | null
           status?: Database["public"]["Enums"]["MEDAL_STATUS"]
           updated_at?: string
         }
         Relationships: []
-      }
-      owners: {
-        Row: {
-          address: string | null
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          pet_id: string
-          phone: string | null
-          updated_at: string
-        }
-        Insert: {
-          address?: string | null
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          pet_id: string
-          phone?: string | null
-          updated_at?: string
-        }
-        Update: {
-          address?: string | null
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          pet_id?: string
-          phone?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "owners_pet_id_fkey"
-            columns: ["pet_id"]
-            isOneToOne: true
-            referencedRelation: "pets"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       pet_tokens: {
         Row: {
@@ -219,6 +187,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      MEDAL_RELATION:
+        | "OWNER"
+        | "FATHER"
+        | "MOTHER"
+        | "GUARDIAN"
+        | "VETERINARIAN"
+        | "EMERGENCY"
       MEDAL_STATUS: "CREATED" | "MANUFACTURED" | "ACTIVE" | "LOST" | "DISABLED"
       PET_GENDER: "MALE" | "FEMALE" | "UNKNOWN"
       PET_GENDER_old: "MALE" | "GENDER" | "UNKNOWN"
@@ -351,6 +326,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      MEDAL_RELATION: [
+        "OWNER",
+        "FATHER",
+        "MOTHER",
+        "GUARDIAN",
+        "VETERINARIAN",
+        "EMERGENCY",
+      ],
       MEDAL_STATUS: ["CREATED", "MANUFACTURED", "ACTIVE", "LOST", "DISABLED"],
       PET_GENDER: ["MALE", "FEMALE", "UNKNOWN"],
       PET_GENDER_old: ["MALE", "GENDER", "UNKNOWN"],

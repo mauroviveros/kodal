@@ -1,5 +1,5 @@
 ---
-import { BasicCard, PromoCard } from '@components/cards';
+import { CardPetBasic, CardPetContact, CardPromotion } from '@components/cards';
 import { DialogIdentityVerification } from '@components/dialogs';
 import Layout from '@layout';
 import { actions } from 'astro:actions';
@@ -21,6 +21,8 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
   <article slot="actions">
     <DialogIdentityVerification pet={pet} medal={medal} />
   </article>
-  <BasicCard pet={pet} />
-  <PromoCard />
+
+  <CardPetBasic pet={pet} />
+  <CardPetContact medal={medal} />
+  <CardPromotion />
 </Layout>

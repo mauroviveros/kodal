@@ -46,7 +46,7 @@
     }
   }
 
-  .card {
+  /* .card {
     @apply bg-card text-on-card flex flex-col gap-6 rounded-xl border py-6 shadow-lg;
     & .card-content {
       @apply space-y-2 px-6;
@@ -61,7 +61,7 @@
         @apply text-on-muted text-sm;
       }
     }
-  }
+  } */
 
   .badge {
     @apply flex w-fit shrink-0 items-center justify-center gap-1 border;

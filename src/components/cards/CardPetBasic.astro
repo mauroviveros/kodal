@@ -1,5 +1,6 @@
 ---
 import { Avatar } from '@components/ui';
+import { Card } from '@components/ui/card';
 import type { Database } from '@lib/database';
 import { getTimeSince } from '@utils';
 interface Props {
@@ -11,7 +12,7 @@ const info = [
   {
     label: 'Raza',
     value: pet.breed,
-    display: pet.breed || 'Desconocida',
+    display: pet.breed,
   },
   {
     label: 'Edad',
@@ -21,21 +22,13 @@ const info = [
 ].filter(({ value }) => value);
 ---
 
-<article class="card">
+<Card>
   <header class="from-primary/10 to-secondary/10 bg-linear-to-br p-8 text-center">
     <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
-    <h1 class="mb-2 text-3xl font-bold text-balance break-all">{pet.name}</h1>
+    <h1 class="mb-2 break-all">{pet.name}</h1>
   </header>
 
-  <div class="card-content">
-    {
-      pet.notes && (
-        <blockquote class="bg-primary/5 border-primary/20 rounded-lg border p-4">
-          <p class="text-on-muted text-center text-sm">{pet.notes}</p>
-        </blockquote>
-      )
-    }
-
+  <article class="p-6">
     <dl
       class:list={[
         'grid grid-cols-1 gap-4',
@@ -52,7 +45,7 @@ const info = [
         ))
       }
     </dl>
-  </div>
-</article>
+  </article>
+</Card>
 
 <!-- {`https://wa.me/${medal.owner_phone}?text=${encodeURIComponent(phone_message)}`} -->

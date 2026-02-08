@@ -12,7 +12,8 @@
       "@utils": ["./utils/index.ts"],
       "@styles/*": ["./styles/*"],
       "@lib/*": ["./lib/*"],
-      "@middlewares/*": ["./middlewares/*"]
+      "@middlewares/*": ["./middlewares/*"],
+      "@constants": ["./constants/index.ts"]
     }
   }
 }

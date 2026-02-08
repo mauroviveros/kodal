@@ -1,10 +1,11 @@
 ---
 import { Button } from '@components/ui';
+import { Card } from '@components/ui/card';
 import { Icon } from 'astro-icon/components';
 ---
 
-<article class="card text-center">
-  <div class="card-content">
+<Card class="text-center">
+  <article>
     <h3 class="mb-3 text-xl font-bold">¿Te gusta esta medalla inteligente?</h3>
     <p class="text-on-muted mb-6 text-pretty">
       Protege a tu mascota con nuestra tecnología de identificación digital. Fácil de usar, siempre
@@ -15,5 +16,5 @@ import { Icon } from 'astro-icon/components';
       Consigue tu Medalla
       <Icon name="lucide:shopping-cart" />
     </Button>
-  </div>
-</article>
+  </article>
+</Card>
