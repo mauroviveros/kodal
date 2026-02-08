@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import type { Pagination } from '@types';
+import { Button } from '@components/ui';
 interface Props {
   origin: string;
   pagination: Pagination;
@@ -15,38 +16,18 @@ const nextPage = Math.min(pagination.lastPage, pagination.currentPage + 1);
 
 <article class="flex items-center justify-between px-6">
   <span class="text-md">Página: {pagination.currentPage}/{pagination.lastPage}</span>
-  <div class="flex">
-    <a
-      aria-disabled={isFirst}
-      tabindex={isFirst ? -1 : undefined}
-      href={`${origin}/1`}
-      class:list={['btn btn-md', isFirst && 'pointer-events-none opacity-50']}
-    >
+  <div class="flex gap-1">
+    <Button variant="outline" href={`${origin}/1`} disabled={isFirst}>
       <Icon name="lucide:chevrons-left" />
-    </a>
-    <a
-      aria-disabled={isFirst}
-      tabindex={isFirst ? -1 : undefined}
-      href={`${origin}/${prevPage}`}
-      class:list={['btn btn-md', isFirst && 'pointer-events-none opacity-50']}
-    >
+    </Button>
+    <Button variant="outline" href={`${origin}/${prevPage}`} disabled={isFirst}>
       <Icon name="lucide:chevron-left" />
-    </a>
-    <a
-      aria-disabled={isLast}
-      tabindex={isLast ? -1 : undefined}
-      href={`${origin}/${nextPage}`}
-      class:list={['btn btn-md', isLast && 'pointer-events-none opacity-50']}
-    >
+    </Button>
+    <Button variant="outline" href={`${origin}/${nextPage}`} disabled={isLast}>
       <Icon name="lucide:chevron-right" />
-    </a>
-    <a
-      aria-disabled={isLast}
-      tabindex={isLast ? -1 : undefined}
-      href={`${origin}/${pagination.lastPage}`}
-      class:list={['btn btn-md', isLast && 'pointer-events-none opacity-50']}
-    >
+    </Button>
+    <Button variant="outline" href={`${origin}/${pagination.lastPage}`} disabled={isLast}>
       <Icon name="lucide:chevrons-right" />
-    </a>
+    </Button>
   </div>
 </article>

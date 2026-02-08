@@ -15,6 +15,7 @@ const {
   size = 'base',
   variant = 'solid',
   disabled,
+  tabindex,
   class: className,
   ...props
 } = Astro.props as Props;
@@ -25,8 +26,8 @@ const { href, target, ...anchorProps } = props as HTMLAttributes<'a'>;
 const SIZE_CLASSES = {
   xs: 'px-2 py-1 text-sm [>svg]:size-3',
   sm: 'px-3 py-1.5 text-sm [>svg]:size-3',
-  base: 'px-4 py-2 text-base [>svg]:size-4',
-  lg: 'px-6 py-3 text-lg [>svg]:size-5',
+  base: 'px-4 py-2 text-sm [>svg]:size-4',
+  lg: 'px-6 py-3 text-base [>svg]:size-5',
 };
 const VARIANT_CLASSES = {
   solid: 'bg-primary text-on-primary hover:bg-primary/90',
@@ -49,6 +50,7 @@ const classes = [
       href={href}
       rel={target === '_blank' && anchorProps.rel ? 'noopener noreferrer' : anchorProps.rel}
       target={target}
+      tabindex={disabled ? -1 : tabindex}
       aria-disabled={disabled}
       class:list={[classes]}
       {...anchorProps}
@@ -61,6 +63,7 @@ const classes = [
       class:list={[classes]}
       aria-disabled={disabled}
       disabled={disabled}
+      tabindex={disabled ? -1 : tabindex}
       {...buttonProps}
     >
       <slot />

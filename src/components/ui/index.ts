@@ -3,4 +3,5 @@ export { default as Button } from './Button.astro';
 export { default as Dialog } from './Dialog.astro';
 export { default as Fieldset } from './Fieldset.astro';
 export { default as Input } from './Input.astro';
+export { default as Link } from './Link.astro';
 export { default as Select } from './Select.astro';

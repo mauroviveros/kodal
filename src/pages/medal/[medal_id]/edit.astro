@@ -1,5 +1,6 @@
 ---
 import { BasicForm, MedalForm } from '@components/forms';
+import { Button } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
@@ -47,18 +48,14 @@ if (response_token.error || !token) return Astro.redirect(`/medal/${Astro.params
     <MedalForm medal={medal} />
 
     <div class="flex gap-4">
-      {
-        medal.id && (
-          <a href={`/medal/${medal?.id}`} class="btn btn-lg btn-outline flex-1">
-            Cancelar
-          </a>
-        )
-      }
+      <Button size="lg" variant="outline" href={`/medal/${medal?.id}`} class="flex-1">
+        Cancelar
+      </Button>
 
-      <button type="submit" class="btn btn-lg btn-filled flex-1">
+      <Button size="lg" type="submit" class="flex-1">
         <Icon name="lucide:save" />
-        {medal.id ? 'Guardar' : 'Crear'}
-      </button>
+        Guardar
+      </Button>
     </div>
   </form>
 </Layout>

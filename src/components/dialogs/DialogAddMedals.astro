@@ -1,49 +1,40 @@
 ---
+import { Button, Dialog, Input } from '@components/ui';
 import { Icon } from 'astro-icon/components';
 ---
 
-<button id={`dialog-add-medals-btn`} type="button" class="btn btn-filled btn-md">
+<Button id="dialog-add-medals-btn">
   <Icon name="lucide:plus" class="size-4" />
   Crear medallas
-</button>
+</Button>
 
-<dialog id="dialog-add-medals" closedby="any">
-  <header class="dialog-header">
-    <h2 class="dialog-title">Crear Medallas Nuevas</h2>
-    <p class="dialog-description">
-      Especifica la cantidad de medallas que deseas crear (máximo 100)
-    </p>
-  </header>
-
+<Dialog
+  title="Crear Medallas Nuevas"
+  description="Especifica la cantidad de medallas que deseas crear (máximo 100)"
+  id="dialog-add-medals"
+  closedby="any"
+>
   <form id="dialog-add-medals-form" class="dialog-content">
-    <fieldset>
-      <label for="quantity" class="text-sm">Cantidad</label>
-      <input
-        type="number"
-        name="quantity"
-        value="1"
-        min="1"
-        max="100"
-        class="input w-full"
-        required
-      />
-    </fieldset>
+    <Input
+      type="number"
+      name="quantity"
+      label="Cantidad de Medallas"
+      min="1"
+      max="100"
+      value="1"
+      required
+    />
 
-    <button type="submit" class="btn btn-lg btn-filled">Crear medallas</button>
+    <Button type="submit" size="lg"> Crear medallas </Button>
   </form>
-</dialog>
+</Dialog>
 
 <script>
   import { actions } from 'astro:actions';
 
   const dialog = document.getElementById('dialog-add-medals') as HTMLDialogElement;
-  const openBtn = document.getElementById('dialog-add-medals-btn') as HTMLButtonElement;
   const form = document.getElementById('dialog-add-medals-form') as HTMLFormElement;
   const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-
-  openBtn?.addEventListener('click', () => {
-    dialog?.showModal();
-  });
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();

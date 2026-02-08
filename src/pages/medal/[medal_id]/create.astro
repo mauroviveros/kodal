@@ -1,5 +1,6 @@
 ---
 import { BasicForm, MedalForm } from '@components/forms';
+import { Button } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
@@ -33,10 +34,10 @@ if (!medal) return Astro.rewrite('/404');
     <MedalForm medal={medal} />
 
     <div class="flex gap-4">
-      <button type="submit" class="btn btn-lg btn-filled flex-1">
+      <Button size="lg" type="submit" class="flex-1">
         <Icon name="lucide:save" />
         Crear
-      </button>
+      </Button>
     </div>
   </form>
 </Layout>

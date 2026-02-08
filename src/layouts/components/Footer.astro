@@ -1,25 +1,25 @@
+---
+import { Link } from '@components/ui';
+---
+
 <footer class="bg-muted/30 flex flex-col justify-center border-t">
   <div class="container mx-auto px-4 py-6 text-center">
     <article class="text-on-muted flex items-center justify-center gap-6 text-sm">
-      <a href="/privacidad" aria-disabled="true">Política de Privacidad</a>
-      <a href="/terminos" aria-disabled="true">Términos de Servicio</a>
-      <a href="/soporte" aria-disabled="true">Soporte</a>
-      <a href="/admin">Administración</a>
+      <Link href="/privacidad" disabled>Políticas de Privacidad</Link>
+      <Link href="/terminos" disabled>Términos de Servicio</Link>
+      <Link href="/soporte" disabled>Soporte</Link>
+      <Link href="/admin">Administración</Link>
     </article>
 
     <p class="text-on-muted mt-4 text-xs">
-      © 2025 Kodal. Manteniendo a las mascotas seguras y conectadas.
+      © 2026 Kodal. Manteniendo a las mascotas seguras y conectadas.
     </p>
+
     <p class="text-on-muted mt-2 text-xs">
       Diseñado y construido con ❤️ por
-      <a
-        href="https://mauroviveros.com.ar/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-primary hover:text-primary/80 transition-colors hover:underline"
-      >
-        Mauro Daniel viveros
-      </a>
+      <Link href="https://mauroviveros.com.ar/" target="_blank" class="text-primary">
+        Mauro Daniel Viveros
+      </Link>
     </p>
   </div>
 </footer>

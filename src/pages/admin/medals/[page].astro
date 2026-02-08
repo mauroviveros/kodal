@@ -1,11 +1,12 @@
 ---
 import QRCode from 'qrcode';
 import Layout from '@layout';
-import { AddMedalsDialog, ViewSlotDialog } from '@components/dialogs';
+import { DialogAddMedals, DialogDetailMedal } from '@components/dialogs';
 import { Icon } from 'astro-icon/components';
 import { Pagination } from '@components/common';
 import { actions } from 'astro:actions';
 import type { Database } from '@lib/database';
+import { Button } from '@components/ui';
 
 const { data: response, error } = await Astro.callAction(actions.getMedalsPaginated, {
   page: parseInt(Astro.params.page || '1'),
@@ -73,7 +74,7 @@ const ROWS = await Promise.all(
 
   <section class="flex flex-col gap-2">
     <header class="card flex-row items-center justify-end px-6">
-      <AddMedalsDialog />
+      <DialogAddMedals />
     </header>
 
     <article class="card overflow-x-auto">
@@ -110,11 +111,10 @@ const ROWS = await Promise.all(
                 </td>
                 <td>
                   <div class="flex items-center justify-end gap-2">
-                    <ViewSlotDialog medalSlot={medal} QRbase64={QRbase64} />
-
-                    <a href={QRbase64} class="btn btn-sm" download={`${medal.id}.png`}>
-                      <Icon name="lucide:download" class="size-4" />
-                    </a>
+                    <DialogDetailMedal medal={medal} QRbase64={QRbase64} />
+                    <Button href={QRbase64} variant="ghost" size="sm" download={`${medal.id}.png`}>
+                      <Icon name="lucide:download" />
+                    </Button>
                   </div>
                 </td>
               </tr>

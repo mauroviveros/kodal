@@ -1,4 +1,5 @@
 ---
+import { Button, Link } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 ---
@@ -24,10 +25,10 @@ import { Icon } from 'astro-icon/components';
       <input type="hidden" name="provider" value="github" />
       <input type="hidden" name="redirectTo" value={Astro.url.searchParams.get('redirectTo')} />
 
-      <button type="submit" class="btn btn-outline btn-lg h-12 w-full">
-        <Icon name="devicon:github" class="size-5" />
+      <Button variant="outline" size="lg" type="submit" class="w-full">
+        <Icon name="devicon:github" />
         <span class="text-base font-medium">Continuar con GitHub</span>
-      </button>
+      </Button>
 
       <div
         class="before:border-on-muted relative flex justify-center text-xs uppercase before:absolute before:top-1/2 before:w-full before:border-t"
@@ -43,7 +44,7 @@ import { Icon } from 'astro-icon/components';
       </div>
 
       <div class="text-center">
-        <a href="/">Volver al inicio </a>
+        <Link href="/">Volver al inicio</Link>
       </div>
     </form>
   </article>

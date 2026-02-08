@@ -1,34 +1,30 @@
 ---
 import type { Database } from '@lib/database';
 import { Icon } from 'astro-icon/components';
-import type { HTMLAttributes } from 'astro/types';
-import { Dialog } from '@components/ui';
+import { Button, Dialog } from '@components/ui';
 import { actions } from 'astro:actions';
 
-interface Props extends HTMLAttributes<'dialog'> {
+interface Props {
   pet: Database['public']['Tables']['pets']['Row'];
   medal: Database['public']['Tables']['medals']['Row'];
 }
-const { pet, medal, class: className, ...props } = Astro.props;
-const id = `dialog-identity-verification-${pet.id}`;
+const { pet, medal } = Astro.props;
 const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
 ---
 
-<button id={`${id}-btn`} type="button" class="btn btn-filled btn-md">
-  <Icon name="lucide:edit" class="size-4" />
+<Button id={`dialog-identity-verification-${pet.id}-btn`} size="xs">
+  <Icon name="lucide:edit" />
   Editar
-</button>
+</Button>
 
 <Dialog
   title="Verificación de Identidad"
   description="Para proteger la información de tu mascota, necesitamos verificar tu identidad."
-  id={id}
+  id={`dialog-identity-verification-${pet.id}`}
   closedby="any"
-  class={className}
-  {...props}
 >
   <form
-    id={`${id}-form`}
+    id={`dialog-identity-verification-${pet.id}-form`}
     action={actions.sendTokenEmail}
     method="POST"
     class="bg-muted/40 rounded-xl border p-4"
@@ -60,10 +56,10 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
   </p>
 
   <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" slot="footer">
-    <button type="button" class="btn btn-outline btn-lg" data-dialog-close>Cancelar</button>
-    <button type="submit" form={`${id}-form`} class="btn btn-filled btn-lg">
+    <Button variant="outline">Cancelar</Button>
+    <Button type="submit" form={`dialog-identity-verification-${pet.id}-form`}>
       <Icon name="lucide:mail" class="size-4" />
       Enviar Código
-    </button>
+    </Button>
   </div>
 </Dialog>

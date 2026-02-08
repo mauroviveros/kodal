@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { Icon } from 'astro-icon/components';
+import Button from './Button.astro';
 
 interface Props extends HTMLAttributes<'dialog'> {
   title?: string | null;
@@ -18,14 +19,9 @@ const { title, description, showClose = true, id, class: className, ...props } =
 <dialog id={id} class:list={['relative', className]} {...props}>
   {
     showClose && (
-      <button
-        type="button"
-        class="btn btn-sm btn-outline absolute top-4 right-4 size-8 p-0"
-        aria-label="Cerrar"
-        data-dialog-close
-      >
+      <Button variant="outline" size="xs" class="absolute top-4 right-4" data-dialog-close>
         <Icon name="lucide:x" class="size-4" />
-      </button>
+      </Button>
     )
   }
 

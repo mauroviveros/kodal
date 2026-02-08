@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'astro/types';
 type Variant = 'primary' | 'underline';
 
 type Props = HTMLAttributes<'a'> & {
-  href: string;
+  href: string | URL;
   disabled?: boolean;
   variant?: Variant;
 };
@@ -25,7 +25,7 @@ const VARIANT_CLASSES: Record<Variant, string> = {
 };
 
 const classes = [
-  'inline-flex items-center gap-1 transition-colors',
+  'space-x-1 space-y-1 transition-colors',
   'aria-disabled:pointer-events-none aria-disabled:opacity-50',
   VARIANT_CLASSES[variant],
   className,
@@ -42,20 +42,3 @@ const classes = [
 >
   <slot />
 </a>
-
-<!-- <a
-  href="https://mauroviveros.com.ar/"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="text-primary hover:text-primary/80 transition-colors hover:underline"
->
-  Mauro Daniel viveros
-</a> -->
-
-<!-- /* a {
-    @apply text-on-muted text-sm transition-colors;
-    @apply hover:text-primary hover:underline;
-    &[aria-disabled='true'] {
-      @apply pointer-events-none opacity-50;
-    }
-  } */ -->
