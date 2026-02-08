@@ -11,14 +11,13 @@ interface Props {
 const { medal } = Astro.props;
 ---
 
-<input type="hidden" name="medal_id" value={medal.id} />
-
 <Card>
   <h2 class="leading-none font-semibold">Información de contacto</h2>
+  <input type="hidden" name="medal_id" value={medal.id} />
 
   <article class="grid space-y-2">
     <Select
-      name="relation_type"
+      name="medal_relation_type"
       id="medal-relation_type-select"
       value={medal.relation_type ?? 'OTHER'}
       label="Relación con la mascota"
@@ -47,7 +46,7 @@ const { medal } = Astro.props;
       label="Correo electrónico"
       placeholder="tu@email.com"
       description="Usaremos este email para verificar tu identidad."
-      maxlength="50"
+      maxlength="100"
       required
     />
 
@@ -59,8 +58,8 @@ const { medal } = Astro.props;
       label="Teléfono"
       placeholder="+54 9 11 1234-5678"
       description="Incluye el código de país y área para asegurar que podamos contactarte."
-      maxlength="50"
-      required
+      minlength="7"
+      maxlength="20"
     />
   </article>
 </Card>

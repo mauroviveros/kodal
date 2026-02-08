@@ -25,10 +25,7 @@ const { token } = response_token.data || {};
 if (response_token.error || !token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 ---
 
-<Layout
-  class="max-w-2xl"
-  title={`Kodal - ${medal.id ? `medalla de ${pet.name}` : 'Nueva medalla'}`}
->
+<Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name} - Editar información`}>
   <hgroup class="mb-6 flex flex-col gap-2">
     <h1 class="text-3xl font-bold">
       Editar información de <span class="text-primary">{pet.name}</span>

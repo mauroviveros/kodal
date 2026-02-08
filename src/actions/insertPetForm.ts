@@ -5,7 +5,7 @@ import { insertPetSchema } from "./schemas";
 export default defineAction({
   accept: 'form',
   input: insertPetSchema,
-  handler: async ({ medal_id, medal_email, medal_full_name, ...payload }, { request, cookies, params }) => {
+  handler: async ({ medal_id, medal_email, medal_full_name, medal_phone, medal_relation_type, ...payload }, { request, cookies, params }) => {
     const supabase = createClient(request, cookies);
     const root = createRoot();
 
@@ -43,6 +43,8 @@ export default defineAction({
       .update({
         email: medal_email,
         full_name: medal_full_name,
+        phone: medal_phone,
+        relation_type: medal_relation_type,
         status: 'ACTIVE',
         updated_at: new Date().toISOString()
       })

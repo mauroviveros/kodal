@@ -4,7 +4,9 @@ import { Constants } from "@lib/database";
 export const petSchema = z.object({
   medal_id: z.string().uuid(),
   medal_full_name: z.string().min(1).max(50),
-  medal_email: z.string().email(),
+  medal_email: z.string().email().max(100),
+  medal_phone: z.string().min(7).max(20).optional(),
+  medal_relation_type: z.enum(Constants.public.Enums.MEDAL_RELATION),
   name: z.string().min(1).max(50),
   species: z.enum(Constants.public.Enums.PET_SPECIES),
   gender: z.enum(Constants.public.Enums.PET_GENDER),
