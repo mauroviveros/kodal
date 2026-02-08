@@ -7,9 +7,10 @@ import { actions } from 'astro:actions';
 
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
-const { medal, pet } = response.data ?? {};
+const { medal, pet, token } = response.data ?? {};
 
 if (!pet || !medal) return Astro.rewrite('/404');
+if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 ---
 
 <Layout class="max-w-lg">

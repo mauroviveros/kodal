@@ -1,3 +1,4 @@
+import type { Database } from "@lib/database";
 import { createClient } from "@lib/supabase";
 import { z } from "astro/zod";
 import { defineAction } from "astro:actions";
@@ -16,13 +17,28 @@ export default defineAction({
       .eq('id', medal_id)
       .limit(1, { foreignTable: 'pets' })
       .maybeSingle();
-    if (query_error) throw query_error;
+    // if (query_error || !data) throw new Error("Medal not found");
+    if (query_error || !data) return { medal: null, pet: null, token: null };
 
-    if (data) {
-      const { pets, ...medal } = data;
-      return { medal, pet: pets};
-    }
+    // 2. Separar la medalla de la mascota (si existe)
+    const { pets, ...medal } = data;
+    if(!pets) return { medal: data, pet: null, token: null };
+    const pet = (Array.isArray(pets) ? pets[0] : pets) as Database["public"]["Tables"]["pets"]["Row"];
 
-    return { medal: null, pet: null };
+    // 2. Obtener el token activo de la mascota (si existe)
+    const { data: token, error: token_error } = await supabase
+      .from('pet_tokens')
+      .select('*')
+      .eq('pet_id', pet.id)
+      .is('revoked_at', null)
+      .gt('expires_at', new Date().toISOString())
+      .limit(1)
+      .maybeSingle();
+    if (token_error) throw token_error;
+
+
+    return { medal, pet, token };
+
+
   },
 });

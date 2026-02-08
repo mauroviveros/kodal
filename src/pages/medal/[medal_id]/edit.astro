@@ -11,18 +11,10 @@ if (!Astro.params.medal_id) return Astro.rewrite('/404');
 const result = Astro.getActionResult(actions.updatePetForm);
 if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 
-//TODO handle action errors
-
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
-const { medal, pet } = response.data ?? {};
-//TODO handle errors properly
+const { medal, pet, token } = response.data ?? {};
 if (response.error || !medal || !pet) return Astro.rewrite('/404');
-
-if (token_code === null) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
-const response_token = await Astro.callAction(actions.getToken, { token_code, pet_id: pet.id });
-const { token } = response_token.data || {};
-//TODO handle errors properly
-if (response_token.error || !token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+if (!token || token.code !== token_code) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 ---
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name} - Editar información`}>

@@ -8,15 +8,11 @@ import { actions } from 'astro:actions';
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 
 const result = Astro.getActionResult(actions.insertPetForm);
-console.log(result);
-// if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
-//TODO handle action errors
+if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 const { medal, pet } = response.data ?? {};
 if (response.error) return Astro.rewrite('/404');
-//TODO handle errors properly
-
 if (pet) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 if (!medal) return Astro.rewrite('/404');
 ---
