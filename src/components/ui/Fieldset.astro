@@ -11,10 +11,10 @@ interface Props extends HTMLAttributes<'fieldset'> {
 const { label, description, required, class: className, input, ...props } = Astro.props;
 ---
 
-<fieldset class:list={['flex flex-col gap-2', className]} {...props}>
+<fieldset class:list={['flex flex-col', className]} {...props}>
   {
     label && (
-      <label for={input} class:list="text-sm">
+      <label for={input} class="mb-2 text-sm">
         {label}
         {required && <span class="text-primary">*</span>}
       </label>
@@ -23,5 +23,5 @@ const { label, description, required, class: className, input, ...props } = Astr
 
   <slot />
 
-  {description && <p class:list="text-on-muted text-xs">{description}</p>}
+  {description && <p class="text-on-muted mt-1 text-xs">{description}</p>}
 </fieldset>

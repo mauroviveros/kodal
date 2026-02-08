@@ -2,6 +2,7 @@
 import { Input, Select } from '@components/ui';
 import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
+import { Card } from '@components/ui/card';
 
 interface Props {
   pet?: Database['public']['Tables']['pets']['Row'] | null;
@@ -24,18 +25,18 @@ const { pet } = Astro.props;
 
 {pet && <input type="hidden" name="id" value={pet.id} />}
 
-<article class="card">
-  <header class="card-header">
-    <h4 class="card-title">Información Básica</h4>
-  </header>
+<Card>
+  <h2 class="leading-none font-semibold">Información Básica</h2>
 
-  <div class:list={['card-content', 'grid grid-cols-1 space-x-2 md:grid-cols-2']}>
+  <article class="grid grid-cols-1 space-y-2 space-x-2 md:grid-cols-2">
     <Input
       class:list={'md:col-span-2'}
       type="text"
       name="name"
       id="pet-name-input"
       label="Nombre"
+      placeholder="Ej: Luna"
+      description="Nombre visible en el perfil de la mascota."
       value={pet?.name}
       maxlength="25"
       required
@@ -45,6 +46,7 @@ const { pet } = Astro.props;
       name="species"
       id="pet-species-select"
       label="Animal"
+      description="Selecciona la especie para personalizar el perfil."
       value={pet?.species ?? 'OTHER'}
       items={ESPECIES}
       required
@@ -55,6 +57,8 @@ const { pet } = Astro.props;
       name="breed"
       id="pet-breed-input"
       label="Raza"
+      placeholder="Ej: Labrador"
+      description="Opcional. Ayuda a identificarla mejor."
       value={pet?.breed}
       maxlength="25"
     />
@@ -63,6 +67,7 @@ const { pet } = Astro.props;
       name="gender"
       id="pet-gender-select"
       label="Género"
+      description="Indica el género de la mascota."
       value={pet?.gender ?? 'UNKNOWN'}
       items={GENDERS}
       required
@@ -73,7 +78,8 @@ const { pet } = Astro.props;
       name="birth_date"
       id="pet-birth-date-input"
       label="Fecha de nacimiento"
+      description="Si no la conoces, deja el campo vacío."
       value={pet?.birth_date && toInputDateValue(pet.birth_date)}
     />
-  </div>
-</article>
+  </article>
+</Card>
