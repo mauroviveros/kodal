@@ -1,8 +1,8 @@
 ---
-import { Card } from '@components/ui/card';
-import type { Database } from '@lib/database';
+import { Card } from '@components/ui';
 import { Icon } from 'astro-icon/components';
 import { MEDAL_RELATIONS } from '@constants';
+import type { Database } from '@lib/database';
 
 interface Props {
   medal: Database['public']['Tables']['medals']['Row'];

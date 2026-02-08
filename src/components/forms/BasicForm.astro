@@ -1,8 +1,7 @@
 ---
-import { Input, Select } from '@components/ui';
+import { Card, Input, Select } from '@components/ui';
 import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
-import { Card } from '@components/ui/card';
 
 interface Props {
   pet?: Database['public']['Tables']['pets']['Row'] | null;

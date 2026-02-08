@@ -6,8 +6,7 @@ import { Icon } from 'astro-icon/components';
 import { Pagination } from '@components/common';
 import { actions } from 'astro:actions';
 import type { Database } from '@lib/database';
-import { Button } from '@components/ui';
-import { Card } from '@components/ui/card';
+import { Button, Card, Table } from '@components/ui';
 
 const { data: response, error } = await Astro.callAction(actions.getMedalsPaginated, {
   page: parseInt(Astro.params.page || '1'),
@@ -31,7 +30,7 @@ const STATUS: Record<
   CREATED: {
     text: 'Nuevo',
     icon: 'lucide:sparkles',
-    class: 'text-blue-600 bg-blue-100 border-blue-300',
+    class: 'text-blue-600 bg-blue-100 border-blue-300!',
   },
   MANUFACTURED: {
     text: 'Fabricado',
@@ -41,7 +40,7 @@ const STATUS: Record<
   ACTIVE: {
     text: 'En uso',
     icon: 'lucide:user-check',
-    class: 'text-emerald-600 bg-emerald-100 border-emerald-300',
+    class: 'text-emerald-600 bg-emerald-100 border-emerald-300!',
   },
   LOST: {
     text: 'Perdido',
@@ -78,50 +77,53 @@ const ROWS = await Promise.all(
       <DialogAddMedals />
     </Card>
     <Card class="overflow-x-auto">
-      <table class="table-auto">
+      <Table>
         <thead>
           <tr>
-            <th>Mascota</th>
-            <th>Dueño</th>
-            <th>Correo</th>
-            <th class="text-end">Fecha ultima actualización</th>
-            <th class="text-end">Fecha de creación</th>
-            <th class="text-center">Estado</th>
-            <th class="text-center">Acciones</th>
+            <th align="left">Mascota</th>
+            <th align="left">Dueño</th>
+            <th align="left">Correo</th>
+            <th align="right">Fecha ultima actualización</th>
+            <th align="right">Fecha de creación</th>
+            <th align="center">Estado</th>
+            <th align="center">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {
             ROWS.map(({ medal, QRbase64, status }) => (
               <tr>
-                <td>{medal.pets?.name}</td>
-                <td>{medal.full_name}</td>
-                <td>{medal.email}</td>
-                <td class="text-end">
+                <td align="left">{medal.pets?.name}</td>
+                <td align="left">{medal.full_name}</td>
+                <td align="left">{medal.email}</td>
+
+                <td align="right">
                   {medal.pets?.updated_at ? new Date(medal.pets.updated_at).toLocaleString() : ''}
                 </td>
-                <td class="text-end">
+
+                <td align="right">
                   {medal.pets?.created_at ? new Date(medal.pets.created_at).toLocaleString() : ''}
                 </td>
+
                 <td align="center">
                   <span class:list={['badge border', status.class]}>
                     <Icon name={status.icon} />
                     {status.text}
                   </span>
                 </td>
-                <td>
-                  <div class="flex items-center justify-end gap-2">
-                    <DialogDetailMedal medal={medal} QRbase64={QRbase64} />
-                    <Button href={QRbase64} variant="ghost" size="sm" download={`${medal.id}.png`}>
-                      <Icon name="lucide:download" />
-                    </Button>
-                  </div>
+
+                <td align="center" class="space-x-2">
+                  <DialogDetailMedal medal={medal} QRbase64={QRbase64} />
+
+                  <Button href={QRbase64} variant="ghost" size="sm" download={`${medal.id}.png`}>
+                    <Icon name="lucide:download" />
+                  </Button>
                 </td>
               </tr>
             ))
           }
         </tbody>
-      </table>
+      </Table>
     </Card>
 
     <Card>

@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'table'> {}
+const { class: className, ...props } = Astro.props as Props;
+
+const classes = [
+  'table-auto w-full text-sm caption-bottom',
+  '[&_tr]:border-b [&>tbody>tr]:hover:bg-muted/50 [&>tbody>tr:last-child]:border-0',
+  '[&_th]:text-on-background [&_th]:h-10 [&_th]:px-2 [&_th]:align-middle [&_th]:font-medium [&_th]:whitespace-nowrap',
+  '[&_td]:p-2 [&_td]:align-middle [&_td]:font-medium [&_td]:whitespace-nowrap',
+  className,
+];
+---
+
+<table class:list={classes} {...props}>
+  <slot />
+</table>

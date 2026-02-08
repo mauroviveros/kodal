@@ -25,44 +25,6 @@
 }
 
 @layer components {
-  table {
-    @apply w-full caption-bottom text-sm;
-
-    & thead {
-      @apply [&_tr]:border-b;
-      & th {
-        @apply text-on-background h-10 px-2 text-left align-middle font-medium whitespace-nowrap;
-      }
-    }
-
-    & tbody {
-      @apply [&_tr:last-child]:border-0;
-      & tr {
-        @apply hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors;
-        & td {
-          @apply p-2 align-middle font-medium whitespace-nowrap;
-        }
-      }
-    }
-  }
-
-  /* .card {
-    @apply bg-card text-on-card flex flex-col gap-6 rounded-xl border py-6 shadow-lg;
-    & .card-content {
-      @apply space-y-2 px-6;
-    }
-    & .card-header {
-      @apply @container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start;
-      @apply gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6;
-      & .card-title {
-        @apply leading-none font-semibold;
-      }
-      & .card-description {
-        @apply text-on-muted text-sm;
-      }
-    }
-  } */
-
   .badge {
     @apply flex w-fit shrink-0 items-center justify-center gap-1 border;
     @apply rounded-md border px-2 py-0.5 text-xs font-medium whitespace-nowrap;
