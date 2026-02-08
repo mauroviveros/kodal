@@ -1,4 +1,3 @@
-import getToken from './getToken';
 import insertPetForm from './insertPetForm';
 import updatePetForm from './updatePetForm';
 import createBulkMedals from './createBulkMedals';
@@ -11,7 +10,6 @@ export const server = {
   getMedalsPaginated,
   insertPetForm,
   updatePetForm,
-  getToken,
   createBulkMedals,
   sendTokenEmail,
 }

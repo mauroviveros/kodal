@@ -7,6 +7,7 @@ import { Pagination } from '@components/common';
 import { actions } from 'astro:actions';
 import type { Database } from '@lib/database';
 import { Button } from '@components/ui';
+import { Card } from '@components/ui/card';
 
 const { data: response, error } = await Astro.callAction(actions.getMedalsPaginated, {
   page: parseInt(Astro.params.page || '1'),
@@ -73,11 +74,10 @@ const ROWS = await Promise.all(
   </div>
 
   <section class="flex flex-col gap-2">
-    <header class="card flex-row items-center justify-end px-6">
+    <Card class="flex-end items-end justify-center px-6">
       <DialogAddMedals />
-    </header>
-
-    <article class="card overflow-x-auto">
+    </Card>
+    <Card class="overflow-x-auto">
       <table class="table-auto">
         <thead>
           <tr>
@@ -122,10 +122,10 @@ const ROWS = await Promise.all(
           }
         </tbody>
       </table>
-    </article>
+    </Card>
 
-    <footer class="card">
-      <Pagination origin="/admin/medals" pagination={pagination} />
-    </footer>
+    <Card>
+      <Pagination origin="/admin/medals" pagination={pagination} class="py-0!" />
+    </Card>
   </section>
 </Layout>
