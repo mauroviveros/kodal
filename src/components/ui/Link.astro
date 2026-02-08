@@ -1,0 +1,61 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Variant = 'primary' | 'underline';
+
+type Props = HTMLAttributes<'a'> & {
+  href: string;
+  disabled?: boolean;
+  variant?: Variant;
+};
+
+const {
+  href,
+  target,
+  rel,
+  variant = 'primary',
+  class: className,
+  disabled = false,
+  ...props
+} = Astro.props as Props;
+
+const VARIANT_CLASSES: Record<Variant, string> = {
+  primary: 'hover:text-primary/80 hover:underline',
+  underline: 'underline hover:text-primary/80',
+};
+
+const classes = [
+  'inline-flex items-center gap-1 transition-colors',
+  'aria-disabled:pointer-events-none aria-disabled:opacity-50',
+  VARIANT_CLASSES[variant],
+  className,
+];
+---
+
+<a
+  href={href}
+  target={target}
+  rel={target === '_blank' && rel ? 'noopener noreferrer' : rel}
+  aria-disabled={disabled}
+  class:list={classes}
+  {...props}
+>
+  <slot />
+</a>
+
+<!-- <a
+  href="https://mauroviveros.com.ar/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="text-primary hover:text-primary/80 transition-colors hover:underline"
+>
+  Mauro Daniel viveros
+</a> -->
+
+<!-- /* a {
+    @apply text-on-muted text-sm transition-colors;
+    @apply hover:text-primary hover:underline;
+    &[aria-disabled='true'] {
+      @apply pointer-events-none opacity-50;
+    }
+  } */ -->

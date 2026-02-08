@@ -63,14 +63,6 @@
     }
   }
 
-  /* a {
-    @apply text-on-muted text-sm transition-colors;
-    @apply hover:text-primary hover:underline;
-    &[aria-disabled='true'] {
-      @apply pointer-events-none opacity-50;
-    }
-  } */
-
   .badge {
     @apply flex w-fit shrink-0 items-center justify-center gap-1 border;
     @apply rounded-md border px-2 py-0.5 text-xs font-medium whitespace-nowrap;
