@@ -18,7 +18,11 @@ const { id, label, description, class: className, items, ...props } = Astro.prop
   label={label}
   class={className}
 >
-  <select id={id} {...props}>
+  <select
+    id={id}
+    class="focus:ring-ring h-10 rounded-lg border bg-black/5 p-1 text-sm focus:ring-2 focus:outline-none"
+    {...props}
+  >
     {
       items?.map(({ value, label }) => (
         <option value={value} selected={props.value === value}>
