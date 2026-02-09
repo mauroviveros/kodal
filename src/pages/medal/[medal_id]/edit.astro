@@ -9,10 +9,7 @@ const token_code = Astro.url.searchParams.get('token');
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 
 const result = Astro.getActionResult(actions.updatePetForm);
-if (result) {
-  if (result.error) console.log(result.error);
-  return Astro.redirect(`/medal/${Astro.params.medal_id}`);
-}
+if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 const { medal, pet, token } = response.data ?? {};

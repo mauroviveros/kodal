@@ -6,6 +6,9 @@ export interface Props extends HTMLAttributes<'figure'> {
   pet: Database['public']['Tables']['pets']['Row'];
 }
 const { pet, class: className, id, ...props } = Astro.props;
+const avatar_path = pet.avatar_path
+  ? `${pet.avatar_path}?v=${pet.updated_at ? new Date(pet.updated_at).getTime() : ''}`
+  : undefined;
 ---
 
 <figure
@@ -17,7 +20,7 @@ const { pet, class: className, id, ...props } = Astro.props;
     id={`${id}-img`}
     alt={`Foto de ${pet.name}`}
     class="aspect-square size-full object-cover transition-opacity duration-200 group-data-[has-image=false]:hidden"
-    src={pet.avatar_path ?? undefined}
+    src={avatar_path}
   />
 
   <span
