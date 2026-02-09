@@ -1,5 +1,5 @@
 ---
-import { BasicForm, MedalForm } from '@components/forms';
+import { FormPetBasic, FormPetContact, FormPetAvatar } from '@components/forms';
 import { Button } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
@@ -35,8 +35,8 @@ if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
   >
     <input type="hidden" name="token_code" value={token_code} />
 
-    <BasicForm pet={pet} />
-    <MedalForm medal={medal} />
+    <FormPetBasic pet={pet} />
+    <FormPetContact medal={medal} />
 
     <div class="flex gap-4">
       <Button size="lg" variant="outline" href={`/medal/${medal?.id}`} class="flex-1">

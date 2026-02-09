@@ -1,5 +1,5 @@
 ---
-import { BasicForm, MedalForm } from '@components/forms';
+import { FormPetBasic, FormPetContact } from '@components/forms';
 import { Button } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
@@ -26,8 +26,8 @@ if (!medal) return Astro.rewrite('/404');
   <form action={actions.insertPetForm} method="POST" class="flex flex-col gap-6">
     <input type="hidden" name="medal_id" value={medal.id} />
 
-    <BasicForm pet={pet} />
-    <MedalForm medal={medal} />
+    <FormPetBasic pet={pet} />
+    <FormPetContact medal={medal} />
 
     <div class="flex gap-4">
       <Button size="lg" type="submit" class="flex-1">
