@@ -32,9 +32,15 @@ if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
     method="POST"
     id="update-pet-form"
     class="flex flex-col gap-6"
+    enctype="multipart/form-data"
   >
-    <input type="hidden" name="token_code" value={token_code} />
+    <input
+      type="hidden"
+      name="token_code"
+      value={import.meta.env.DISABLE_TOKEN ? crypto.randomUUID() : token_code}
+    />
 
+    <FormPetAvatar pet={pet} />
     <FormPetBasic pet={pet} />
     <FormPetContact medal={medal} />
 

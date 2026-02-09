@@ -1,5 +1,6 @@
 ---
-import { Avatar, Card } from '@components/ui';
+import { Avatar } from '@components/common';
+import { Card } from '@components/ui';
 import type { Database } from '@lib/database';
 import { getTimeSince } from '@utils';
 interface Props {
@@ -23,7 +24,7 @@ const info = [
 
 <Card>
   <header class="from-primary/10 to-secondary/10 bg-linear-to-br p-8 text-center">
-    <Avatar alt={pet.name} class="mx-auto mb-6 size-32" />
+    <Avatar pet={pet} class="mx-auto mb-6 size-32" />
     <h1 class="mb-2 break-all">{pet.name}</h1>
   </header>
 

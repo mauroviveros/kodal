@@ -7,7 +7,6 @@ const medalSchema = z.object({
   medal_email: z.string().email().max(100),
   medal_phone: z.string().min(7).max(20).optional(),
   medal_relation_type: z.enum(Constants.public.Enums.MEDAL_RELATION),
-  medal_avatar: z.instanceof(File).optional(),
 });
 
 const petSchema = z.object({
@@ -16,6 +15,7 @@ const petSchema = z.object({
   gender: z.enum(Constants.public.Enums.PET_GENDER),
   breed: z.string().min(1).max(50).optional(),
   birth_date: z.string().optional(),
+  avatar_file: z.instanceof(File).optional(),
 
 });
 export const insertPetSchema = z.object({}).merge(medalSchema).merge(petSchema);

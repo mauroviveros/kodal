@@ -131,6 +131,7 @@ export type Database = {
       }
       pets: {
         Row: {
+          avatar_path: string | null
           birth_date: string | null
           breed: string | null
           created_at: string
@@ -144,6 +145,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          avatar_path?: string | null
           birth_date?: string | null
           breed?: string | null
           created_at?: string
@@ -157,6 +159,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          avatar_path?: string | null
           birth_date?: string | null
           breed?: string | null
           created_at?: string

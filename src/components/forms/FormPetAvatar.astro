@@ -1,19 +1,46 @@
 ---
-import { Avatar } from '@components/ui';
+import { Avatar } from '@components/common';
+import { Card, Input } from '@components/ui';
+import type { Database } from '@lib/database';
+import { Icon } from 'astro-icon/components';
 
+interface Props {
+  pet: Database['public']['Tables']['pets']['Row'];
+}
 const { pet } = Astro.props;
 ---
 
-<article class="card">
-  <h4 class="text-lg font-bold">Foto de perfil</h4>
+<Card>
+  <h2 class="leading-none font-semibold">
+    <Icon name="lucide:home" class="mr-2 inline-block" />
+    Información Básica
+  </h2>
 
-  <div class="flex items-center gap-4">
-    <Avatar alt={pet.name} class="size-24" />
-    <div class="flex grow flex-col gap-2 overflow-hidden">
-      <label for="avatar" class="text-sm"
-        >Subir foto de perfil<span class="text-primary">*</span></label
-      >
-      <input type="file" name="avatar" id="avatar" accept="image/jpg, image/jpeg, image/png" />
-    </div>
-  </div>
-</article>
+  <article
+    class="grid grid-cols-1 items-center justify-items-center gap-x-4 md:grid-cols-[auto_1fr] md:justify-items-normal"
+  >
+    <Avatar id="pet-avatar" pet={pet} data-has-image={pet.avatar_path ? 'true' : 'false'} />
+
+    <Input
+      type="file"
+      name="avatar_file"
+      id="pet-avatar-file-input"
+      label="Foto de perfil"
+      placeholder="Selecciona una imagen"
+      description="Sube una foto para el perfil de la mascota."
+      accept="image/jpg, image/jpeg, image/png"
+    />
+  </article>
+</Card>
+
+<script>
+  const input = document.getElementById('pet-avatar-file-input') as HTMLInputElement;
+  const avatar = document.getElementById('pet-avatar') as HTMLDivElement;
+  const avatarImg = avatar.querySelector('img') as HTMLImageElement;
+
+  input?.addEventListener('change', (event) => {
+    const file = (event.target as HTMLInputElement).files?.[0] as File;
+    avatarImg.src = file ? URL.createObjectURL(file) : '';
+    avatar.setAttribute('data-has-image', file ? 'true' : 'false');
+  });
+</script>

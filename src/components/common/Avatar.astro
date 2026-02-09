@@ -1,0 +1,28 @@
+---
+import type { Database } from '@lib/database';
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'figure'> {
+  pet: Database['public']['Tables']['pets']['Row'];
+}
+const { pet, class: className, id, ...props } = Astro.props;
+---
+
+<figure
+  id={id}
+  class="ring-primary/20 text-on-primary group relative flex size-24 shrink-0 overflow-hidden rounded-full ring-4"
+  {...props}
+>
+  <img
+    id={`${id}-img`}
+    alt={`Foto de ${pet.name}`}
+    class="aspect-square size-full object-cover transition-opacity duration-200 group-data-[has-image=false]:hidden"
+    src={pet.avatar_path ?? undefined}
+  />
+
+  <span
+    class="bg-primary flex size-full items-center justify-center text-4xl font-bold select-none group-data-[has-image=true]:hidden"
+  >
+    {(pet.name || '').charAt(0)}
+  </span>
+</figure>
