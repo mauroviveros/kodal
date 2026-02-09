@@ -2,6 +2,7 @@
 import { Card, Input, Select } from '@components/ui';
 import { MEDAL_RELATIONS } from '@constants';
 import type { Database } from '@lib/database';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   medal: Database['public']['Tables']['medals']['Row'];
@@ -11,7 +12,11 @@ const { medal } = Astro.props;
 ---
 
 <Card>
-  <h2 class="leading-none font-semibold">Información de contacto</h2>
+  <h2 class="font-semibold">
+    <Icon name="lucide:phone" class="mr-2 inline-block" />
+    Información de contacto
+  </h2>
+
   <input type="hidden" name="medal_id" value={medal.id} />
 
   <article class="grid space-y-2">

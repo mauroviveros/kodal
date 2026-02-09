@@ -2,6 +2,7 @@
 import { Card, Input, Select } from '@components/ui';
 import { toInputDateValue } from '@utils';
 import type { Database } from '@lib/database';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   pet?: Database['public']['Tables']['pets']['Row'] | null;
@@ -25,7 +26,10 @@ const { pet } = Astro.props;
 {pet && <input type="hidden" name="id" value={pet.id} />}
 
 <Card>
-  <h2 class="leading-none font-semibold">Información Básica</h2>
+  <h2 class="font-semibold">
+    <Icon name="lucide:info" class="mr-2 inline-block" />
+    Información Básica
+  </h2>
 
   <article class="grid grid-cols-1 space-y-2 space-x-2 md:grid-cols-2">
     <Input
