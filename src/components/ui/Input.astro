@@ -7,6 +7,12 @@ interface Props extends HTMLAttributes<'input'> {
   description?: string;
 }
 
+const classes = [
+  'focus:ring-ring h-10 rounded-lg border bg-black/5 p-1 text-sm focus:ring-2 focus:outline-none',
+  'file:bg-primary/10 file:text-primary hover:file:bg-primary/20 hover:file:text-primary/90',
+  'file:cursor-pointer file:h-full file:px-4 file:rounded-lg file:text-sm',
+];
+
 const { id, label, description, class: className, ...props } = Astro.props;
 ---
 
@@ -17,13 +23,6 @@ const { id, label, description, class: className, ...props } = Astro.props;
   class:list={[className]}
   label={label}
 >
-  <input
-    id={id?.toString()}
-    class="focus:ring-ring h-10 rounded-lg border bg-black/5 p-1 text-sm focus:ring-2 focus:outline-none"
-    {...props}
-  />
+  <input id={id?.toString()} class:list={[classes]} {...props} />
   <slot />
 </Fieldset>
-
-<!-- @apply cursor-pointer rounded-lg border bg-black/5 p-1 text-sm leading-8; @apply focus:ring-ring
-focus:ring-2 focus:outline-none; -->
