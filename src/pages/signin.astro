@@ -1,5 +1,5 @@
 ---
-import { Button, Link } from '@components/ui';
+import { Button, Card, Link } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
 ---
@@ -11,17 +11,17 @@ import { Icon } from 'astro-icon/components';
   showHeader={false}
   title="Kodal - Login"
 >
-  <article class="card max-w-md">
-    <header class="card-header text-center">
+  <Card class="max-w-md">
+    <header class="flex flex-col text-center">
       <span class="bg-primary text-on-primary mx-auto mb-4 w-fit rounded-full p-4">
         <Icon name="lucide:shield" class="size-8" />
       </span>
-      <div>
-        <h2 class="card-title">Panel de Administración</h2>
-        <p class="card-description">Acceso exclusivo para administradores autorizados</p>
-      </div>
+
+      <h2 class="text-lg font-semibold">Panel de Administración</h2>
+      <h3 class="text-on-muted text-sm">Acceso exclusivo para administradores autorizados</h3>
     </header>
-    <form action="/api/auth/signin" method="POST" class="card-content space-y-6">
+
+    <form action="/api/auth/signin" method="POST" class="space-y-6">
       <input type="hidden" name="provider" value="github" />
       <input type="hidden" name="redirectTo" value={Astro.url.searchParams.get('redirectTo')} />
 
@@ -47,5 +47,5 @@ import { Icon } from 'astro-icon/components';
         <Link href="/">Volver al inicio</Link>
       </div>
     </form>
-  </article>
+  </Card>
 </Layout>

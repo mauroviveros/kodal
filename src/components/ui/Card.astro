@@ -5,7 +5,7 @@ interface Props extends HTMLAttributes<'section'> {}
 const { class: className, ...props } = Astro.props;
 const classes = [
   'bg-card text-on-card shadow-lg border rounded-xl flex flex-col gap-2 py-6',
-  '[&>article]:p-6',
+  '[&>article,&>form]:p-6',
   '[&_h1]:text-3xl [&_h1]:font-bold',
   '[&_h1,&_h2,&_h3]:text-balance [&>h2]:text-on-background [&>h3]:text-on-muted',
   '[&>header,&>h1,&>h2,&>h3]:px-6',
