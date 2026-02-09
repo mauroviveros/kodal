@@ -24,6 +24,8 @@ export default defineAction({
   handler: async ({ medal, pet }, { url, request, cookies }) => {
     const supabase = createClient(request, cookies);
 
+    if (import.meta.env.DISABLE_TOKEN) return { success: true };
+
     // 1. Generar token seguro y expiración
     const token_code = crypto.randomUUID();
     const expires_at = new Date(Date.now() + 1000 * 60 * 15).toISOString(); // 15 min

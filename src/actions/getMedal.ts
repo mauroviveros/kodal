@@ -26,16 +26,19 @@ export default defineAction({
     const pet = (Array.isArray(pets) ? pets[0] : pets) as Database["public"]["Tables"]["pets"]["Row"];
 
     // 2. Obtener el token activo de la mascota (si existe)
-    const { data: token, error: token_error } = await supabase
-      .from('pet_tokens')
-      .select('*')
-      .eq('pet_id', pet.id)
-      .is('revoked_at', null)
-      .gt('expires_at', new Date().toISOString())
-      .limit(1)
-      .maybeSingle();
-    if (token_error) throw token_error;
-
+    let token = null;
+    if (!import.meta.env.DISABLE_TOKEN) {
+      const { data: tokenData, error: token_error } = await supabase
+        .from('pet_tokens')
+        .select('*')
+        .eq('pet_id', pet.id)
+        .is('revoked_at', null)
+        .gt('expires_at', new Date().toISOString())
+        .limit(1)
+        .maybeSingle();
+      if (token_error) throw token_error;
+      token = tokenData;
+    }
 
     return { medal, pet, token };
 

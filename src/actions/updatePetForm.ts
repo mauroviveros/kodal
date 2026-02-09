@@ -1,7 +1,8 @@
+import pick from 'lodash/pick';
+import mapKeys from 'lodash/mapKeys';
 import { createClient, createRoot } from "@lib/supabase";
 import { defineAction } from "astro:actions";
 import { updatePetSchema } from "./schemas";
-import { mapKeys, pick } from "lodash";
 
 export default defineAction({
   accept: 'form',
@@ -21,16 +22,18 @@ export default defineAction({
     if (!params.medal_id || params.medal_id !== medal_payload.id) throw new Error("Medal ID mismatch");
 
     // 3. Verificar el token
-    const token = await supabase
-      .from('pet_tokens')
-      .select('pet_id')
-      .eq('code', token_code)
-      .eq('pet_id', pet_payload.id)
-      .is('revoked_at', null)
-      .gt('expires_at', new Date().toISOString())
-      .limit(1)
-      .single();
-    if(token.error || !token.data) throw new Error("Invalid token");
+    if (!import.meta.env.DISABLE_TOKEN) {
+      const token = await supabase
+        .from('pet_tokens')
+        .select('pet_id')
+        .eq('code', token_code)
+        .eq('pet_id', pet_payload.id)
+        .is('revoked_at', null)
+        .gt('expires_at', new Date().toISOString())
+        .limit(1)
+        .single();
+      if (token.error || !token.data) throw new Error("Invalid token");
+    }
 
     // 4. Actualizar el formulario de la mascota
     const { data: updated_pet, error: pet_error } = await supabase
@@ -82,12 +85,14 @@ export default defineAction({
     // }
 
     // 6. Invalidar el token usado (usa admin para bypassear RLS)
-    const { error: revoke_error } = await root
-      .from('pet_tokens')
-      .update({ revoked_at: new Date().toISOString() })
-      .eq('code', token_code)
-      .eq('pet_id', pet_payload.id);
-    if (revoke_error) throw new Error("Failed to revoke token");
+    if (!import.meta.env.DISABLE_TOKEN) {
+      const { error: revoke_error } = await root
+        .from('pet_tokens')
+        .update({ revoked_at: new Date().toISOString() })
+        .eq('code', token_code)
+        .eq('pet_id', pet_payload.id);
+      if (revoke_error) throw new Error("Failed to revoke token");
+    }
 
     return { pet: updated_pet };
   }

@@ -4,6 +4,8 @@ interface ImportMetaEnv {
   readonly SUPABASE_SECRET_KEY: string
   readonly RESEND_API_KEY: string
   readonly RESEND_FROM_EMAIL: string
+
+  readonly DISABLE_TOKEN: boolean
 }
 
 interface ImportMeta {

@@ -1,7 +1,9 @@
 ---
 import { CardPetBasic, CardPetContact, CardPromotion } from '@components/cards';
 import { DialogIdentityVerification } from '@components/dialogs';
+import { Button } from '@components/ui';
 import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
 
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
@@ -18,7 +20,16 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name}`}>
   <article slot="actions">
-    <DialogIdentityVerification pet={pet} medal={medal} />
+    {
+      import.meta.env.DISABLE_TOKEN ? (
+        <Button href={`/medal/${Astro.params.medal_id}/edit`} size="xs">
+          <Icon name="lucide:edit" />
+          Editar
+        </Button>
+      ) : (
+        <DialogIdentityVerification pet={pet} medal={medal} />
+      )
+    }
   </article>
 
   <CardPetBasic pet={pet} />

@@ -1,7 +1,8 @@
+import pick from 'lodash/pick';
+import mapKeys from 'lodash/mapKeys';
 import { createClient, createRoot } from "@lib/supabase";
 import { defineAction } from "astro:actions";
 import { insertPetSchema } from "./schemas";
-import { mapKeys, pick } from "lodash";
 
 export default defineAction({
   accept: 'form',
