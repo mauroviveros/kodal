@@ -1,7 +1,7 @@
 import { z } from "astro/zod";
 import { defineAction } from "astro:actions";
 import { Resend } from "resend";
-import { createClient } from "@lib/supabase";
+import { createClient, createRoot } from "@lib/supabase";
 
 export default defineAction({
   accept: 'form',
@@ -23,6 +23,7 @@ export default defineAction({
   }),
   handler: async ({ medal, pet }, { url, request, cookies }) => {
     const supabase = createClient(request, cookies);
+    const root = createRoot();
 
     if (import.meta.env.DISABLE_TOKEN) return { success: true };
 
@@ -31,7 +32,7 @@ export default defineAction({
     const expires_at = new Date(Date.now() + 1000 * 60 * 15).toISOString(); // 15 min
 
     // 2. Valido que la mascota no tenga un token activo
-    const { data: existing_token, error: token_query_error } = await supabase
+    const { data: existing_token, error: token_query_error } = await root
       .from('pet_tokens')
       .select('code')
       .eq('pet_id', pet.id)
@@ -44,7 +45,7 @@ export default defineAction({
     if (existing_token) throw new Error("A valid token already exists for this pet");
 
     // 3. Guardar el token en la base (para validar luego)
-    const { error: token_error } = await supabase
+    const { error: token_error } = await root
       .from('pet_tokens')
       .insert({
         code: token_code,

@@ -23,7 +23,7 @@ export default defineAction({
 
     // 3. Verificar el token
     if (!import.meta.env.DISABLE_TOKEN) {
-      const token = await supabase
+      const token = await root
         .from('pet_tokens')
         .select('pet_id')
         .eq('code', token_code)

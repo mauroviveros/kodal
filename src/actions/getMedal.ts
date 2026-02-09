@@ -1,5 +1,5 @@
 import type { Database } from "@lib/database";
-import { createClient } from "@lib/supabase";
+import { createClient, createRoot } from "@lib/supabase";
 import { z } from "astro/zod";
 import { defineAction } from "astro:actions";
 
@@ -9,6 +9,7 @@ export default defineAction({
   }),
   handler: async ({ medal_id }, { request, cookies }) => {
     const supabase = createClient(request, cookies);
+    const root = createRoot();
 
     // 1. Buscar la medalla con su mascota asociada
     const { data, error: query_error } = await supabase
@@ -28,7 +29,7 @@ export default defineAction({
     // 2. Obtener el token activo de la mascota (si existe)
     let token = null;
     if (!import.meta.env.DISABLE_TOKEN) {
-      const { data: tokenData, error: token_error } = await supabase
+      const { data: tokenData, error: token_error } = await root
         .from('pet_tokens')
         .select('*')
         .eq('pet_id', pet.id)
