@@ -13,7 +13,10 @@ const avatar_path = pet.avatar_path
 
 <figure
   id={id}
-  class="ring-primary/20 text-on-primary group relative flex size-24 shrink-0 overflow-hidden rounded-full ring-4"
+  class:list={[
+    'ring-primary/20 text-on-primary group relative flex size-32 shrink-0 overflow-hidden rounded-full ring-4',
+    className,
+  ]}
   {...props}
 >
   <img
