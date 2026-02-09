@@ -1,32 +1,40 @@
 import { createClient, createRoot } from "@lib/supabase";
 import { defineAction } from "astro:actions";
 import { insertPetSchema } from "./schemas";
+import { mapKeys, pick } from "lodash";
 
 export default defineAction({
   accept: 'form',
   input: insertPetSchema,
-  handler: async ({ medal_id, medal_email, medal_full_name, medal_phone, medal_relation_type, ...payload }, { request, cookies, params }) => {
+  handler: async (input, { request, cookies, params }) => {
     const supabase = createClient(request, cookies);
     const root = createRoot();
 
-    // 1. Validar parámetro de URL medal_id con el del formulario
-    if (!params.medal_id || params.medal_id !== medal_id) throw new Error("Medal ID mismatch");
+    // 1. Preparar payloads de mascota y medalla
+    const pet_payload = pick(input, ['name', 'species', 'gender', 'breed', 'birth_date']);
+    const medal_payload = mapKeys(
+      pick(input, ['medal_full_name', 'medal_email', 'medal_phone', 'medal_relation_type']),
+      (_, key) => key.replace('medal_', '')
+    );
 
-    // 2. Verificar que la medalla exista y esté disponible (usa admin para leer cualquier estado)
+    // 2. Validar parámetro de URL medal_id con el del formulario
+    if (!params.medal_id || params.medal_id !== medal_payload.id) throw new Error("Medal ID mismatch");
+
+    // 3. Verificar que la medalla exista y esté disponible (usa admin para leer cualquier estado)
     const { data: medal, error: medal_error } = await root
       .from('medals')
       .select('id, status')
-      .eq('id', medal_id)
+      .eq('id', medal_payload.id)
       .maybeSingle();
     if (medal_error || !medal) throw new Error("Medal not found");
     if (medal.status !== 'CREATED') throw new Error("Medal is not available for registration");
 
-    // 3. Insertar la nueva mascota (UNIQUE constraint on medal_id prevents duplicates)
-    const { data: pet, error: pet_error } = await root
+    // 4. Insertar la nueva mascota (UNIQUE constraint on medal_id prevents duplicates)
+    const { data: pet, error: pet_error } = await supabase
       .from('pets')
       .insert({
-        medal_id,
-        ...payload
+        medal_id: medal_payload.id,
+        ...pet_payload
       })
       .select()
       .single();
@@ -37,18 +45,15 @@ export default defineAction({
     }
     // if (pet_error || !pet) throw new Error("Failed to create pet");
 
-    // 4. Actualizar el estado de la medalla a ACTIVE (usa admin para garantizar éxito)
+    // 5. Actualizar el estado de la medalla a ACTIVE (usa admin para garantizar éxito)
     const { error: update_medal_error } = await root
       .from('medals')
       .update({
-        email: medal_email,
-        full_name: medal_full_name,
-        phone: medal_phone,
-        relation_type: medal_relation_type,
+        ...medal_payload,
         status: 'ACTIVE',
         updated_at: new Date().toISOString()
       })
-      .eq('id', medal_id);
+      .eq('id', medal_payload.id);
     if (update_medal_error) {
       // Rollback: eliminar el pet si falla activar la medalla
       await root.from('pets').delete().eq('id', pet.id);
