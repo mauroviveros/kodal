@@ -10,6 +10,7 @@ const medalSchema = z.object({
 });
 
 const petSchema = z.object({
+  id: z.string().uuid(),
   name: z.string().min(1).max(50),
   species: z.enum(Constants.public.Enums.PET_SPECIES),
   gender: z.enum(Constants.public.Enums.PET_GENDER),
@@ -21,7 +22,6 @@ const petSchema = z.object({
 export const insertPetSchema = z.object({}).merge(medalSchema).merge(petSchema);
 
 export const updatePetSchema = z.object({}).merge(medalSchema).merge(petSchema).extend({
-  id: z.string().uuid(),
   token_code: z.string().uuid(),
 })
 

@@ -1,20 +1,19 @@
 import pick from 'lodash/pick';
 import mapKeys from 'lodash/mapKeys';
-import { createClient, createRoot } from "@lib/supabase";
+import { createRoot } from "@lib/supabase";
 import { defineAction } from "astro:actions";
 import { insertPetSchema } from "./schemas";
 
 export default defineAction({
   accept: 'form',
   input: insertPetSchema,
-  handler: async (input, { request, cookies, params }) => {
-    const supabase = createClient(request, cookies);
+  handler: async ({avatar_file, ...input}, { request, cookies, params }) => {
     const root = createRoot();
 
     // 1. Preparar payloads de mascota y medalla
-    const pet_payload = pick(input, ['name', 'species', 'gender', 'breed', 'birth_date']);
+    const pet_payload = pick(input, ['id', 'name', 'species', 'gender', 'breed', 'birth_date']);
     const medal_payload = mapKeys(
-      pick(input, ['medal_full_name', 'medal_email', 'medal_phone', 'medal_relation_type']),
+      pick(input, ['medal_id', 'medal_full_name', 'medal_email', 'medal_phone', 'medal_relation_type']),
       (_, key) => key.replace('medal_', '')
     );
 
@@ -30,12 +29,33 @@ export default defineAction({
     if (medal_error || !medal) throw new Error("Medal not found");
     if (medal.status !== 'CREATED') throw new Error("Medal is not available for registration");
 
+    // 4. Subir avatar de la medalla (si viene en el formulario)
+    let avatar_path: string | null = null;
+    if (avatar_file instanceof File && avatar_file.size > 0) {
+      const extension = avatar_file.name.split('.').pop() ?? 'png';
+      const filePath = `${pet_payload.id}/avatar.${extension}`;
+
+      const { error: upload_error } = await root.storage
+        .from('pet_avatars')
+        .upload(filePath, avatar_file, {
+          upsert: true,
+          contentType: avatar_file.type,
+        });
+      if (upload_error) throw new Error('Failed to upload medal avatar');
+
+      const { data: public_data } = root.storage
+        .from('pet_avatars')
+        .getPublicUrl(filePath);
+      if(public_data.publicUrl) avatar_path = public_data.publicUrl;
+    }
+
     // 4. Insertar la nueva mascota (UNIQUE constraint on medal_id prevents duplicates)
-    const { data: pet, error: pet_error } = await supabase
+    const { data: pet, error: pet_error } = await root
       .from('pets')
       .insert({
+        ...pet_payload,
         medal_id: medal_payload.id,
-        ...pet_payload
+        avatar_path,
       })
       .select()
       .single();

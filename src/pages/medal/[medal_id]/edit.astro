@@ -28,10 +28,9 @@ if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
   </hgroup>
 
   <form
+    class="flex flex-col gap-6"
     action={actions.updatePetForm}
     method="POST"
-    id="update-pet-form"
-    class="flex flex-col gap-6"
     enctype="multipart/form-data"
   >
     <input

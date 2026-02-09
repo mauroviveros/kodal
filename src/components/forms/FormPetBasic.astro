@@ -23,7 +23,7 @@ const GENDERS = [
 const { pet } = Astro.props;
 ---
 
-{pet && <input type="hidden" name="id" value={pet.id} />}
+<input type="hidden" name="id" value={pet ? pet.id : crypto.randomUUID()} />
 
 <Card>
   <h2 class="font-semibold">
