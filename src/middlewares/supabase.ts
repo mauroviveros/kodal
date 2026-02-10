@@ -1,4 +1,4 @@
-import { createClient } from "@lib/supabase";
+import { createClient } from "supabase";
 import type { MiddlewareHandler } from "astro";
 
 export const middleware: MiddlewareHandler = async ({ request, cookies, locals, url }, next) => {

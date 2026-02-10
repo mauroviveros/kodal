@@ -1,6 +1,6 @@
 
 import { createServerClient, parseCookieHeader } from "@supabase/ssr";
-import type { Database } from "./database";
+import type { Database } from "./types/database";
 import type { AstroCookies } from "astro";
 
 export function createClient(request: Request, cookies: AstroCookies) {

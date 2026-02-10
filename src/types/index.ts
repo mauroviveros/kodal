@@ -1,3 +1,5 @@
+export * from "./database";
+
 export interface Pagination {
   total: number;
   size: number;

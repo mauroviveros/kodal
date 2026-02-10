@@ -12,8 +12,9 @@
       "@utils": ["./utils/index.ts"],
       "@styles/*": ["./styles/*"],
       "@lib/*": ["./lib/*"],
-      "@middlewares/*": ["./middlewares/*"],
-      "@constants": ["./constants/index.ts"]
+      "@constants": ["./constants/index.ts"],
+
+      "@supabase": ["./supabase.ts"]
     }
   }
 }
