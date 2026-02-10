@@ -44,7 +44,7 @@ export const getMedalById = async (
 }
 
 // Función para validar que una medalla existe y está disponible para registro
-export const validateMedalForRegistration = async (
+export const isValidMedalForRegistration = async (
   supabase: SupabaseClient<Database>,
   { id }: { id: string }
 ) => {
@@ -56,4 +56,62 @@ export const validateMedalForRegistration = async (
     throw new Error("Medal is not available for registration");
   }
 
+  return true;
+}
+
+export const insertNewMedals = async (
+  supabase: SupabaseClient<Database>,
+  { quantity }: { quantity: number }
+) => {
+  const payload = Array.from({ length: quantity }, () => ({
+    status: 'CREATED' as Enums<'MEDAL_STATUS'>,
+    created_at: new Date().toISOString(),
+  }));
+
+  const { data, error } = await supabase
+    .from('medals')
+    .insert(payload)
+    .select('id');
+
+  if (error) {
+    console.error('Failed to insert medals:', error);
+    throw new Error("Failed to insert medals");
+  }
+
+  return data;
+}
+
+export async function getMedalsPaginated(
+  supabase: SupabaseClient<Database>,
+  { page, pageSize }: { page: number; pageSize: number }
+) {
+  const offset = (page - 1) * pageSize;
+
+  const { data, error } = await supabase
+    .from('medals')
+    .select('*, pets(*)')
+    .order('created_at', { ascending: false })
+    .range(offset, offset + pageSize - 1);
+
+  if (error) {
+    console.error('Failed to fetch medals:', error);
+    throw new Error("Failed to fetch medals");
+  }
+
+  return data || [];
+}
+
+export const getTotalMedalsCount = async (
+  supabase: SupabaseClient<Database>
+) => {
+  const { count, error } = await supabase
+    .from('medals')
+    .select('id', { count: 'exact', head: true });
+
+  if (error) {
+    console.error('Failed to count medals:', error);
+    throw new Error("Failed to count medals");
+  }
+
+  return count || 0;
 }

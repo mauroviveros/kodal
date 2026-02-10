@@ -1,3 +1,5 @@
+export * from "./mappers";
+
 export const getTimeSince = (birthdate: Date) : string =>  {
   const diff = new Date().getTime() - new Date(birthdate).getTime(); // diferencia en milisegundos
   const rtf = new Intl.RelativeTimeFormat('es-AR', {numeric: 'always', style: 'long' });

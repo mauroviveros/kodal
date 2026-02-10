@@ -19,8 +19,21 @@ const petSchema = z.object({
   avatar_file: z.instanceof(File).optional(),
 
 });
-export const insertPetSchema = z.object({}).merge(medalSchema).merge(petSchema);
 
-export const updatePetSchema = z.object({}).merge(medalSchema).merge(petSchema).extend({
-  token_code: z.string().uuid(),
+export const insertPetSchema = z.object({})
+  .merge(medalSchema)
+  .merge(petSchema);
+
+export const updatePetSchema = z.object({})
+  .merge(medalSchema)
+  .merge(petSchema)
+  .extend({
+    token_code: z.string().uuid(),
+  });
+
+export const sendTokenEmailSchema = z.object({
+  email: z.string().email(),
+  pet_id: z.string().uuid(),
+  medal_id: z.string().uuid(),
+  pet_name: z.string(),
 });

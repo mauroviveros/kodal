@@ -1,4 +1,4 @@
-import type { Enums } from "@lib/database";
+import type { Enums } from "@types";
 
 export const RESEND_TEMPLATES = {
   IDENTITY_VERIFICATION: 'kodal-token-1',
