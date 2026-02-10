@@ -11,10 +11,11 @@
       "@types": ["./types/index.ts"],
       "@utils": ["./utils/index.ts"],
       "@styles/*": ["./styles/*"],
-      "@lib/*": ["./lib/*"],
       "@constants": ["./constants/index.ts"],
 
-      "@supabase": ["./supabase.ts"]
+      "@supabase": ["./supabase.ts"],
+      "@repositories": ["./repositories/index.ts"],
+      "@libs": ["./libs/index.ts"]
     }
   }
 }

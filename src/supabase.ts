@@ -28,7 +28,7 @@ export function createClient(request: Request, cookies: AstroCookies) {
   );
 }
 
-export function createRoot() {
+function createRoot() {
   return createServerClient<Database>(
     import.meta.env.PUBLIC_SUPABASE_URL,
     import.meta.env.SUPABASE_SECRET_KEY,
@@ -43,3 +43,4 @@ export function createRoot() {
     },
   );
 }
+export const root = createRoot();
