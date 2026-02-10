@@ -16,9 +16,8 @@ if (result) {
 
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 const { medal, pet } = response.data ?? {};
-if (response.error) return Astro.rewrite('/404');
+if (response.error || !medal) return Astro.rewrite('/404');
 if (pet) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
-if (!medal) return Astro.rewrite('/404');
 ---
 
 <Layout class="max-w-2xl" title="Kodal - Nueva medalla">
