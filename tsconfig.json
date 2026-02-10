@@ -15,7 +15,8 @@
 
       "@supabase": ["./supabase.ts"],
       "@repositories": ["./repositories/index.ts"],
-      "@libs": ["./libs/index.ts"]
+      "@libs": ["./libs/index.ts"],
+      "@schemas": ["./schemas/index.ts"]
     }
   }
 }

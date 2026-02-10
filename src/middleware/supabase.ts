@@ -1,7 +1,7 @@
 import { createClient } from "supabase";
 import type { MiddlewareHandler } from "astro";
 
-export const middleware: MiddlewareHandler = async ({ request, cookies, locals, url }, next) => {
+export const middleware: MiddlewareHandler = async ({ request, cookies, locals }, next) => {
   const supabase = createClient(request, cookies);
   const { data: { session } } = await supabase.auth.getSession();
   const { data: { user } } = await supabase.auth.getUser();
