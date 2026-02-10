@@ -3,6 +3,7 @@ import type { Tables } from '@types';
 import { Icon } from 'astro-icon/components';
 import { Button, Dialog } from '@components/ui';
 import { actions } from 'astro:actions';
+import { Avatar } from '@components/common';
 
 interface Props {
   pet: Tables<'pets'>;
@@ -32,11 +33,7 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
     <input type="hidden" name="medal_id" value={medal.id} />
 
     <div class="flex items-center gap-3">
-      <div
-        class="bg-primary/10 text-primary flex size-12 items-center justify-center rounded-full font-semibold"
-      >
-        {initial}
-      </div>
+      <Avatar pet={pet} class="size-12!" />
       <div class="flex flex-col">
         <span class="text-on-background text-sm font-semibold">{pet.name}</span>
         <span class="text-on-muted text-sm">{pet.breed}</span>
@@ -49,10 +46,7 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
     <p class="text-on-background mt-1 text-sm font-semibold">{medal.email}</p>
   </form>
 
-  <p class="text-on-muted text-sm">
-    El código expirará en 15 minutos. Haz clic en el botón del email para acceder directamente a la
-    edición.
-  </p>
+  <p class="text-on-muted text-sm">El código expirará en 15 minutos.</p>
 
   <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" slot="footer">
     <Button variant="outline">Cancelar</Button>
