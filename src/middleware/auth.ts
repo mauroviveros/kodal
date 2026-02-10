@@ -10,6 +10,7 @@ const isProtected = (pathname: string) => routes.privates.some(pattern => minima
 const isAPI = (pathname: string) => minimatch(pathname, "/api/**");
 const shouldSkipAuth = (pathname: string) => routes.prerender.some(pattern => minimatch(pathname, pattern));
 
+// Este middleware se encarga de verificar si el usuario tiene una sesión válida para acceder a rutas protegidas
 export const middleware: MiddlewareHandler = async ({ locals, url, redirect }, next) => {
   if(shouldSkipAuth(url.pathname)) return next();
 
