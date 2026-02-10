@@ -11,12 +11,21 @@ interface Props extends HTMLAttributes<'dialog'> {
 }
 
 const { title, description, showClose = true, id, class: className, ...props } = Astro.props;
-// const dialogId = id ?? '';
+const classes = [
+  'bg-background text-on-background w-full max-w-[calc(100%-2rem)] sm:max-w-lg',
+  'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
+  'open:grid gap-4 rounded-lg border p-6 shadow-lg',
+  '[&>header]:flex [&>header]:flex-col [&>header]:gap-2',
+  '[&>header>h2]:text-lg [&>header>h2]:font-semibold [&>header>h2]:leading-none',
+  '[&>header>p]:text-on-muted [&>header>p]:text-sm',
+  '[&>section]:flex [&>section]:flex-col [&>section]:gap-4 [&>section]:py-4',
+  className,
+];
 ---
 
 <slot name="button" />
 
-<dialog id={id} class:list={['relative', className]} {...props}>
+<dialog id={id} class:list={classes} {...props}>
   {
     showClose && (
       <Button variant="outline" size="xs" class="absolute top-4 right-4" data-dialog-close>
