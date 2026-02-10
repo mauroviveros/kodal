@@ -1,12 +1,12 @@
 ---
-import QRCode from 'qrcode';
 import Layout from '@layout';
 import { DialogAddMedals, DialogDetailMedal } from '@components/dialogs';
 import { Icon } from 'astro-icon/components';
 import { Pagination } from '@components/common';
 import { actions } from 'astro:actions';
-import type { Database } from '@lib/database';
 import { Button, Card, Table } from '@components/ui';
+import { MEDAL_STATUS } from '@constants';
+import { generateQR } from '@utils';
 
 const { data: response, error } = await Astro.callAction(actions.getMedalsPaginated, {
   page: parseInt(Astro.params.page || '1'),
@@ -14,56 +14,7 @@ const { data: response, error } = await Astro.callAction(actions.getMedalsPagina
 });
 
 if (error) return Astro.rewrite('/404');
-const { data: medals, pagination } = response;
-
-const getSlotQR = async (id: string) => {
-  const QR = await QRCode.toDataURL(new URL(`/medal/${id}`, Astro.url.origin).toString(), {
-    margin: 1,
-  });
-  return QR;
-};
-
-const STATUS: Record<
-  Database['public']['Enums']['MEDAL_STATUS'],
-  { text: string; icon: string; class: string }
-> = {
-  CREATED: {
-    text: 'Nuevo',
-    icon: 'lucide:sparkles',
-    class: 'text-blue-600 bg-blue-100 border-blue-300!',
-  },
-  MANUFACTURED: {
-    text: 'Fabricado',
-    icon: 'lucide:factory',
-    class: 'text-yellow-600 bg-yellow-100 border-yellow-300',
-  },
-  ACTIVE: {
-    text: 'En uso',
-    icon: 'lucide:user-check',
-    class: 'text-emerald-600 bg-emerald-100 border-emerald-300!',
-  },
-  LOST: {
-    text: 'Perdido',
-    icon: 'lucide:alert-triangle',
-    class: 'text-red-600 bg-red-100 border-red-300',
-  },
-  DISABLED: {
-    text: 'Desactivado',
-    icon: 'lucide:slash',
-    class: 'text-gray-600 bg-gray-100 border-gray-300',
-  },
-};
-
-const ROWS = await Promise.all(
-  medals.map(async (medal) => {
-    const QRbase64 = await getSlotQR(medal.id);
-    return {
-      medal,
-      QRbase64,
-      status: STATUS[medal.status],
-    };
-  }),
-);
+const { data, pagination } = response;
 ---
 
 <Layout showFooter={false} title="Kodal - Panel de Administración">
@@ -91,36 +42,40 @@ const ROWS = await Promise.all(
         </thead>
         <tbody>
           {
-            ROWS.map(({ medal, QRbase64, status }) => (
-              <tr>
-                <td align="left">{medal.pets?.name}</td>
-                <td align="left">{medal.full_name}</td>
-                <td align="left">{medal.email}</td>
+            data.map(async (medal) => {
+              const QRbase64 = await generateQR(new URL(`/medal/${medal.id}`, Astro.url.origin));
+              const status = MEDAL_STATUS[medal.status];
+              return (
+                <tr>
+                  <td align="left">{medal.pets?.name}</td>
+                  <td align="left">{medal.full_name}</td>
+                  <td align="left">{medal.email}</td>
 
-                <td align="right">
-                  {medal.pets?.updated_at ? new Date(medal.pets.updated_at).toLocaleString() : ''}
-                </td>
+                  <td align="right">
+                    {medal.pets?.updated_at ? new Date(medal.pets.updated_at).toLocaleString() : ''}
+                  </td>
 
-                <td align="right">
-                  {medal.pets?.created_at ? new Date(medal.pets.created_at).toLocaleString() : ''}
-                </td>
+                  <td align="right">
+                    {medal.pets?.created_at ? new Date(medal.pets.created_at).toLocaleString() : ''}
+                  </td>
 
-                <td align="center">
-                  <span class:list={['badge border', status.class]}>
-                    <Icon name={status.icon} />
-                    {status.text}
-                  </span>
-                </td>
+                  <td align="center">
+                    <span class:list={['badge border', status.class]}>
+                      <Icon name={status.icon} />
+                      {status.text}
+                    </span>
+                  </td>
 
-                <td align="center" class="space-x-2">
-                  <DialogDetailMedal medal={medal} QRbase64={QRbase64} />
+                  <td align="center" class="space-x-2">
+                    <DialogDetailMedal medal={medal} QRbase64={QRbase64} />
 
-                  <Button href={QRbase64} variant="ghost" size="sm" download={`${medal.id}.png`}>
-                    <Icon name="lucide:download" />
-                  </Button>
-                </td>
-              </tr>
-            ))
+                    <Button href={QRbase64} variant="ghost" size="sm" download={`${medal.id}.png`}>
+                      <Icon name="lucide:download" />
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })
           }
         </tbody>
       </Table>

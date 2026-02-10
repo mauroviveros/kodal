@@ -1,3 +1,4 @@
+import QRCode from 'qrcode';
 export * from "./mappers";
 
 export const getTimeSince = (birthdate: Date) : string =>  {
@@ -15,4 +16,10 @@ export const toInputDateValue = (date: Date | string): string => {
     month: '2-digit',
     day: '2-digit',
   }).format(new Date(date));
+}
+
+export const generateQR = async (url: URL): Promise<string> => {
+  return await QRCode.toDataURL(url.toString(), {
+    margin: 1,
+  });
 }
