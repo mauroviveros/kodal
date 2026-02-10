@@ -32,8 +32,5 @@ export const updatePetSchema = z.object({})
   });
 
 export const sendTokenEmailSchema = z.object({
-  email: z.string().email(),
-  pet_id: z.string().uuid(),
   medal_id: z.string().uuid(),
-  pet_name: z.string(),
 });

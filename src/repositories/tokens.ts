@@ -36,7 +36,7 @@ export const getToken = async (
     .eq('pet_id', pet_id)
     .is('revoked_at', null)
     .gt('expires_at', new Date().toISOString())
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('Invalid token:', error);
@@ -44,6 +44,22 @@ export const getToken = async (
   }
 
   return data;
+}
+
+export const checkTokenValidity = async (
+  supabase: SupabaseClient<Database>,
+  { code, pet_id }: { code: string; pet_id: string; }
+) => {
+  if (import.meta.env.DISABLE_TOKEN) return true;
+
+  const token = await getToken(supabase, { code, pet_id });
+
+  if (!token) {
+    console.error('Token is not valid');
+    throw new Error("Token is not valid");
+  }
+
+  return true;
 }
 
 export const checkPetWithoutActiveToken = async (

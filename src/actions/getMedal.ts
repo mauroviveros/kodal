@@ -18,6 +18,7 @@ export default defineAction({
 
     // 3. Obtener token activo asociado a la mascota (si existe)
     const token = await getToken(root, { code: '', pet_id: pet.id });
+
     return { medal, pet, token };
   },
 });

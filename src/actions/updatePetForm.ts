@@ -1,6 +1,6 @@
 import { defineAction } from "astro:actions";
 import { updatePetSchema } from "@schemas";
-import { deletePet, getToken, revokeToken, updateMedal, updatePet } from '@repositories';
+import { checkTokenValidity, deletePet, getToken, revokeToken, updateMedal, updatePet } from '@repositories';
 import { root } from '@supabase';
 import { removePetAvatar, uploadPetAvatar } from '@libs';
 import type { Tables } from '@types';
@@ -9,7 +9,7 @@ import { buildPetAndMedalPayloads } from '@utils';
 export default defineAction({
   accept: 'form',
   input: updatePetSchema,
-  handler: async ({token_code, avatar_file, ...input}, { params, locals: { supabase } }) => {
+  handler: async ({token_code, avatar_file, ...input}, { params }) => {
     let avatar_path: string | null = null;
     let pet: Tables<'pets'> | null = null;
     const { pet_payload, medal_payload } = buildPetAndMedalPayloads(input);
@@ -21,12 +21,12 @@ export default defineAction({
     }
 
     // 2. Valido obteniendo el token que se usará para la actualización, si no es válido se lanza un error
-    await getToken(root, { code: token_code, pet_id: pet_payload.id });
+    await checkTokenValidity(root, { code: token_code, pet_id: pet_payload.id });
 
     // 3. Subir avatar de la mascota, actualizar la mascota y datos de la medalla
     try{
       avatar_path = await uploadPetAvatar(root, { file: avatar_file, id: pet_payload.id });
-      pet = await updatePet(supabase, { id: pet_payload.id, medal_id: medal_payload.id, payload: { ...pet_payload, avatar_path }});
+      pet = await updatePet(root, { id: pet_payload.id, medal_id: medal_payload.id, payload: { ...pet_payload, avatar_path }});
       await updateMedal(root, { id: medal_payload.id, payload: { ...medal_payload }});
     } catch(error) {
       if (avatar_path) await removePetAvatar(root, { path: avatar_path });

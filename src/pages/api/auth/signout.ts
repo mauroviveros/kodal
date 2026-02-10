@@ -1,5 +1,3 @@
-
-import { createClient } from 'supabase'
 import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ redirect, locals: { supabase } }) => {

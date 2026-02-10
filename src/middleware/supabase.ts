@@ -1,4 +1,4 @@
-import { createClient } from "supabase";
+import { createClient } from "@supabase";
 import type { MiddlewareHandler } from "astro";
 
 // Este middleware se encarga de crear un cliente de Supabase para cada solicitud,

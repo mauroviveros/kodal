@@ -5,7 +5,7 @@ export const uploadPetAvatar = async (
   supabase: SupabaseClient<Database>,
   { file, id }: { file?: File; id: string; }
 ) => {
-  if (!file) return null;
+  if (!file || !file.size) return null;
 
   const extension = file.name.split('.').pop() ?? 'png';
   const filePath = `${id}/avatar.${extension}`;

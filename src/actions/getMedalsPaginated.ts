@@ -7,7 +7,7 @@ export default defineAction({
     page: z.number().min(1).default(1),
     pageSize: z.number().min(1).max(100).default(10),
   }),
-  handler: async ({ page, pageSize }, { params, locals: { supabase } }) => {
+  handler: async ({ page, pageSize }, { locals: { supabase } }) => {
     const total = await getTotalMedalsCount(supabase);
     const medals = await getMedalsPaginated(supabase, { page, pageSize });
 

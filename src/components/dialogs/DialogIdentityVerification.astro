@@ -29,8 +29,7 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
     method="POST"
     class="bg-muted/40 rounded-xl border p-4"
   >
-    <input type="hidden" name="pet" value={JSON.stringify(pet)} />
-    <input type="hidden" name="medal" value={JSON.stringify(medal)} />
+    <input type="hidden" name="medal_id" value={medal.id} />
 
     <div class="flex items-center gap-3">
       <div
