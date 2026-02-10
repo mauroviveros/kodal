@@ -1,10 +1,10 @@
 ---
 import { Avatar } from '@components/common';
 import { Card } from '@components/ui';
-import type { Database } from '@lib/database';
+import type { Tables } from '@types';
 import { getTimeSince } from '@utils';
 interface Props {
-  pet: Database['public']['Tables']['pets']['Row'];
+  pet: Tables<'pets'>;
 }
 const { pet } = Astro.props;
 const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;

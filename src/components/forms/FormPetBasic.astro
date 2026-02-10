@@ -1,11 +1,11 @@
 ---
 import { Card, Input, Select } from '@components/ui';
 import { toInputDateValue } from '@utils';
-import type { Database } from '@lib/database';
 import { Icon } from 'astro-icon/components';
+import type { Tables } from '@types';
 
 interface Props {
-  pet?: Database['public']['Tables']['pets']['Row'] | null;
+  pet?: Tables<'pets'> | null;
 }
 
 const ESPECIES = [

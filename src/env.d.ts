@@ -16,6 +16,6 @@ declare namespace App {
   interface Locals {
     session?: import("@supabase/supabase-js").Session | null;
     user?: import("@supabase/supabase-js").User | null;
-    supabase: import("@supabase/supabase-js").SupabaseClient<import("types/database").Database>;
+    supabase: import("@supabase/supabase-js").SupabaseClient<import("@types").Database>;
   }
 }

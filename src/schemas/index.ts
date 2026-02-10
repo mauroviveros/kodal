@@ -1,5 +1,5 @@
+import { Constants } from "@types";
 import { z } from "astro/zod";
-import { Constants } from "types/database";
 
 const medalSchema = z.object({
   medal_id: z.string().uuid(),

@@ -1,11 +1,11 @@
 ---
 import { Avatar } from '@components/common';
 import { Card, Input } from '@components/ui';
-import type { Database } from '@lib/database';
+import type { Tables } from '@types';
 import { Icon } from 'astro-icon/components';
 
 interface Props {
-  pet?: Database['public']['Tables']['pets']['Row'];
+  pet?: Tables<'pets'>;
 }
 const { pet } = Astro.props;
 ---

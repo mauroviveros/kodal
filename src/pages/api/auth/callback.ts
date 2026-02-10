@@ -1,19 +1,15 @@
-import { createClient } from "@lib/supabase";
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = async ({ request, url, cookies, redirect }) => {
+export const safeURL = (url: string) => url.startsWith("/") && !url.startsWith("//") ? url : "/";
+export const GET: APIRoute = async ({ url, redirect, locals: { supabase } }) => {
   const code = url.searchParams.get("code");
   if (!code) return new Response("No code provided", { status: 400 });
 
-  const supabase = createClient(request, cookies);
   const { error } = await supabase.auth.exchangeCodeForSession(code);
   if (error) return new Response(error.message, { status: 500 });
 
   const redirectTo = url.searchParams.get("redirectTo");
-  const safeRedirect =
-    redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")
-      ? redirectTo
-      : "/";
+  const safeRedirect = safeURL(redirectTo || "/");
 
   return redirect(safeRedirect);
 };

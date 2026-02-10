@@ -1,10 +1,10 @@
 ---
 import { Button, Dialog, Link } from '@components/ui';
-import type { Database } from '@lib/database';
 import { Icon } from 'astro-icon/components';
+import type { Tables } from '@types';
 
 interface Props {
-  medal: Database['public']['Tables']['medals']['Row'];
+  medal: Tables<'medals'>;
   QRbase64: string;
 }
 const { medal, QRbase64 } = Astro.props;

@@ -1,11 +1,11 @@
 ---
 import { Card, Input, Select } from '@components/ui';
 import { MEDAL_RELATIONS } from '@constants';
-import type { Database } from '@lib/database';
 import { Icon } from 'astro-icon/components';
+import type { Tables } from '@types';
 
 interface Props {
-  medal: Database['public']['Tables']['medals']['Row'];
+  medal: Tables<'medals'>;
 }
 
 const { medal } = Astro.props;

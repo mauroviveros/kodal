@@ -1,9 +1,9 @@
 ---
-import type { Database } from '@lib/database';
+import type { Tables } from '@types';
 import type { HTMLAttributes } from 'astro/types';
 
 export interface Props extends HTMLAttributes<'figure'> {
-  pet?: Database['public']['Tables']['pets']['Row'];
+  pet?: Tables<'pets'>;
 }
 const { pet, class: className, id, ...props } = Astro.props;
 const avatar_path = pet?.avatar_path

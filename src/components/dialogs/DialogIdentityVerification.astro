@@ -1,12 +1,12 @@
 ---
-import type { Database } from '@lib/database';
+import type { Tables } from '@types';
 import { Icon } from 'astro-icon/components';
 import { Button, Dialog } from '@components/ui';
 import { actions } from 'astro:actions';
 
 interface Props {
-  pet: Database['public']['Tables']['pets']['Row'];
-  medal: Database['public']['Tables']['medals']['Row'];
+  pet: Tables<'pets'>;
+  medal: Tables<'medals'>;
 }
 const { pet, medal } = Astro.props;
 const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
