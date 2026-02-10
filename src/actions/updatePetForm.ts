@@ -1,6 +1,6 @@
 import { defineAction } from "astro:actions";
 import { updatePetSchema } from "@schemas";
-import { checkTokenValidity, deletePet, getToken, revokeToken, updateMedal, updatePet } from '@repositories';
+import { checkTokenValidity, deletePet, revokeToken, updateMedal, updatePet } from '@repositories';
 import { root } from '@supabase';
 import { removePetAvatar, uploadPetAvatar } from '@libs';
 import type { Tables } from '@types';
@@ -25,7 +25,7 @@ export default defineAction({
 
     // 3. Subir avatar de la mascota, actualizar la mascota y datos de la medalla
     try{
-      avatar_path = await uploadPetAvatar(root, { file: avatar_file, id: pet_payload.id });
+      if(avatar_file && avatar_file.size) avatar_path = await uploadPetAvatar(root, { file: avatar_file, id: pet_payload.id });
       pet = await updatePet(root, { id: pet_payload.id, medal_id: medal_payload.id, payload: { ...pet_payload, avatar_path }});
       await updateMedal(root, { id: medal_payload.id, payload: { ...medal_payload }});
     } catch(error) {

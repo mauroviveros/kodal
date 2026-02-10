@@ -26,7 +26,7 @@ export default defineAction({
 
     // 3. Subir avatar de la mascota, crear la mascota y actualizar estado medalla
     try{
-      avatar_path = await uploadPetAvatar(root, { file: avatar_file, id: pet_payload.id });
+      if(avatar_file && avatar_file.size) avatar_path = await uploadPetAvatar(root, { file: avatar_file, id: pet_payload.id });
       pet = await insertPet(root, { payload: { ...pet_payload, medal_id: medal_payload.id, avatar_path }});
       await updateMedal(root, { id: medal_payload.id, payload: { ...medal_payload, status: 'ACTIVE' }});
     } catch(error) {
