@@ -40,10 +40,10 @@ const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet
   </article>
 
   <!-- Basic -->
-  <Card>
+  <Card class="animate-zoom-in">
     <header class="relative z-10 flex flex-col items-center justify-items-center overflow-hidden p-8 text-center">
       <Background gender={pet.gender} species={pet.species} />
-      <Avatar pet={pet} class="size-52" />
+      <Avatar pet={pet} class="size-52 shadow-xl select-none" transition:name={`avatar-pet-medal-${medal.id}`} />
       <h1 class="my-2 break-all">{pet.name}</h1>
 
       {
@@ -79,7 +79,7 @@ const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet
   </Card>
 
   <!-- Contact -->
-  <Card>
+  <Card class="animate-zoom-in timeline-view animate-range-entry">
     <header class="grid grid-cols-[auto_1fr] items-center gap-x-2">
       <Icon name="lucide:user" class="text-primary row-span-2 size-8" />
 
@@ -110,5 +110,5 @@ const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet
     </article>
   </Card>
 
-  <Promotion />
+  <Promotion class="animate-zoom-in timeline-view animate-range-entry" />
 </Layout>

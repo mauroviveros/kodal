@@ -1,9 +1,13 @@
 ---
 import { Button, Card } from '@components/ui';
 import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'section'> {}
+const { class: className, ...props } = Astro.props;
 ---
 
-<Card class="text-center">
+<Card class:list={['text-center', className]} {...props}>
   <article>
     <h3 class="mb-3 text-xl font-bold">¿Te gusta esta medalla inteligente?</h3>
     <p class="text-on-muted mb-6 text-pretty">

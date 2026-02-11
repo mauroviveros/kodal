@@ -22,7 +22,7 @@ const { pet, medal, errors } = Astro.props;
   </h2>
 
   <article class="grid grid-cols-1 items-center justify-items-center gap-x-4 md:grid-cols-[auto_1fr] md:justify-items-normal">
-    <Avatar id="pet-avatar" pet={pet} />
+    <Avatar id="pet-avatar" pet={pet} transition:name={`avatar-pet-medal-${medal.id}`} />
 
     <Input
       type="file"

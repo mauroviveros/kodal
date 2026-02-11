@@ -11,7 +11,7 @@ export const prerender = true;
   <section class="relative flex min-h-[calc(100dvh-4rem)] items-center">
     <div class="container mx-auto flex flex-col items-center justify-center p-4">
       <div class="from-primary/5 to-primary/5 absolute inset-0 -z-10 bg-linear-to-br"></div>
-      <article class="mx-auto max-w-4xl text-center">
+      <article class="animate-zoom-in animate-duration-slower mx-auto max-w-4xl text-center">
         <span class="badge mx-auto mb-6">
           <Icon name="lucide:smartphone" class="mr-1 size-3" />
           Tecnología Inteligente para Mascotas
@@ -36,7 +36,7 @@ export const prerender = true;
   <!-- FEATURES -->
   <section class="bg-muted/30 py-20">
     <div class="container mx-auto px-4">
-      <header class="mb-16 text-center">
+      <header class="animate-fade-in-down timeline-view animate-range-entry mb-16 text-center">
         <h2 class="text-on-background mb-4 text-3xl font-bold lg:text-4xl">¿Por qué elegir Kodal?</h2>
         <p class="text-on-muted mx-auto max-w-2xl text-xl">Tecnología avanzada diseñada específicamente para la seguridad de tu mascota</p>
       </header>
@@ -44,7 +44,7 @@ export const prerender = true;
       <article class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {
           FEATURES_LIST.map(({ title, description, icon }) => (
-            <Card>
+            <Card class="timeline-view animate-zoom-in animate-range-entry">
               <header>
                 <span class="bg-primary/10 mx-auto mb-4 flex size-12 items-center justify-center rounded-full">
                   <Icon name={icon} class="text-primary size-6" />
@@ -64,7 +64,7 @@ export const prerender = true;
 
   <!-- CTA - Call To Action -->
   <section class="bg-secondary text-on-secondary py-20">
-    <div class="container mx-auto px-4 text-center">
+    <div class="animate-fade-in-right timeline-view animate-range-entry container mx-auto px-4 text-center">
       <h2 class="mb-4 text-3xl font-bold lg:text-4xl">¿Listo para proteger a tu mascota?</h2>
       <p class="mx-auto mb-8 max-w-2xl text-xl opacity-90">
         Únete a miles de dueños que ya confían en Kodal para mantener a sus mascotas seguras
