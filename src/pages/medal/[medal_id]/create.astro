@@ -26,12 +26,7 @@ if (pet) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
     <p class="text-on-muted">Completa los datos de tu mascota para crear su perfil.</p>
   </hgroup>
 
-  <form
-    class="flex flex-col gap-6"
-    action={actions.insertPetForm}
-    method="POST"
-    enctype="multipart/form-data"
-  >
+  <form class="flex flex-col gap-6" action={actions.insertPetForm} method="POST" enctype="multipart/form-data">
     <input type="hidden" name="medal_id" value={medal.id} />
 
     <FormPetAvatar />

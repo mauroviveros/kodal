@@ -11,14 +11,7 @@ interface Props extends HTMLAttributes<'main'> {
   showFooter?: boolean;
   title?: string;
 }
-const {
-  class: className,
-  withContainer = true,
-  showHeader = true,
-  showFooter = true,
-  title = 'Kodal',
-  ...props
-} = Astro.props;
+const { class: className, withContainer = true, showHeader = true, showFooter = true, title = 'Kodal', ...props } = Astro.props;
 ---
 
 <!doctype html>
@@ -41,12 +34,7 @@ const {
     }
 
     <main
-      class:list={[
-        'flex grow flex-col gap-8',
-        { 'container mx-auto px-4 py-8': withContainer },
-        { 'mt-16': showHeader },
-        className,
-      ]}
+      class:list={['flex grow flex-col gap-8', { 'container mx-auto px-4 py-8': withContainer }, { 'mt-16': showHeader }, className]}
       {...props}
     >
       <slot />

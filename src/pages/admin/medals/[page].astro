@@ -50,15 +50,8 @@ const { data, pagination } = response;
                   <td align="left">{medal.pets?.name}</td>
                   <td align="left">{medal.full_name}</td>
                   <td align="left">{medal.email}</td>
-
-                  <td align="right">
-                    {medal.pets?.updated_at ? new Date(medal.pets.updated_at).toLocaleString() : ''}
-                  </td>
-
-                  <td align="right">
-                    {medal.pets?.created_at ? new Date(medal.pets.created_at).toLocaleString() : ''}
-                  </td>
-
+                  <td align="right">{medal.pets?.updated_at ? new Date(medal.pets.updated_at).toLocaleString() : ''}</td>
+                  <td align="right">{medal.pets?.created_at ? new Date(medal.pets.created_at).toLocaleString() : ''}</td>
                   <td align="center">
                     <span class:list={['badge border', status.class]}>
                       <Icon name={status.icon} />

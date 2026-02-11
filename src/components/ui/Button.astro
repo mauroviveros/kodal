@@ -7,18 +7,9 @@ type BaseProps = {
   disabled?: boolean;
 };
 
-type Props =
-  | (BaseProps & { href: string } & HTMLAttributes<'a'>)
-  | (BaseProps & { href?: undefined } & HTMLAttributes<'button'>);
+type Props = (BaseProps & { href: string } & HTMLAttributes<'a'>) | (BaseProps & { href?: undefined } & HTMLAttributes<'button'>);
 
-const {
-  size = 'base',
-  variant = 'solid',
-  disabled,
-  tabindex,
-  class: className,
-  ...props
-} = Astro.props as Props;
+const { size = 'base', variant = 'solid', disabled, tabindex, class: className, ...props } = Astro.props as Props;
 
 const { type = 'button', ...buttonProps } = props as HTMLAttributes<'button'>;
 const { href, target, ...anchorProps } = props as HTMLAttributes<'a'>;

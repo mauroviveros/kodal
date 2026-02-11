@@ -16,13 +16,7 @@ const classes = [
 const { id, label, description, class: className, ...props } = Astro.props;
 ---
 
-<Fieldset
-  input={id?.toString()}
-  required={Boolean(props.required)}
-  description={description}
-  class:list={[className]}
-  label={label}
->
+<Fieldset input={id?.toString()} required={Boolean(props.required)} description={description} class:list={[className]} label={label}>
   <input id={id?.toString()} class:list={[classes]} {...props} />
   <slot />
 </Fieldset>

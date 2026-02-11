@@ -23,21 +23,13 @@ const info = [
 ---
 
 <Card>
-  <header
-    class="from-primary/10 to-secondary/10 flex flex-col items-center justify-items-center bg-linear-to-br p-8 text-center"
-  >
+  <header class="from-primary/10 to-secondary/10 flex flex-col items-center justify-items-center bg-linear-to-br p-8 text-center">
     <Avatar pet={pet} class="size-52" />
     <h1 class="my-2 break-all">{pet.name}</h1>
   </header>
 
   <article class="p-6">
-    <dl
-      class:list={[
-        'grid grid-cols-1 gap-4',
-        info.length === 2 && 'md:grid-cols-2',
-        info.length > 2 && 'md:grid-cols-3',
-      ]}
-    >
+    <dl class:list={['grid grid-cols-1 gap-4', info.length === 2 && 'md:grid-cols-2', info.length > 2 && 'md:grid-cols-3']}>
       {
         info.map(({ label, display }) => (
           <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">

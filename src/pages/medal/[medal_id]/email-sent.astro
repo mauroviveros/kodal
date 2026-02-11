@@ -19,13 +19,9 @@ if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
     </Button>
   </article>
 
-  <span
-    class="bg-primary/10 relative mx-auto flex size-24 items-center justify-center rounded-full"
-  >
+  <span class="bg-primary/10 relative mx-auto flex size-24 items-center justify-center rounded-full">
     <Icon name="lucide:mail-check" class="text-primary size-12" />
-    <div
-      class="bg-primary absolute -top-1 -right-1 flex size-8 animate-bounce items-center justify-center rounded-full"
-    >
+    <div class="bg-primary absolute -top-1 -right-1 flex size-8 animate-bounce items-center justify-center rounded-full">
       <span class="bg-primary text-on-primary text-sm font-bold">1</span>
     </div>
   </span>
@@ -33,9 +29,7 @@ if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
   <Card>
     <article class="flex flex-col items-center gap-6 px-8">
       <div class="space-y-2 text-center">
-        <h1 class="text-on-background text-2xl font-bold text-balance">
-          Email de verificación enviado
-        </h1>
+        <h1 class="text-on-background text-2xl font-bold text-balance">Email de verificación enviado</h1>
         <p class="text-on-muted text-pretty">
           Hemos enviado un enlace de verificación para que puedas editar el perfil de
           <b class="text-on-background">{pet.name}</b>
@@ -49,9 +43,7 @@ if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 
       <ol class="space-y-4">
         <li class="relative pl-8">
-          <span
-            class="bg-primary text-on-primary absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold"
-          >
+          <span class="bg-primary text-on-primary absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold">
             1
           </span>
           <p class="text-on-background font-medium">Revisa tu bandeja de entrada</p>
@@ -61,9 +53,7 @@ if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
           </p>
         </li>
         <li class="relative pl-8">
-          <span
-            class="bg-primary text-on-primary absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold"
-          >
+          <span class="bg-primary text-on-primary absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold">
             2
           </span>
           <p class="text-on-background font-medium">Haz clic en el enlace</p>
@@ -71,21 +61,15 @@ if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
         </li>
 
         <li class="relative pl-8">
-          <span
-            class="bg-on-muted/20 text-on-muted absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold"
-          >
+          <span class="bg-on-muted/20 text-on-muted absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold">
             3
           </span>
           <p class="text-on-background font-medium">Edita el perfil de {pet.name}</p>
-          <p class="text-on-muted text-sm text-balance">
-            Una vez verificado, podras actualizar toda la información
-          </p>
+          <p class="text-on-muted text-sm text-balance">Una vez verificado, podras actualizar toda la información</p>
         </li>
       </ol>
 
-      <div
-        class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-2 text-sm text-amber-700"
-      >
+      <div class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-2 text-sm text-amber-700">
         <Icon name="lucide:clock" class="size-4" />
         <span>El enlace expira en 15 minutos</span>
       </div>

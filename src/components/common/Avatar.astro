@@ -6,9 +6,7 @@ export interface Props extends HTMLAttributes<'figure'> {
   pet?: Tables<'pets'>;
 }
 const { pet, class: className, id, ...props } = Astro.props;
-const avatar_path = pet?.avatar_path
-  ? `${pet.avatar_path}?v=${pet.updated_at ? new Date(pet.updated_at).getTime() : ''}`
-  : undefined;
+const avatar_path = pet?.avatar_path ? `${pet.avatar_path}?v=${pet.updated_at ? new Date(pet.updated_at).getTime() : ''}` : undefined;
 ---
 
 <figure
@@ -27,9 +25,7 @@ const avatar_path = pet?.avatar_path
     src={avatar_path}
   />
 
-  <span
-    class="bg-primary flex size-full items-center justify-center text-4xl font-bold select-none group-data-[has-image=true]:hidden"
-  >
+  <span class="bg-primary flex size-full items-center justify-center text-4xl font-bold select-none group-data-[has-image=true]:hidden">
     {(pet?.name || '�').charAt(0)}
   </span>
 </figure>

@@ -9,15 +9,7 @@ type Props = HTMLAttributes<'a'> & {
   variant?: Variant;
 };
 
-const {
-  href,
-  target,
-  rel,
-  variant = 'primary',
-  class: className,
-  disabled = false,
-  ...props
-} = Astro.props as Props;
+const { href, target, rel, variant = 'primary', class: className, disabled = false, ...props } = Astro.props as Props;
 
 const VARIANT_CLASSES: Record<Variant, string> = {
   primary: 'hover:text-primary/80 hover:underline',
