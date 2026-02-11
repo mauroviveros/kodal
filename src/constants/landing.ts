@@ -120,3 +120,36 @@ export const POLICY_OF_PRIVACY: { title: string, content: string, items?: string
     content: 'Si tienes preguntas o inquietudes sobre nuestra política de privacidad, por favor contáctanos a través de nuestro correo de soporte: <strong>maurod.viveros@gmail.com</strong>.'
   }
 ];
+
+export const FEATURES_LIST: { title: string, description: string, icon: string }[] = [
+  {
+    title: 'Acceso Instantáneo',
+    description: 'Cualquier persona puede escanear el código QR y acceder inmediatamente a la información de contacto.',
+    icon: 'lucide:smartphone',
+  },
+  {
+    title: 'Información Segura',
+    description: 'Tus datos personales están protegidos. Solo se muestra la información necesaria para el contacto.',
+    icon: 'lucide:shield-check',
+  },
+  {
+    title: 'Actualización en tiempo real',
+    description: 'Modifica la información de tu mascota cuando quieras. Los cambios se reflejan inmediatamente.',
+    icon: 'lucide:refresh-ccw',
+  },
+  {
+    title: 'Soporte 24/7',
+    description: 'Nuestro equipo de soporte está disponible para ayudarte en cualquier momento. Contáctanos por teléfono o correo electrónico.',
+    icon: 'lucide:headset',
+  },
+  {
+    title: 'Diseño Personalizado',
+    description: 'Elige entre diferentes estilos de medallas físicas para que tu mascota luzca única y elegante.',
+    icon: 'lucide:palette',
+  },
+  {
+    title: 'Funcionalidad de Localización',
+    description: 'En caso de pérdida, la medalla puede ayudar a localizar a tu mascota a través de la comunidad y veterinarios cercanos.',
+    icon: 'lucide:map-pin',
+  }
+]
