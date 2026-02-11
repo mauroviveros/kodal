@@ -10,7 +10,7 @@ export default defineAction({
   accept: 'form',
   input: updatePetSchema,
   handler: async ({ token_code, avatar_file, ...input }, { params }) => {
-    let avatar_path: string | null = null;
+    let avatar_path: string | null | undefined = undefined;
     let pet: Tables<'pets'> | null = null;
     const { pet_payload, medal_payload } = buildPetAndMedalPayloads(input);
 

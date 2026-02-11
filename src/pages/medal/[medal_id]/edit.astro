@@ -1,4 +1,5 @@
 ---
+import { Form } from '@components';
 import { FormPetBasic, FormPetContact, FormPetAvatar } from '@components/forms';
 import { Button } from '@components/ui';
 import Layout from '@layout';
@@ -31,18 +32,6 @@ const token_code_value = import.meta.env.DISABLE_TOKEN ? crypto.randomUUID() : t
 
   <form class="flex flex-col gap-6" action={actions.updatePetForm} method="POST" enctype="multipart/form-data">
     <input type="hidden" name="token_code" value={token_code_value} />
-
-    <FormPetAvatar pet={pet} />
-    <FormPetBasic pet={pet} />
-    <FormPetContact medal={medal} />
-
-    <div class="flex gap-4">
-      <Button size="lg" variant="outline" href={`/medal/${medal?.id}`} class="flex-1"> Cancelar </Button>
-
-      <Button size="lg" type="submit" class="flex-1">
-        <Icon name="lucide:save" />
-        Guardar
-      </Button>
-    </div>
+    <Form pet={pet} medal={medal} />
   </form>
 </Layout>

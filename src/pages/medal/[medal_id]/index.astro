@@ -1,8 +1,11 @@
 ---
-import { CardPetBasic, CardPetContact, CardPromotion } from '@components/cards';
+import { Promotion } from '@components';
+import { Avatar } from '@components/common';
 import { DialogIdentityVerification } from '@components/dialogs';
-import { Button } from '@components/ui';
+import { Button, Card } from '@components/ui';
+import { MEDAL_RELATIONS } from '@constants';
 import Layout from '@layout';
+import { buildPetContactInfo, buildPetInfo } from '@utils';
 import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
 
@@ -15,6 +18,12 @@ const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.para
 const { medal, pet } = response.data ?? {};
 if (response.error || !medal) return Astro.rewrite('/404');
 if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
+
+const PET_INFO = buildPetInfo(pet);
+const PET_CONTACT_INFO = buildPetContactInfo(medal);
+
+// const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;
+// <!-- {`https://wa.me/${medal.owner_phone}?text=${encodeURIComponent(phone_message)}`} -->
 ---
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name}`}>
@@ -31,7 +40,58 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
     }
   </article>
 
-  <CardPetBasic pet={pet} />
-  <CardPetContact medal={medal} />
-  <CardPromotion />
+  <!-- Basic -->
+  <Card>
+    <header class="from-primary/10 to-secondary/10 flex flex-col items-center justify-items-center bg-linear-to-br p-8 text-center">
+      <Avatar pet={pet} class="size-52" />
+      <h1 class="my-2 break-all">{pet.name}</h1>
+    </header>
+
+    <article class="p-6">
+      <dl class:list={['grid grid-cols-1 gap-4', PET_INFO.length === 2 && 'md:grid-cols-2', PET_INFO.length > 2 && 'md:grid-cols-3']}>
+        {
+          PET_INFO.map(({ label, display }) => (
+            <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
+              <dt class="text-primary text-2xl font-bold text-balance break-all">{display}</dt>
+              <dd class="text-on-muted text-sm">{label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </article>
+  </Card>
+
+  <!-- Contact -->
+  <Card>
+    <header class="grid grid-cols-[auto_1fr] items-center gap-x-2">
+      <Icon name="lucide:user" class="text-primary row-span-2 size-8" />
+
+      <h2 class="text-xl font-bold">Información de contacto</h2>
+      <h3 class="text-lg">
+        Mi
+        <span class="lowercase">
+          {medal.relation_type ? MEDAL_RELATIONS[medal.relation_type] : 'contacto'}
+        </span>
+        es
+        <span class="text-primary">{medal.full_name}</span>.
+      </h3>
+    </header>
+
+    <article class="space-y-4">
+      {
+        PET_CONTACT_INFO.map(({ label, display, icon }) => (
+          <dl class="bg-muted/30 grid grid-cols-[auto_1fr] grid-rows-2 items-center gap-x-2 rounded-lg p-4">
+            <span class="bg-primary/10 row-span-2 flex size-10 items-center justify-center rounded-full">
+              <Icon name={icon} class="text-primary size-5" />
+            </span>
+
+            <dt class="font-medium">{label}</dt>
+            <dd class="text-primary">{display}</dd>
+          </dl>
+        ))
+      }
+    </article>
+  </Card>
+
+  <Promotion />
 </Layout>

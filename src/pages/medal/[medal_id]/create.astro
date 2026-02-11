@@ -1,5 +1,5 @@
 ---
-import { FormPetAvatar, FormPetBasic, FormPetContact } from '@components/forms';
+import { Form } from '@components';
 import { Button } from '@components/ui';
 import Layout from '@layout';
 import { Icon } from 'astro-icon/components';
@@ -8,11 +8,7 @@ import { actions } from 'astro:actions';
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 
 const result = Astro.getActionResult(actions.insertPetForm);
-// if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
-if (result) {
-  if (result.error) console.log(result.error);
-  return Astro.redirect(`/medal/${Astro.params.medal_id}`);
-}
+if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 const { medal, pet } = response.data ?? {};
@@ -27,17 +23,6 @@ if (pet) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
   </hgroup>
 
   <form class="flex flex-col gap-6" action={actions.insertPetForm} method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="medal_id" value={medal.id} />
-
-    <FormPetAvatar />
-    <FormPetBasic pet={pet} />
-    <FormPetContact medal={medal} />
-
-    <div class="flex gap-4">
-      <Button size="lg" type="submit" class="flex-1">
-        <Icon name="lucide:save" />
-        Crear
-      </Button>
-    </div>
+    <Form medal={medal} />
   </form>
 </Layout>

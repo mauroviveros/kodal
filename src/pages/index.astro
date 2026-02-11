@@ -1,10 +1,80 @@
 ---
-import { CTA, Features, Hero } from '@components/landing';
+import { Button, Card } from '@components/ui';
+import { FEATURES_LIST } from '@constants';
 import Layout from '@layout';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout withContainer={false} title="Kodal - Siempre vuelven a casa" class="gap-0!">
-  <Hero />
-  <Features />
-  <CTA />
+  <!-- HERO -->
+  <section class="relative flex min-h-[calc(100dvh-4rem)] items-center">
+    <div class="container mx-auto flex flex-col items-center justify-center p-4">
+      <div class="from-primary/5 to-primary/5 absolute inset-0 -z-10 bg-linear-to-br"></div>
+      <article class="mx-auto max-w-4xl text-center">
+        <span class="badge mx-auto mb-6">
+          <Icon name="lucide:smartphone" class="mr-1 size-3" />
+          Tecnología Inteligente para Mascotas
+        </span>
+
+        <h1 class="mb-6 text-4xl font-bold text-balance lg:text-6xl">
+          Mantén a tu mascota <br /><span class="text-primary">segura y conectada</span> siempre.
+        </h1>
+        <p class="text-on-muted mx-auto mb-8 max-w-xl text-xl text-pretty">
+          Medallas inteligentes con tecnología digital que permiten a cualquier persona contactarte inmediatamente si encuentran a tu
+          mascota perdida.
+        </p>
+
+        <Button disabled>
+          Consigue tu Medalla
+          <Icon name="lucide:shopping-cart" />
+        </Button>
+      </article>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-muted/30 py-20">
+    <div class="container mx-auto px-4">
+      <header class="mb-16 text-center">
+        <h2 class="text-on-background mb-4 text-3xl font-bold lg:text-4xl">¿Por qué elegir Kodal?</h2>
+        <p class="text-on-muted mx-auto max-w-2xl text-xl">Tecnología avanzada diseñada específicamente para la seguridad de tu mascota</p>
+      </header>
+
+      <article class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          FEATURES_LIST.map(({ title, description, icon }) => (
+            <Card>
+              <header>
+                <span class="bg-primary/10 mx-auto mb-4 flex size-12 items-center justify-center rounded-full">
+                  <Icon name={icon} class="text-primary size-6" />
+                </span>
+                <h2 class="text-center">{title}</h2>
+              </header>
+
+              <article class="text-center">
+                <p class="text-on-muted">{description}</p>
+              </article>
+            </Card>
+          ))
+        }
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA - Call To Action -->
+  <section class="bg-secondary text-on-secondary py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="mb-4 text-3xl font-bold lg:text-4xl">¿Listo para proteger a tu mascota?</h2>
+      <p class="mx-auto mb-8 max-w-2xl text-xl opacity-90">
+        Únete a miles de dueños que ya confían en Kodal para mantener a sus mascotas seguras
+      </p>
+
+      <article class="flex flex-col justify-center gap-4 sm:flex-row">
+        <Button variant="solid" disabled>
+          Consigue tu Medalla
+          <Icon name="lucide:shopping-cart" />
+        </Button>
+      </article>
+    </div>
+  </section>
 </Layout>

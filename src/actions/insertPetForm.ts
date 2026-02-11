@@ -10,6 +10,8 @@ export default defineAction({
   accept: 'form',
   input: insertPetSchema,
   handler: async ({ avatar_file, ...input }, { params }) => {
+    let avatar_path: string | null | undefined = undefined;
+    let pet: Tables<'pets'> | null = null;
     const { pet_payload, medal_payload } = buildPetAndMedalPayloads(input);
 
     // 1. Validar parámetro de URL medal_id con el del formulario
@@ -20,9 +22,6 @@ export default defineAction({
 
     // 2. Validar que la medalla existe y está disponible para registro, si no es así se lanza un error
     await isValidMedalForRegistration(root, { id: medal_payload.id });
-
-    let avatar_path: string | null = null;
-    let pet: Tables<'pets'> | null = null;
 
     // 3. Subir avatar de la mascota, crear la mascota y actualizar estado medalla
     try {
