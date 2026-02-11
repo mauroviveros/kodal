@@ -7,8 +7,9 @@ import type { Tables } from '@types';
 interface Props {
   pet?: Tables<'pets'>;
   medal: Tables<'medals'>;
+  errors?: { [key: string]: string[] | undefined };
 }
-const { pet, medal } = Astro.props;
+const { pet, medal, errors } = Astro.props;
 ---
 
 <input type="hidden" name="id" value={pet ? pet.id : crypto.randomUUID()} />
@@ -31,6 +32,7 @@ const { pet, medal } = Astro.props;
       placeholder="Selecciona una imagen"
       description="Sube una foto para el perfil de la mascota."
       accept="image/jpg, image/jpeg, image/png"
+      error={errors?.avatar_file?.[0]}
     />
   </article>
 </Card>
@@ -52,6 +54,7 @@ const { pet, medal } = Astro.props;
       description="Nombre visible en el perfil de la mascota."
       value={pet?.name}
       maxlength="25"
+      error={errors?.name?.[0]}
       required
     />
 
@@ -62,6 +65,7 @@ const { pet, medal } = Astro.props;
       description="Selecciona la especie para personalizar el perfil."
       value={pet?.species ?? 'OTHER'}
       items={PET_ESPECIES}
+      error={errors?.species?.[0]}
       required
     />
 
@@ -74,6 +78,7 @@ const { pet, medal } = Astro.props;
       description="Opcional. Ayuda a identificarla mejor."
       value={pet?.breed}
       maxlength="25"
+      error={errors?.breed?.[0]}
     />
 
     <Select
@@ -83,6 +88,7 @@ const { pet, medal } = Astro.props;
       description="Indica el género de la mascota."
       value={pet?.gender ?? 'UNKNOWN'}
       items={PET_GENDERS}
+      error={errors?.gender?.[0]}
       required
     />
 
@@ -93,6 +99,7 @@ const { pet, medal } = Astro.props;
       label="Fecha de nacimiento"
       description="Si no la conoces, deja el campo vacío."
       value={pet?.birth_date}
+      error={errors?.birth_date?.[0]}
     />
   </article>
 </Card>
@@ -112,6 +119,7 @@ const { pet, medal } = Astro.props;
       label="Relación con la mascota"
       description="Selecciona tu vínculo con la mascota para mostrarlo en el perfil."
       items={Object.entries(MEDAL_RELATIONS).map(([value, label]) => ({ value, label }))}
+      error={errors?.medal_relation_type?.[0]}
       required
     />
 
@@ -124,6 +132,7 @@ const { pet, medal } = Astro.props;
       placeholder="Ej: Ana Pérez"
       description="Este nombre se mostrará en el perfil de la mascota."
       maxlength="50"
+      error={errors?.medal_full_name?.[0]}
       required
     />
 
@@ -136,6 +145,7 @@ const { pet, medal } = Astro.props;
       placeholder="tu@email.com"
       description="Usaremos este email para verificar tu identidad."
       maxlength="100"
+      error={errors?.medal_email?.[0]}
       required
     />
 
@@ -149,6 +159,7 @@ const { pet, medal } = Astro.props;
       description="Incluye el código de país y área para asegurar que podamos contactarte."
       minlength="7"
       maxlength="20"
+      error={errors?.medal_phone?.[0]}
     />
   </article>
 </Card>

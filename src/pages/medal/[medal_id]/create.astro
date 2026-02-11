@@ -1,14 +1,14 @@
 ---
 import { Form } from '@components';
-import { Button } from '@components/ui';
 import Layout from '@layout';
-import { Icon } from 'astro-icon/components';
-import { actions } from 'astro:actions';
+import { actions, isInputError } from 'astro:actions';
 
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 
 const result = Astro.getActionResult(actions.insertPetForm);
-if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+if (result?.data?.success) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+if (result?.error && !inputErrors) return Astro.rewrite('/404');
 
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 const { medal, pet } = response.data ?? {};
@@ -23,6 +23,6 @@ if (pet) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
   </hgroup>
 
   <form class="flex flex-col gap-6" action={actions.insertPetForm} method="POST" enctype="multipart/form-data">
-    <Form medal={medal} />
+    <Form medal={medal} errors={inputErrors} />
   </form>
 </Layout>

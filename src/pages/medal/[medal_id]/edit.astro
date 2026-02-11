@@ -1,20 +1,20 @@
 ---
 import { Form } from '@components';
-import { FormPetBasic, FormPetContact, FormPetAvatar } from '@components/forms';
-import { Button } from '@components/ui';
 import Layout from '@layout';
-import { Icon } from 'astro-icon/components';
-import { actions } from 'astro:actions';
+import { actions, isInputError } from 'astro:actions';
 
 const token_code = Astro.url.searchParams.get('token');
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
 
 const result = Astro.getActionResult(actions.updatePetForm);
-if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+if (result?.data?.success) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+if (result?.error && !inputErrors) return Astro.rewrite('/404');
 
 const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
 const { medal, pet, token } = response.data ?? {};
 if (response.error || !medal || !pet) return Astro.rewrite('/404');
+
 if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
   return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 }
@@ -32,6 +32,6 @@ const token_code_value = import.meta.env.DISABLE_TOKEN ? crypto.randomUUID() : t
 
   <form class="flex flex-col gap-6" action={actions.updatePetForm} method="POST" enctype="multipart/form-data">
     <input type="hidden" name="token_code" value={token_code_value} />
-    <Form pet={pet} medal={medal} />
+    <Form pet={pet} medal={medal} errors={inputErrors} />
   </form>
 </Layout>
