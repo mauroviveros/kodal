@@ -1,15 +1,1 @@
-{
-  "[astro]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
-  },
-  "workbench.editor.customLabels.patterns": {
-    "**/src/layouts/**/*.astro": "${filename} - layout 🏗️",
-    "**/src/**/*.astro": "${filename} - components 🧩",
-    "**/src/types/**/*.ts": "${filename} - types 🏷️",
-    "**/src/utils/**/*.ts": "${filename} - utils 💡",
-    "**/*.css": "${filename} - styles 🎨"
-  }
-}
+{}
