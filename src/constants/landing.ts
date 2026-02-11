@@ -71,6 +71,52 @@ export const TERMS_OF_SERVICE: { title: string, content: string, items?: string[
   },
   {
     title: 'Contacto',
-    content: 'Si tienes preguntas o inquietudes sobre estos términos, por favor contáctanos a través de nuestro correo de soporte: <strong>maurod.viveros@gmail.com</strong>'
+    content: 'Si tienes preguntas o inquietudes sobre estos términos, por favor contáctanos a través de nuestro correo de soporte: <strong>maurod.viveros@gmail.com</strong>.'
+  }
+];
+
+export const POLICY_OF_PRIVACY: { title: string, content: string, items?: string[] }[] = [
+  {
+    title: 'Información que Recopilamos',
+    content: 'En Kodal, recopilamos únicamente la información necesaria para proporcionar nuestro servicio de medallas inteligentes:',
+    items: [
+      'Información de la mascota (nombre, raza, edad, peso, foto)',
+      'Datos de contacto del propietario (teléfono, email, dirección)',
+      'Información médica básica (vacunas, alergias, medicamentos)',
+      'Datos de personalidad y comportamiento de la mascota'
+    ]
+  },
+  {
+    title: 'Cómo Usamos tu Información',
+    content: 'Utilizamos la información recopilada exclusivamente para:',
+    items: [
+      'Mostrar el perfil digital de tu mascota',
+      'Facilitar el contacto entre quien encuentra a tu mascota y tú',
+      'Proporcionar información médica relevante en emergencias',
+      'Mejorar nuestros servicios y funcionalidades'
+    ]
+  },
+  {
+    title: 'Compartir Información',
+    content: 'Tu información solo es visible cuando alguien escanea la medalla inteligente de tu mascota. No vendemos, alquilamos ni compartimos tu información personal con terceros para fines comerciales. La información solo se comparte con veterinarios o autoridades en caso de emergencia médica.'
+  },
+  {
+    title: 'Seguridad de la Información',
+    content: 'Implementamos medidas de seguridad técnicas y organizativas apropiadas para proteger tu información contra acceso no autorizado, alteración, divulgación o destrucción. Todos los datos se almacenan de forma segura y se transmiten mediante conexiones cifradas.'
+  },
+  {
+    title: 'Tus Derechos',
+    content: 'Tienes derecho a:',
+    items: [
+      'Acceder a tu información personal',
+      'Corregir datos inexactos',
+      'Eliminar tu cuenta y datos',
+      'Portabilidad de tus datos',
+      'Oponerte al procesamiento de tus datos'
+    ]
+  },
+  {
+    title: 'Contacto',
+    content: 'Si tienes preguntas o inquietudes sobre nuestra política de privacidad, por favor contáctanos a través de nuestro correo de soporte: <strong>maurod.viveros@gmail.com</strong>.'
   }
 ];
