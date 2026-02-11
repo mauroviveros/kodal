@@ -25,6 +25,6 @@ const { id, label, description, error, class: className, ...props } = Astro.prop
   label={label}
   error={error}
 >
-  <input id={id?.toString()} class:list={[classes]} {...props} />
+  <input id={id?.toString()} class:list={[classes]} transition:persist {...props} />
   <slot />
 </Fieldset>
