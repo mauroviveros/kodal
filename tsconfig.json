@@ -8,8 +8,7 @@
       "@layout": ["./layouts/Layout.astro"],
       "@components": ["./components/index.ts"],
       "@components/*": ["./components/*"],
-      "@styles/*": ["./styles/*"],
-
+      "@styles": ["./global.css"],
       "@supabase": ["./supabase.ts"],
       "@repositories": ["./repositories/index.ts"],
       "@libs": ["./libs/index.ts"],

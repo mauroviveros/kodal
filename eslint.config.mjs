@@ -5,10 +5,10 @@ import prettier from 'eslint-plugin-prettier/recommended';
 import ts_parser from '@typescript-eslint/parser';
 
 export default defineConfig([
+  globalIgnores([".astro/", ".husky/", ".vercel/", "dist/", "node_modules/", "pnpm-lock.yaml"]),
   astro.configs.recommended,
   astro.configs['jsx-a11y-recommended'],
   prettier,
-  globalIgnores(['.astro/', '.husky/', '.vercel/', '.vscode/', 'db/', 'dist/', 'node_modules/']),
   {
     files: ['**/*.astro'],
     languageOptions: {
@@ -21,6 +21,10 @@ export default defineConfig([
   },
   {
     files: ['**/*.astro/*.ts', '*.astro/*.ts'],
-    rules: { 'prettier/prettier': 'off' },
-  },
+    languageOptions: {
+      globals: { browser: true, es2020: true },
+      parserOptions: { parser: ts_parser, sourceType: "module" },
+    },
+    rules: { 'prettier/prettier': 'off' }
+  }
 ]);
