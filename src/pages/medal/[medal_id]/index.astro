@@ -1,5 +1,5 @@
 ---
-import { Promotion } from '@components';
+import { Background, Promotion } from '@components';
 import { Avatar } from '@components/common';
 import { DialogIdentityVerification } from '@components/dialogs';
 import { Button, Card } from '@components/ui';
@@ -22,8 +22,7 @@ if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 const PET_INFO = buildPetInfo(pet);
 const PET_CONTACT_INFO = buildPetContactInfo(medal);
 
-// const phone_message = `Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`;
-// <!-- {`https://wa.me/${medal.owner_phone}?text=${encodeURIComponent(phone_message)}`} -->
+const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`);
 ---
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name}`}>
@@ -42,12 +41,30 @@ const PET_CONTACT_INFO = buildPetContactInfo(medal);
 
   <!-- Basic -->
   <Card>
-    <header class="from-primary/10 to-secondary/10 flex flex-col items-center justify-items-center bg-linear-to-br p-8 text-center">
+    <header class="relative z-10 flex flex-col items-center justify-items-center overflow-hidden p-8 text-center">
+      <Background gender={pet.gender} species={pet.species} />
       <Avatar pet={pet} class="size-52" />
       <h1 class="my-2 break-all">{pet.name}</h1>
+
+      {
+        medal.phone && (
+          <Button href={`https://wa.me/${medal.phone}?text=${phone_message}`} size="sm">
+            <Icon name="lucide:smartphone" />
+            Enviar WhatsApp
+          </Button>
+        )
+      }
     </header>
 
     <article class="p-6">
+      {
+        pet.notes && (
+          <blockquote class="bg-secondary/30 border-secondary/50! mb-4 rounded-lg border p-4">
+            <p class="text-on-muted text-center text-sm text-pretty">{pet.notes}</p>
+          </blockquote>
+        )
+      }
+
       <dl class:list={['grid grid-cols-1 gap-4', PET_INFO.length === 2 && 'md:grid-cols-2', PET_INFO.length > 2 && 'md:grid-cols-3']}>
         {
           PET_INFO.map(({ label, display }) => (
