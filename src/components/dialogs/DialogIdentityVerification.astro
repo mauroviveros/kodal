@@ -10,10 +10,9 @@ interface Props {
   medal: Tables<'medals'>;
 }
 const { pet, medal } = Astro.props;
-const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
 ---
 
-<Button id={`dialog-identity-verification-${pet.id}-btn`} size="xs">
+<Button id={`dialog-identity-verification-${pet.id}-btn`} transition:persist size="xs">
   <Icon name="lucide:edit" />
   Editar
 </Button>
@@ -23,6 +22,7 @@ const initial = pet.name?.trim()?.[0]?.toUpperCase() ?? 'M';
   description="Para proteger la información de tu mascota, necesitamos verificar tu identidad."
   id={`dialog-identity-verification-${pet.id}`}
   closedby="any"
+  transition:persist
 >
   <form
     id={`dialog-identity-verification-${pet.id}-form`}

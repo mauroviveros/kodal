@@ -58,17 +58,19 @@ const classes = [
 </dialog>
 
 <script define:vars={{ id }}>
-  const dialog = id ? document.getElementById(id) : null;
-  const openBtn = id ? document.getElementById(`${id}-btn`) : null;
-  const closeBtns = dialog?.querySelectorAll('[data-dialog-close]');
+  document.addEventListener('astro:page-load', () => {
+    const dialog = id ? document.getElementById(id) : null;
+    const openBtn = id ? document.getElementById(`${id}-btn`) : null;
+    const closeBtns = dialog?.querySelectorAll('[data-dialog-close]');
 
-  openBtn?.addEventListener('click', () => {
-    dialog?.showModal();
-  });
+    openBtn?.addEventListener('click', () => {
+      dialog?.showModal();
+    });
 
-  closeBtns?.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      dialog?.close();
+    closeBtns?.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        dialog?.close();
+      });
     });
   });
 </script>

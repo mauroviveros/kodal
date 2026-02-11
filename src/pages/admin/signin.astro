@@ -21,7 +21,7 @@ import { Icon } from 'astro-icon/components';
       <h3 class="text-on-muted text-sm">Acceso exclusivo para administradores autorizados</h3>
     </header>
 
-    <form action="/api/auth/signin" method="POST" class="space-y-6">
+    <form action="/api/auth/signin" method="POST" class="space-y-6" data-astro-reload>
       <input type="hidden" name="provider" value="github" />
       <input type="hidden" name="redirectTo" value={Astro.url.searchParams.get('redirectTo')} />
 
