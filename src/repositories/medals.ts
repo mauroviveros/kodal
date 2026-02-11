@@ -1,5 +1,5 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database, Enums } from "@types";
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database, Enums } from '@types';
 
 // Función para actualizar una medalla
 export const updateMedal = async (
@@ -11,7 +11,7 @@ export const updateMedal = async (
     .from('medals')
     .update({
       ...updateData,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     })
     .eq('id', id)
     .select('*')
@@ -19,72 +19,53 @@ export const updateMedal = async (
 
   if (error) {
     console.error('Failed to update medal:', error);
-    throw new Error("Failed to update medal");
+    throw new Error('Failed to update medal');
   }
 
   return data;
-}
+};
 
 // Función para obtener una medalla por su ID
-export const getMedalById = async (
-  supabase: SupabaseClient<Database>,
-  { id }: { id: string }
-) => {
-  const { data, error } = await supabase
-    .from('medals')
-    .select('*')
-    .eq('id', id)
-    .maybeSingle();
+export const getMedalById = async (supabase: SupabaseClient<Database>, { id }: { id: string }) => {
+  const { data, error } = await supabase.from('medals').select('*').eq('id', id).maybeSingle();
   if (error) {
     console.error('Medal not found:', error);
-    throw new Error("Medal not found");
+    throw new Error('Medal not found');
   }
 
   return data;
-}
+};
 
 // Función para validar que una medalla existe y está disponible para registro
-export const isValidMedalForRegistration = async (
-  supabase: SupabaseClient<Database>,
-  { id }: { id: string }
-) => {
+export const isValidMedalForRegistration = async (supabase: SupabaseClient<Database>, { id }: { id: string }) => {
   const data = await getMedalById(supabase, { id });
   const validStatuses: Enums<'MEDAL_STATUS'>[] = ['CREATED'];
 
   if (!data || !validStatuses.includes(data.status)) {
     console.error('Medal is not available for registration', { id, status: data?.status });
-    throw new Error("Medal is not available for registration");
+    throw new Error('Medal is not available for registration');
   }
 
   return true;
-}
+};
 
-export const insertNewMedals = async (
-  supabase: SupabaseClient<Database>,
-  { quantity }: { quantity: number }
-) => {
+export const insertNewMedals = async (supabase: SupabaseClient<Database>, { quantity }: { quantity: number }) => {
   const payload = Array.from({ length: quantity }, () => ({
     status: 'CREATED' as Enums<'MEDAL_STATUS'>,
     created_at: new Date().toISOString(),
   }));
 
-  const { data, error } = await supabase
-    .from('medals')
-    .insert(payload)
-    .select('id');
+  const { data, error } = await supabase.from('medals').insert(payload).select('id');
 
   if (error) {
     console.error('Failed to insert medals:', error);
-    throw new Error("Failed to insert medals");
+    throw new Error('Failed to insert medals');
   }
 
   return data;
-}
+};
 
-export async function getMedalsPaginated(
-  supabase: SupabaseClient<Database>,
-  { page, pageSize }: { page: number; pageSize: number }
-) {
+export async function getMedalsPaginated(supabase: SupabaseClient<Database>, { page, pageSize }: { page: number; pageSize: number }) {
   const offset = (page - 1) * pageSize;
 
   const { data, error } = await supabase
@@ -95,23 +76,19 @@ export async function getMedalsPaginated(
 
   if (error) {
     console.error('Failed to fetch medals:', error);
-    throw new Error("Failed to fetch medals");
+    throw new Error('Failed to fetch medals');
   }
 
   return data || [];
 }
 
-export const getTotalMedalsCount = async (
-  supabase: SupabaseClient<Database>
-) => {
-  const { count, error } = await supabase
-    .from('medals')
-    .select('id', { count: 'exact', head: true });
+export const getTotalMedalsCount = async (supabase: SupabaseClient<Database>) => {
+  const { count, error } = await supabase.from('medals').select('id', { count: 'exact', head: true });
 
   if (error) {
     console.error('Failed to count medals:', error);
-    throw new Error("Failed to count medals");
+    throw new Error('Failed to count medals');
   }
 
   return count || 0;
-}
+};

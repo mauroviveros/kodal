@@ -1,4 +1,4 @@
-export * from "./database";
+export * from './database';
 
 export interface Pagination {
   total: number;

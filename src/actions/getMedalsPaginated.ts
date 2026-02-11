@@ -1,6 +1,6 @@
-import { getMedalsPaginated, getTotalMedalsCount } from "@repositories";
-import { z } from "astro/zod";
-import { defineAction } from "astro:actions";
+import { getMedalsPaginated, getTotalMedalsCount } from '@repositories';
+import { z } from 'astro/zod';
+import { defineAction } from 'astro:actions';
 
 export default defineAction({
   input: z.object({
@@ -20,7 +20,7 @@ export default defineAction({
         end: (page - 1) * pageSize + medals.length,
         currentPage: page,
         lastPage: Math.ceil(total / pageSize),
-      }
+      },
     };
-  }
-})
+  },
+});

@@ -1,4 +1,4 @@
-import type { Enums } from "@types";
+import type { Enums } from '@types';
 
 export const MEDAL_RELATIONS: Record<Enums<'MEDAL_RELATION'>, string> = {
   OWNER: 'Dueño/a',
@@ -9,10 +9,7 @@ export const MEDAL_RELATIONS: Record<Enums<'MEDAL_RELATION'>, string> = {
   EMERGENCY: 'Contacto de emergencia',
 };
 
-export const MEDAL_STATUS: Record<
-  Enums<'MEDAL_STATUS'>,
-  { text: string; icon: string; class: string }
-> = {
+export const MEDAL_STATUS: Record<Enums<'MEDAL_STATUS'>, { text: string; icon: string; class: string }> = {
   CREATED: {
     text: 'Nuevo',
     icon: 'lucide:sparkles',

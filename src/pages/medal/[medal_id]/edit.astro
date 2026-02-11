@@ -17,6 +17,8 @@ if (response.error || !medal || !pet) return Astro.rewrite('/404');
 if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
   return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 }
+
+const token_code_value = import.meta.env.DISABLE_TOKEN ? crypto.randomUUID() : token_code;
 ---
 
 <Layout class="max-w-2xl" title={`Kodal - medalla de ${pet.name} - Editar información`}>
@@ -28,7 +30,7 @@ if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
   </hgroup>
 
   <form class="flex flex-col gap-6" action={actions.updatePetForm} method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="token_code" value={import.meta.env.DISABLE_TOKEN ? crypto.randomUUID() : token_code} />
+    <input type="hidden" name="token_code" value={token_code_value} />
 
     <FormPetAvatar pet={pet} />
     <FormPetBasic pet={pet} />

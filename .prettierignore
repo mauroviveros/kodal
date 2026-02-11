@@ -1,7 +1,7 @@
-.git
-.astro
-.husky
-.vercel
-dist
-node_modules
+.git/
+.astro/
+.husky/
+.vercel/
+dist/
+node_modules/
 pnpm-lock.yaml

@@ -1,7 +1,12 @@
 {
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "[astro]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "always"
   },
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#ef7f3a",

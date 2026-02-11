@@ -1,8 +1,8 @@
-import { sendVerificationEmail } from "@libs";
-import { checkPetWithoutActiveToken, getMedalById, getPetByMedalId, insertToken } from "@repositories";
-import { sendTokenEmailSchema } from "@schemas";
-import { root } from "@supabase";
-import { defineAction } from "astro:actions";
+import { sendVerificationEmail } from '@libs';
+import { checkPetWithoutActiveToken, getMedalById, getPetByMedalId, insertToken } from '@repositories';
+import { sendTokenEmailSchema } from '@schemas';
+import { root } from '@supabase';
+import { defineAction } from 'astro:actions';
 
 export default defineAction({
   accept: 'form',
@@ -15,9 +15,9 @@ export default defineAction({
     const pet = await getPetByMedalId(root, { medal_id });
 
     // 2. Validar que existan ambos registros
-    if(!medal || !medal.email || !pet) {
+    if (!medal || !medal.email || !pet) {
       console.error('Medal or pet not found for medal_id:', medal_id);
-      throw new Error("Medal or pet not found");
+      throw new Error('Medal or pet not found');
     }
 
     // 3. Validar que el pet no tenga un token activo (que no esté revocado y no haya expirado)
@@ -36,5 +36,5 @@ export default defineAction({
     });
 
     return { success: true, resend_email_id: id };
-  }
-})
+  },
+});

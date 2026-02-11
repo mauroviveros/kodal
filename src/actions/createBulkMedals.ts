@@ -1,6 +1,6 @@
-import { defineAction } from "astro:actions";
-import { z } from "astro/zod";
-import { insertNewMedals } from "@repositories";
+import { defineAction } from 'astro:actions';
+import { z } from 'astro/zod';
+import { insertNewMedals } from '@repositories';
 
 export default defineAction({
   accept: 'json',

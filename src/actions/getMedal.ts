@@ -1,7 +1,7 @@
 import { z } from "astro/zod";
 import { root } from "@supabase";
 import { defineAction } from "astro:actions";
-import { getMedalById, getPetByMedalId, getToken } from "@repositories";
+import { getMedalById, getPetByMedalId, getToken } from '@repositories';
 
 export default defineAction({
   input: z.object({

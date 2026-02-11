@@ -1,5 +1,5 @@
-import { Constants } from "@types";
-import { z } from "astro/zod";
+import { Constants } from '@types';
+import { z } from 'astro/zod';
 
 const medalSchema = z.object({
   medal_id: z.string().uuid(),
@@ -17,19 +17,13 @@ const petSchema = z.object({
   breed: z.string().min(1).max(50).optional(),
   birth_date: z.string().optional(),
   avatar_file: z.instanceof(File).optional(),
-
 });
 
-export const insertPetSchema = z.object({})
-  .merge(medalSchema)
-  .merge(petSchema);
+export const insertPetSchema = z.object({}).merge(medalSchema).merge(petSchema);
 
-export const updatePetSchema = z.object({})
-  .merge(medalSchema)
-  .merge(petSchema)
-  .extend({
-    token_code: z.string().uuid(),
-  });
+export const updatePetSchema = z.object({}).merge(medalSchema).merge(petSchema).extend({
+  token_code: z.string().uuid(),
+});
 
 export const sendTokenEmailSchema = z.object({
   medal_id: z.string().uuid(),

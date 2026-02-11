@@ -5,7 +5,6 @@ import getMedalsPaginated from './getMedalsPaginated';
 import createBulkMedals from './createBulkMedals';
 import sendTokenEmail from './sendTokenEmail';
 
-
 export const server = {
   getMedal,
   getMedalsPaginated,
@@ -13,4 +12,4 @@ export const server = {
   updatePetForm,
   createBulkMedals,
   sendTokenEmail,
-}
+};
