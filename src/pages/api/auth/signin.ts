@@ -16,6 +16,6 @@ export const POST: APIRoute = async ({ url, redirect, locals: { supabase }, requ
     },
   });
 
-  if (error) return redirect(`/signin?error=${encodeURIComponent(error.message)}`);
+  if (error) return redirect(`/admin/signin?error=${encodeURIComponent(error.message)}`);
   return redirect(data.url);
 }
