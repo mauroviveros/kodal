@@ -17,7 +17,6 @@ const {
   medal: { pets: pet, ...medal },
   token,
 } = response.data;
-
 if ((!token || token.code !== token_code) && !import.meta.env.DISABLE_TOKEN) {
   return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 }
