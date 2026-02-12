@@ -1,7 +1,8 @@
 import { sendVerificationEmail } from '@libs';
-import { checkPetWithoutActiveToken, getMedalById, getPetByMedalId, insertToken } from '@repositories';
+import { checkPetWithoutActiveToken, getMedalPetById, getPetByMedalId, insertToken } from '@repositories';
 import { sendTokenEmailSchema } from '@schemas';
 import { root } from '@supabase';
+import type { Tables } from '@types';
 import { defineAction } from 'astro:actions';
 
 export default defineAction({
@@ -11,8 +12,8 @@ export default defineAction({
     if (import.meta.env.DISABLE_TOKEN) return { success: true };
 
     // 1. Obtener datos de medalla y mascota asociada al medal_id
-    const medal = await getMedalById(root, { id: medal_id });
-    const pet = await getPetByMedalId(root, { medal_id });
+    const data = await getMedalPetById(root, { id: medal_id });
+    const { pets: pet, ...medal } = data || ({} as Tables<'medals'> & { pets: Tables<'pets'> | null });
 
     // 2. Validar que existan ambos registros
     if (!medal || !medal.email || !pet) {
