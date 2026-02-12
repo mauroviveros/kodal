@@ -5,9 +5,13 @@ import { Icon } from 'astro-icon/components';
 import { actions } from 'astro:actions';
 
 if (!Astro.params.medal_id) return Astro.rewrite('/404');
-const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
-const { medal, pet, token } = response.data ?? {};
-if (response.error || !pet || !medal) return Astro.rewrite('/404');
+const response = await Astro.callAction(actions.getMedalPet, { medal_id: Astro.params.medal_id });
+if (!response.data?.medal?.pets || response.error) return Astro.rewrite('/404');
+const {
+  medal: { pets: pet, ...medal },
+  token,
+} = response.data;
+
 if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 ---
 

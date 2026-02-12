@@ -14,9 +14,12 @@ if (!Astro.params.medal_id) return Astro.rewrite('/404');
 const result = Astro.getActionResult(actions.sendTokenEmail);
 if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}/email-sent`);
 
-const response = await Astro.callAction(actions.getMedal, { medal_id: Astro.params.medal_id });
-const { medal, pet } = response.data ?? {};
-if (response.error || !medal) return Astro.rewrite('/404');
+const response = await Astro.callAction(actions.getMedalPet, { medal_id: Astro.params.medal_id });
+if (!response.data?.medal || response.error) return Astro.rewrite('/404');
+const {
+  medal: { pets: pet, ...medal },
+} = response.data;
+
 if (!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 
 const PET_INFO = buildPetInfo(pet);

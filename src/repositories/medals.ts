@@ -26,8 +26,8 @@ export const updateMedal = async (
 };
 
 // Función para obtener una medalla por su ID
-export const getMedalById = async (supabase: SupabaseClient<Database>, { id }: { id: string }) => {
-  const { data, error } = await supabase.from('medals').select('*').eq('id', id).maybeSingle();
+export const getMedalPetById = async (supabase: SupabaseClient<Database>, { id }: { id: string }) => {
+  const { data, error } = await supabase.from('medals').select('*, pets(*)').eq('id', id).maybeSingle();
   if (error) {
     console.error('Medal not found:', error);
     throw new Error('Medal not found');
@@ -38,9 +38,9 @@ export const getMedalById = async (supabase: SupabaseClient<Database>, { id }: {
 
 // Función para validar que una medalla existe y está disponible para registro
 export const isValidMedalForRegistration = async (supabase: SupabaseClient<Database>, { id }: { id: string }) => {
-  const data = await getMedalById(supabase, { id });
-  const validStatuses: Enums<'MEDAL_STATUS'>[] = ['CREATED'];
+  const { data } = await supabase.from('medals').select('status').eq('id', id).maybeSingle();
 
+  const validStatuses: Enums<'MEDAL_STATUS'>[] = ['CREATED'];
   if (!data || !validStatuses.includes(data.status)) {
     console.error('Medal is not available for registration', { id, status: data?.status });
     throw new Error('Medal is not available for registration');
@@ -91,4 +91,16 @@ export const getTotalMedalsCount = async (supabase: SupabaseClient<Database>) =>
   }
 
   return count || 0;
+};
+
+// Función para obtener la medalla junto con su mascota asociada por el ID de la medalla, incluyendo validaciones adicionales si es necesario
+export const getMedalFullDataByID = async (supabase: SupabaseClient<Database>, { id }: { id: string }) => {
+  const { data, error } = await supabase.from('medals').select(`*, pets(*)`).eq('id', id).limit(1).maybeSingle();
+
+  if (error) {
+    console.error('Failed to fetch medal full data:', error);
+    throw new Error('Failed to fetch medal full data');
+  }
+
+  return data;
 };
