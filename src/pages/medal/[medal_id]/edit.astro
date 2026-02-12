@@ -11,7 +11,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 if (result?.data?.success) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 if (result?.error && !inputErrors) return Astro.rewrite('/404');
 
-const response = await Astro.callAction(actions.getMedalPet, { medal_id: Astro.params.medal_id });
+const response = await Astro.callAction(actions.getMedalPet, { medal_id: Astro.params.medal_id, withToken: true });
 if (!response.data?.medal?.pets || response.error) return Astro.rewrite('/404');
 const {
   medal: { pets: pet, ...medal },
