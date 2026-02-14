@@ -11,6 +11,9 @@ importers:
       '@astrojs/vercel':
         specifier: 9.0.4
         version: 9.0.4(astro@5.17.1(@types/node@25.2.0)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(rollup@4.57.1)
+      '@mauroviveros/ui':
+        specifier: ^0.2.0
+        version: 0.2.0(astro@5.17.1(@types/node@25.2.0)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(tailwindcss@4.1.18)
       '@supabase/ssr':
         specifier: ^0.8.0
         version: 0.8.0(@supabase/supabase-js@2.95.3)
@@ -755,6 +758,12 @@ packages:
     resolution: {integrity: sha512-uwPAhccfFJlsfCxMYTwOdVfOz3xqyj8xYL3zJj8f0pb30tLohnnFPhLuqp4/qoEz8sNxe4SESZedcBojRefIzg==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@mauroviveros/ui@0.2.0':
+    resolution: {integrity: sha512-CMgvh/nivhjBUAnEtAqqFJf8p7XKZqCdZ2l7t/uAWk9UHUl7qk/RjvJP2RSBs6zEd7dnglUpdMO8QXPTVPODWA==, tarball: https://npm.pkg.github.com/download/@mauroviveros/ui/0.2.0/3eabb0d3b02e87200f86cec432c2dd85c47fad73}
+    peerDependencies:
+      astro: ^4.0.0 || ^5.0.0
+      tailwindcss: ^4.0.0
 
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
@@ -4904,6 +4913,11 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@mauroviveros/ui@0.2.0(astro@5.17.1(@types/node@25.2.0)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))(tailwindcss@4.1.18)':
+    dependencies:
+      astro: 5.17.1(@types/node@25.2.0)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
+      tailwindcss: 4.1.18
 
   '@napi-rs/wasm-runtime@1.1.1':
     dependencies:
