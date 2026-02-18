@@ -43,7 +43,7 @@ const { data, pagination } = response;
         <tbody>
           {
             data.map(async (medal) => {
-              const QRbase64 = await generateQR(new URL(`/medal/${medal.id}`, Astro.url.origin));
+              const QRbase64 = await generateQR(new URL(`/medal/${medal.id}`, import.meta.env.QR_DOMAIN ?? Astro.url.origin));
               const status = MEDAL_STATUS[medal.status];
               return (
                 <tr>
