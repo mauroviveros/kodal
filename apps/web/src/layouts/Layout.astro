@@ -2,13 +2,14 @@
 import type { HTMLAttributes } from 'astro/types';
 import { ClientRouter } from 'astro:transitions';
 import { Icon } from '@components';
-import '../global.css';
+import '@/global.css';
 
 interface Props extends HTMLAttributes<'main'>{
   title?: string;
+  useContainer?: boolean;
 }
 
-const { title = 'Kodal', class: className, ...props } = Astro.props;
+const { title = 'Kodal', useContainer = true, class: className, ...props } = Astro.props;
 ---
 
 <html lang="es" class="overscroll-none">
@@ -43,7 +44,7 @@ const { title = 'Kodal', class: className, ...props } = Astro.props;
       </div>
     </header>
 
-    <main class:list={['grow', className]} {...props}>
+    <main class:list={['grow', { 'container mx-auto mt-16 px-4 py-8': useContainer }, className]} {...props}>
       <slot/>
     </main>
 
