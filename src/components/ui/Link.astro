@@ -7,9 +7,10 @@ type Props = HTMLAttributes<'a'> & {
   href: string | URL;
   disabled?: boolean;
   variant?: Variant;
+  reload?: boolean;
 };
 
-const { href, target, rel, variant = 'primary', class: className, disabled = false, ...props } = Astro.props as Props;
+const { href, target, rel, variant = 'primary', class: className, disabled = false, reload = false, ...props } = Astro.props as Props;
 
 const VARIANT_CLASSES: Record<Variant, string> = {
   primary: 'hover:text-primary/80 hover:underline',
@@ -30,6 +31,7 @@ const classes = [
   rel={target === '_blank' && rel ? 'noopener noreferrer' : rel}
   aria-disabled={disabled}
   class:list={classes}
+  {...reload && { 'data-astro-reload': '' }}
   {...props}
 >
   <slot />
