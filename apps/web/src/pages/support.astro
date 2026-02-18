@@ -1,0 +1,85 @@
+---
+import { Card, Icon } from "@components";
+import { SUPPORT_CONTACT_METHODS, SUPPORT_FREQUENTLY_ASKED_QUESTIONS } from "@constants";
+import Layout from "@layout";
+export const prerender = true;
+---
+
+<Layout class="container mx-auto mt-16 py-8 px-4 max-w-4xl">
+  <header class="mb-8 text-center">
+    <Icon name="lucide:headset" class="text-primary mx-auto mb-4 size-16" />
+    <h1 class="mb-2 text-3xl font-bold">Centro de Soporte</h1>
+    <p class="text-muted-foreground">Estamos aquí para ayudarte con tu medalla inteligente Kodal</p>
+  </header>
+
+  <section class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <Card class="h-fit">
+      <header class="flex items-center gap-2">
+        <Icon name="lucide:message-circle" class="text-primary size-5" />
+        <h2>Métodos de contacto</h2>
+      </header>
+
+      <article class="space-y-4">
+        {
+          SUPPORT_CONTACT_METHODS.map(({ method, contact, description, icon }) => (
+            <div class="bg-muted/30 flex items-center gap-4 rounded-lg p-4">
+              <span class="bg-primary/10 flex size-10 items-center justify-center rounded-full">
+                <Icon name={icon} class="text-primary size-5" />
+              </span>
+              <div>
+                <h3 class="font-medium">{method}</h3>
+                <p class="text-primary">{contact}</p>
+                <p class="text-muted-foreground text-sm">{description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </article>
+    </Card>
+
+    <Card>
+      <header class="flex items-center gap-2">
+        <Icon name="lucide:help-circle" class="text-primary size-5" />
+        <h2>Preguntas Frecuentes</h2>
+      </header>
+
+      <article class="space-y-3">
+        {
+          SUPPORT_FREQUENTLY_ASKED_QUESTIONS.map(({ question, answer }) => (
+            <details class="group">
+              <summary class="bg-muted/30 flex cursor-pointer items-center justify-between rounded-lg p-3">
+                <span class="font-medium">{question}</span>
+                <span class="transition-transform duration-300 group-open:rotate-180">▼</span>
+              </summary>
+              <div class="details-content text-muted-foreground mt-3 p-3 text-sm">{answer}</div>
+            </details>
+          ))
+        }
+      </article>
+
+  </section>
+
+  <!-- <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+
+    <Card>
+      <header class="flex items-center gap-2">
+        <Icon name="lucide:help-circle" class="text-primary size-5" />
+        <h2>Preguntas Frecuentes</h2>
+      </header>
+
+      <article class="space-y-3">
+        {
+          SUPPORT_FREQUENTLY_ASKED_QUESTIONS.map(({ question, answer }) => (
+            <details class="group">
+              <summary class="bg-muted/30 flex cursor-pointer items-center justify-between rounded-lg p-3">
+                <span class="font-medium">{question}</span>
+                <span class="transition-transform duration-300 group-open:rotate-180">▼</span>
+              </summary>
+              <div class="details-content text-on-muted mt-3 p-3 text-sm">{answer}</div>
+            </details>
+          ))
+        }
+      </article>
+    </Card>
+  </div> -->
+</Layout>

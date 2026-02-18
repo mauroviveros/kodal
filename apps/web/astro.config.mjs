@@ -1,0 +1,21 @@
+// @ts-check
+import { defineConfig } from 'astro/config';
+
+import tailwindcss from '@tailwindcss/vite';
+
+import icon from 'astro-icon';
+
+import vercel from '@astrojs/vercel';
+
+// https://astro.build/config
+export default defineConfig({
+  site: 'https://kodal-pet.vercel.app',
+  output: 'server',
+
+  vite: {
+    plugins: [tailwindcss()]
+  },
+
+  integrations: [icon()],
+  adapter: vercel()
+});

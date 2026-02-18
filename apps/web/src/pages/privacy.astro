@@ -1,0 +1,39 @@
+---
+import { Card, Icon } from "@components";
+import { POLICY_OF_PRIVACY } from "@constants";
+import Layout from "@layout";
+export const prerender = true;
+---
+
+<Layout class="container mx-auto mt-16 py-8 px-4 max-w-4xl">
+  <header class="mb-8 text-center">
+    <Icon name="lucide:shield" class="text-primary mx-auto mb-4 size-16" />
+    <h1 class="mb-2 text-3xl font-bold">Política de Privacidad</h1>
+    <p class="text-muted-foreground">Última actualización: Febrero 2026</p>
+  </header>
+
+  <section class="space-y-6">
+    {
+      POLICY_OF_PRIVACY.map(({ title, content, items }, index) => (
+        <Card>
+          <header class="flex items-center">
+            <h2>
+              {index + 1}. {title}
+            </h2>
+          </header>
+
+          <article class="space-y-4">
+            <p class="text-muted-foreground" set:html={content} />
+            {items && (
+              <ul class="text-muted-foreground ml-4 list-inside list-disc space-y-2">
+                {items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+          </article>
+        </Card>
+      ))
+    }
+  </section>
+</Layout>

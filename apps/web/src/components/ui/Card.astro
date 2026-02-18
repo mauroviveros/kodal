@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'section'> {}
+const { class: className, ...props } = Astro.props;
+const classes = [
+  'bg-card text-card-foreground shadow-lg border border-border rounded-xl flex flex-col gap-2 py-6',
+  '[&>article,&>form]:p-6',
+  '[&_h1]:text-3xl [&_h1]:font-bold [&_h2]:font-semibold',
+  '[&_h1,&_h2,&_h3]:text-balance [&>h2]:text-foreground [&>h3]:text-muted-foreground',
+  '[&>header,&>h1,&>h2,&>h3]:px-6',
+  className,
+];
+---
+
+<section class:list={classes} {...props} class="[&_h2_&_h3]:bg-red-500">
+  <slot />
+</section>

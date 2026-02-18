@@ -1,2 +1,0 @@
-#!/usr/bin/env sh
-echo '{"*.{js,ts,jsx,tsx,astro}": "eslint"}' | npx lint-staged -c -

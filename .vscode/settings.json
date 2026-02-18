@@ -1,31 +1,5 @@
 {
-  "[astro]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "always"
-  },
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#ef7f3a",
-    "activityBar.background": "#ef7f3a",
-    "activityBar.foreground": "#15202b",
-    "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#89f5b2",
-    "activityBarBadge.foreground": "#15202b",
-    "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#ef7f3a",
-    "statusBar.background": "#e46212",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#ef7f3a",
-    "statusBarItem.remoteBackground": "#e46212",
-    "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#e46212",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#e4621299",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.color": "#e46212"
+    "conventionalCommits.scopes": [
+        "web"
+    ]
 }

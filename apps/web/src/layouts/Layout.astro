@@ -1,0 +1,75 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { ClientRouter } from 'astro:transitions';
+import { Icon } from '@components';
+import '../global.css';
+
+interface Props extends HTMLAttributes<'main'>{
+  title?: string;
+}
+
+const { title = 'Kodal', class: className, ...props } = Astro.props;
+---
+
+<html lang="es" class="overscroll-none">
+  <head>
+    <title>{title}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#FEFBF4" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <ClientRouter />
+  </head>
+  <body class="bg-background text-foreground font-space-grotesk flex flex-col min-h-dvh">
+    <header class="border-b border-border bg-card/50 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+      <div class="container mx-auto px-4 flex items-center justify-between">
+        <a href="/" class="hover:text-primary/80 select-none flex items-center">
+          <Icon name="logos/isotipo" class="h-16 w-16 py-2" />
+
+          <hgroup>
+            <h2 class="text-3xl leading-6 font-bold md:text-3xl">Kodal</h2>
+            <p class="text-primary text-xs leading-3 font-semibold md:text-sm">Siempre vuelven a casa</p>
+          </hgroup>
+        </a>
+
+        <!-- slots actions -->
+      </div>
+    </header>
+
+    <main class:list={['grow', className]} {...props}>
+      <slot/>
+    </main>
+
+    <footer class="border-t border-border bg-muted/30 text-muted-foreground">
+      <div class="container mx-auto px-4 py-6 text-center">
+        <section class=" flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+          <a href="/privacy" class="hover:underline hover:text-primary/80">Políticas de Privacidad</a>
+          <a href="/terms" class="hover:underline hover:text-primary/80">Términos de Servicio</a>
+          <a href="/support" class="hover:underline hover:text-primary/80">Soporte</a>
+          <a href="/admin" class="hover:underline hover:text-primary/80" aria-disabled="true">Administración</a>
+        </section>
+
+        <p class="mt-4 text-xs">© 2026 Kodal. Manteniendo a las mascotas seguras y conectadas.</p>
+
+        <p class="mt-2 text-xs">
+          Diseñado y construido con ❤️ por
+          <a
+            href="https://mauroviveros.com.ar/"
+            rel="noopener noreferrer"
+            target="_blank"
+            class="text-primary hover:text-primary/80 hover:underline"
+          >
+            Mauro Daniel Viveros
+          </a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
