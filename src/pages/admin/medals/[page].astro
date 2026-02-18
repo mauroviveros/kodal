@@ -10,7 +10,7 @@ import { generateQR } from '@utils';
 
 const { data: response, error } = await Astro.callAction(actions.getMedalsPaginated, {
   page: parseInt(Astro.params.page || '1'),
-  pageSize: 10,
+  pageSize: 100,
 });
 
 if (error) return Astro.rewrite('/404');

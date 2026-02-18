@@ -71,6 +71,7 @@ export async function getMedalsPaginated(supabase: SupabaseClient<Database>, { p
   const { data, error } = await supabase
     .from('medals')
     .select('*, pets(*)')
+    .order('status', { ascending: true })
     .order('created_at', { ascending: false })
     .range(offset, offset + pageSize - 1);
 
