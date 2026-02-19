@@ -1,0 +1,72 @@
+---
+import { Avatar, Button, Dialog, Icon } from '@components';
+import type { Tables } from '@types';
+import { actions } from 'astro:actions';
+
+interface Props {
+  pet: Tables<'pets'>;
+  medal: Tables<'medals'>;
+}
+const { pet, medal } = Astro.props;
+---
+
+<Button id={`dialog-identity-verification-btn`} transition:persist size="xs">
+  <Icon name="lucide:edit" />
+  Editar
+</Button>
+
+<Dialog
+  title="Verificación de Identidad"
+  description="Para proteger la información de tu mascota, necesitamos verificar tu identidad."
+  id={`dialog-identity-verification`}
+>
+  <form
+    id={`dialog-identity-verification-form`}
+    action={actions.sendTokenEmailForm}
+    method="POST"
+    class="bg-muted/40 rounded-xl border border-border p-4"
+  >
+    <input type="hidden" name="medal_id" value={medal.id} />
+
+    <div class="flex items-center gap-3">
+      <Avatar pet={pet} class="size-12!" />
+      <div class="flex flex-col">
+        <span class="text-on-background text-sm font-semibold">{pet.name}</span>
+        <span class="text-on-muted text-sm">{pet.breed}</span>
+      </div>
+    </div>
+
+    <p class="text-on-muted mt-4 text-sm">Enviaremos un código de verificación al email registrado:</p>
+    <p class="text-on-background mt-1 text-sm font-semibold">{medal.email}</p>
+  </form>
+
+  <p class="text-on-muted text-sm">El código expirará en 15 minutos.</p>
+
+  <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end" slot="footer">
+    <Button variant="outline" data-dialog-close>Cancelar</Button>
+    <Button
+      id={`dialog-identity-verification--submit`}
+      form={`dialog-identity-verification-form`}
+      type="submit">
+      <Icon name="lucide:mail" class="size-4" />
+      Enviar Código
+    </Button>
+  </div>
+</Dialog>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById(`dialog-identity-verification-form`);
+    const dialog = document.getElementById(`dialog-identity-verification`);
+
+    form?.addEventListener('submit', (e) => {
+      const btns = dialog?.querySelectorAll('button');
+      const submit = dialog?.querySelector('button[type="submit"][form="dialog-identity-verification-form"]');
+      btns?.forEach(btn => {
+        btn.setAttribute('aria-disabled', 'true');
+      });
+
+      if(submit) submit.innerHTML = 'Cargando...';
+    });
+  });
+</script>

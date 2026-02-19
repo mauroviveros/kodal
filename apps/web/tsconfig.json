@@ -5,10 +5,14 @@
   "compilerOptions": {
     "baseUrl": "./src/",
     "paths": {
-      "@layout": ["./layouts/Layout.astro"],
       "@components": ["./components/index.ts"],
       "@constants": ["./constants/index.ts"],
+      "@libs": ["./libs/index.ts"],
+      "@layout": ["./layouts/Layout.astro"],
+      "@repositories": ["./repositories/index.ts"],
+      "@schemas": ["./schemas/index.ts"],
       "@types": ["./types/index.ts"],
+      "@utils": ["./utils/index.ts"],
       "@/*": ["./*"]
     }
   }

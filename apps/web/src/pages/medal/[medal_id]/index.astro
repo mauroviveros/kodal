@@ -1,7 +1,114 @@
 ---
 import Layout from "@layout";
+import { Avatar, Background, Button, Card, DialogIdentityVerification, Icon } from "@components";
+import { buildPetContactInfo, buildPetInfo } from "@utils";
+import { MEDAL_RELATIONS } from "@constants";
+import { actions } from "astro:actions";
+
+const result = Astro.getActionResult(actions.sendTokenEmailForm);
+if (result) return Astro.redirect(`/medal/${Astro.params.medal_id}/email-sent`);
+
+const { medal, pet } = Astro.locals;
+if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);
+
+const PET_INFO = buildPetInfo(pet);
+const PET_CONTACT_INFO = buildPetContactInfo(medal);
+const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet.name}. Por favor, contáctame.`);
 ---
 
-<Layout>
-  <h1>Medal - Index</h1>
+<Layout class="max-w-2xl flex flex-col gap-8" title={`Kodal - medalla de ${pet.name}`}>
+  {
+    import.meta.env.DISABLE_TOKEN ? (
+      <Button href={`/medal/${Astro.params.medal_id}/edit`} size="xs" slot="actions">
+        <Icon name="lucide:edit" />
+        Editar
+      </Button>
+    ) : (
+      <DialogIdentityVerification pet={pet} medal={medal} />
+    )
+  }
+
+  <Card class="animate-zoom-in">
+    <header class="relative z-10 flex flex-col items-center justify-items-center overflow-hidden p-8 text-center">
+      <Background gender={pet.gender} species={pet.species} />
+      <Avatar pet={pet} class="size-52 shadow-xl select-none" transition:name={`avatar-pet-medal-${medal.id}`} />
+      <h1 class="my-2 break-all">{pet.name}</h1>
+
+      {
+        medal.phone && (
+          <Button href={`https://wa.me/${medal.phone}?text=${phone_message}`} size="sm">
+            <Icon name="lucide:smartphone" />
+            Enviar WhatsApp
+          </Button>
+        )
+      }
+    </header>
+
+    <article class="p-6">
+      {
+        pet.notes && (
+          <blockquote class="bg-secondary/30 border-secondary/50! mb-4 rounded-lg border p-4">
+            <p class="text-muted-foreground text-center text-sm text-pretty">{pet.notes}</p>
+          </blockquote>
+        )
+      }
+
+      <dl class:list={['grid grid-cols-1 gap-4', PET_INFO.length === 2 && 'md:grid-cols-2', PET_INFO.length > 2 && 'md:grid-cols-3']}>
+        {
+          PET_INFO.map(({ label, display }) => (
+            <div class="bg-muted/50 flex flex-col items-center justify-center rounded-lg p-4 text-center">
+              <dt class="text-primary text-2xl font-bold text-balance break-all">{display}</dt>
+              <dd class="text-muted-foreground text-sm">{label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </article>
+  </Card>
+
+  <Card class="animate-zoom-in timeline-view animate-range-entry">
+    <header class="grid grid-cols-[auto_1fr] items-center gap-x-2">
+      <Icon name="lucide:user" class="text-primary row-span-2 size-8" />
+
+      <h2 class="text-xl font-bold">Información de contacto</h2>
+      <h3 class="text-lg">
+        Mi
+        <span class="lowercase">
+          {medal.relation_type ? MEDAL_RELATIONS[medal.relation_type] : 'contacto'}
+        </span>
+        es
+        <span class="text-primary">{medal.full_name}</span>.
+      </h3>
+    </header>
+
+    <article class="space-y-4">
+      {
+        PET_CONTACT_INFO.map(({ label, display, icon }) => (
+          <dl class="bg-muted/30 grid grid-cols-[auto_1fr] grid-rows-2 items-center gap-x-2 rounded-lg p-4">
+            <span class="bg-primary/10 row-span-2 flex size-10 items-center justify-center rounded-full">
+              <Icon name={icon} class="text-primary size-5" />
+            </span>
+
+            <dt class="font-medium">{label}</dt>
+            <dd class="text-primary">{display}</dd>
+          </dl>
+        ))
+      }
+    </article>
+  </Card>
+
+  <Card class="text-center animate-zoom-in timeline-view animate-range-entry">
+    <article>
+      <h3 class="mb-3 text-xl font-bold">¿Te gusta esta medalla inteligente?</h3>
+      <p class="text-on-muted mb-6 text-pretty">
+        Protege a tu mascota con nuestra tecnología de identificación digital. Fácil de usar, siempre actualizada y disponible 24/7.
+      </p>
+
+      <Button disabled>
+        Consigue tu Medalla
+        <Icon name="lucide:shopping-cart" />
+      </Button>
+    </article>
+  </Card>
+
 </Layout>

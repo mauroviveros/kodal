@@ -1,7 +1,45 @@
 ---
+import { root } from "@/supabase";
+import { Button, Form, Icon } from "@components";
 import Layout from "@layout";
+import { getToken } from "@repositories";
+import type { Tables } from "@types";
+import { actions, isInputError } from "astro:actions";
+
+let token: Tables<'pet_tokens'> | null = null;
+const token_code = Astro.url.searchParams.get("token");
+const result = Astro.getActionResult(actions.updatePetForm);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+if (result?.data?.success) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+
+const { medal, pet } = Astro.locals;
+if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);
+if (token_code) token = await getToken({ code: token_code, pet_id: pet.id })
+if (!token && !import.meta.env.DISABLE_TOKEN) return Astro.redirect(`/medal/${medal.id}`);
 ---
 
-<Layout>
-  <h1>Medal - Edit</h1>
+<Layout class="max-w-2xl" title={`Kodal - Editar medalla de ${pet.name}`}>
+  <Button href={`/medal/${Astro.params.medal_id}`} size="xs" slot="actions">
+    <Icon name="lucide:arrow-left" />
+    Mascota
+  </Button>
+
+  <hgroup class="mb-6 flex flex-col gap-2">
+    <h1 class="text-3xl font-bold">Editar información de <span class="text-primary">{pet.name}</span></h1>
+    <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
+  </hgroup>
+
+  {
+    result?.error?.message && !Object.keys(inputErrors).length && (
+      <blockquote class="bg-destructive text-destructive-foreground rounded-lg p-4">
+        <h3 class="text-base font-medium">Error al editar la mascota</h3>
+        <p class="text-sm mt-1">{result.error.message}</p>
+      </blockquote>
+    )
+  }
+
+  <form class="flex flex-col gap-6" action={actions.updatePetForm} method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="token_code" value={token_code || crypto.randomUUID()} />
+    <Form medal={medal} pet={pet} errors={inputErrors} />
+  </form>
 </Layout>

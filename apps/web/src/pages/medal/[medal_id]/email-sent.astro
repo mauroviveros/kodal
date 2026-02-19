@@ -1,7 +1,86 @@
 ---
+import { Button, Card, Icon } from "@components";
 import Layout from "@layout";
+import { getToken } from "@repositories";
+
+const { medal, pet } = Astro.locals;
+if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);
+const token = await getToken({ pet_id: pet.id });
+if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
 ---
 
-<Layout>
-  <h1>Medal - Email Sent</h1>
+<Layout class="max-w-lg flex flex-col gap-8" title={`Kodal - Email de verificación enviado para ${pet.name}`}>
+  <Button href={`/medal/${Astro.params.medal_id}`} size="xs" slot="actions">
+    <Icon name="lucide:arrow-left" />
+    Mascota
+  </Button>
+
+  <span class="bg-primary/10 relative mx-auto flex size-24 items-center justify-center rounded-full">
+    <Icon name="lucide:mail-check" class="text-primary size-12" />
+    <div class="bg-primary absolute -top-1 -right-1 flex size-8 animate-bounce items-center justify-center rounded-full">
+      <span class="bg-primary text-primary-foreground text-sm font-bold">1</span>
+    </div>
+  </span>
+
+  <Card>
+    <article class="flex flex-col items-center gap-6 px-8">
+      <div class="space-y-2 text-center">
+        <h1 class="text-foreground text-2xl font-bold text-balance">Email de verificación enviado</h1>
+        <p class="text-muted-foreground text-pretty">
+          Hemos enviado un enlace de verificación para que puedas editar el perfil de
+          <b class="text-foreground">{pet.name}</b>
+        </p>
+      </div>
+
+      <div class="bg-muted/50 inline-flex items-center gap-2 rounded-lg p-4">
+        <Icon name="lucide:mail" class="text-primary size-6" />
+        <span class="text-foreground font-medium">{medal.email}</span>
+      </div>
+
+      <ol class="space-y-4">
+        <li class="relative pl-8">
+          <span class="bg-primary text-primary-foreground absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold">
+            1
+          </span>
+          <p class="text-foreground font-medium">Revisa tu bandeja de entrada</p>
+          <p class="text-muted-foreground text-sm text-balance">
+            Busca un correo de Kodal con el asunto
+            <span>"<u>Verificación de Identidad para {pet.name}</u>"</span>
+          </p>
+        </li>
+        <li class="relative pl-8">
+          <span class="bg-primary text-primary-foreground absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold">
+            2
+          </span>
+          <p class="text-foreground font-medium">Haz clic en el enlace</p>
+          <p class="text-muted-foreground text-sm text-balance">El email contiene un botón directo</p>
+        </li>
+
+        <li class="relative pl-8">
+          <span class="bg-muted/20 text-muted-foreground absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold">
+            3
+          </span>
+          <p class="text-foreground font-medium">Edita el perfil de {pet.name}</p>
+          <p class="text-muted-foreground text-sm text-balance">Una vez verificado, podras actualizar toda la información</p>
+        </li>
+      </ol>
+
+      <div class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-2 text-sm text-amber-700">
+        <Icon name="lucide:clock" class="size-4" />
+        <span>El enlace expira en 15 minutos</span>
+      </div>
+    </article>
+  </Card>
+
+  <Card>
+    <article>
+      <h2 class="text-foreground mb-3 font-semibold">No recibiste el correo?</h2>
+
+      <ul class="marker:text-primary list-inside list-disc">
+        <li>Revisa tu carpeta de spam o correo no deseado</li>
+        <li>Verifica que el email registrado sea correcto</li>
+        <li>Espera unos minutos, a veces puede demorar</li>
+      </ul>
+    </article>
+  </Card>
 </Layout>

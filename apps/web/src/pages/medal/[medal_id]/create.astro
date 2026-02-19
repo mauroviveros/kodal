@@ -1,7 +1,32 @@
 ---
+import { actions, isInputError } from "astro:actions";
+import { Form } from "@components";
 import Layout from "@layout";
+
+const result = Astro.getActionResult(actions.insertPetForm);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+if (result?.data?.success) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+
+const { medal, pet } = Astro.locals;
+if (pet) return Astro.redirect(`/medal/${medal.id}`);
 ---
 
-<Layout>
-  <h1>Medal - Create</h1>
+<Layout class="max-w-2xl" title="Kodal - Nueva medalla">
+  <hgroup class="mb-6 flex flex-col gap-2">
+    <h1 class="text-3xl font-bold">Crear información de tu mascota</h1>
+    <p class="text-muted-foreground">Completa los datos de tu mascota para crear su perfil.</p>
+  </hgroup>
+
+  {
+    result?.error?.message && !Object.keys(inputErrors).length && (
+      <blockquote class="bg-destructive text-destructive-foreground rounded-lg p-4">
+        <h3 class="text-base font-medium">Error al crear la mascota</h3>
+        <p class="text-sm mt-1">{result.error.message}</p>
+      </blockquote>
+    )
+  }
+
+  <form class="flex flex-col gap-6" action={actions.insertPetForm} method="POST" enctype="multipart/form-data">
+    <Form medal={medal} errors={inputErrors} />
+  </form>
 </Layout>

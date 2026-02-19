@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'fieldset'> {
+  description?: string;
+  required?: boolean;
+  label?: string;
+  input?: string;
+  error?: string;
+}
+
+const { label, description, required, class: className, input, error, ...props } = Astro.props;
+---
+
+<fieldset class:list={['flex flex-col', className]} {...props}>
+  {
+    label && (
+      <label for={input} class="mb-1 text-sm">
+        {label}
+        {required && <span class="text-primary">*</span>}
+      </label>
+    )
+  }
+
+  <slot />
+
+  {description && <p class="text-muted-foreground text-xs">{description}</p>}
+  {error && <p class="text-destructive-foreground text-xs">{error}</p>}
+</fieldset>
