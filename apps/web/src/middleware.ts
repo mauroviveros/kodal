@@ -1,15 +1,18 @@
 import { defineMiddleware } from "astro:middleware";
 import { supabase } from "./supabase";
 
-export const onRequest = defineMiddleware(async ({ url, params: { medal_id }, locals, redirect }, next) => {
-  if (!url.pathname.startsWith("/medal")) return next();
-  if (!medal_id) return redirect("/404");
+export const onRequest = defineMiddleware(async ({ url, params: { code, id }, locals, redirect }, next) => {
+  if (!url.pathname.startsWith("/m")) return next();
+  if (!(code || id)) return redirect("/404");
 
-  const { data } = await supabase
+  const query =  supabase
   .from("medals")
   .select("*, pet:pets(*)")
-  .eq("id", medal_id)
-  .maybeSingle();
+
+  if(code) query.eq("code", code);
+  if(id) query.eq("id", id);
+
+  const { data } = await query.maybeSingle()
   if (!data) return redirect("/404");
 
   const { pet, ...medal } = data;

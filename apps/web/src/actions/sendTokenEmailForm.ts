@@ -9,7 +9,7 @@ export const sendTokenEmailForm = defineAction({
   handler: async ({ medal_id }, { url, locals }) => {
     let resend_email_id: string | null = null;
     const { medal, pet } = locals;
-    if (import.meta.env.DISABLE_TOKEN) return { success: true };
+    if (import.meta.env.DISABLE_TOKEN) return { success: true, medal, resend_email_id };
 
     // 1. Validar que existan ambos registros de medalla y mascota
     if (!medal || !medal.email || !pet) {
@@ -35,10 +35,9 @@ export const sendTokenEmailForm = defineAction({
       const { code } = await insertToken({ pet_id: pet.id });
       const { id } = await sendVerificationEmail({
         email: medal.email,
-        code: code,
-        pet_name: pet.name,
-        medal_id,
         origin: url.origin,
+        pet_name: pet.name,
+        edit_url: new URL(`/medal/${medal.id}/edit?token=${code}`, url).toString(),
       });
       resend_email_id = id;
     } catch (error) {
@@ -49,6 +48,6 @@ export const sendTokenEmailForm = defineAction({
       });
     }
 
-    return { success: true, resend_email_id };
+    return { success: true, medal, resend_email_id };
   }
 })

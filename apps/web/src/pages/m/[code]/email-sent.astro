@@ -6,11 +6,12 @@ import { getToken } from "@repositories";
 const { medal, pet } = Astro.locals;
 if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 const token = await getToken({ pet_id: pet.id });
-if (!token) return Astro.redirect(`/medal/${Astro.params.medal_id}`);
+if (!token) return Astro.redirect(`/m/${medal.code}`);
+console.log({ token });
 ---
 
 <Layout class="max-w-lg flex flex-col gap-8" title={`Kodal - Email de verificación enviado para ${pet.name}`}>
-  <Button href={`/medal/${Astro.params.medal_id}`} size="xs" slot="actions">
+  <Button href={`/m/${medal.code}`} size="xs" slot="actions">
     <Icon name="lucide:arrow-left" />
     Mascota
   </Button>

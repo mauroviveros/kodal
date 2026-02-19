@@ -9,13 +9,11 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kodal-pet.vercel.app',
+  site: 'https://kodal.pet',
   output: 'server',
-
   vite: {
     plugins: [tailwindcss()]
   },
-
   integrations: [icon()],
-  adapter: vercel()
+  adapter: vercel(),
 });

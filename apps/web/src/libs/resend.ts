@@ -3,16 +3,14 @@ import { Resend } from 'resend';
 
 export const sendVerificationEmail = async ({
   email,
-  code,
   origin,
   pet_name,
-  medal_id,
+  edit_url,
 }: {
   email: string;
-  code: string;
   origin: string;
   pet_name: string;
-  medal_id: string;
+  edit_url: string;
 }) => {
   const resend = new Resend(import.meta.env.RESEND_API_KEY);
   const { data, error } = await resend.emails.send({
@@ -22,9 +20,8 @@ export const sendVerificationEmail = async ({
     template: {
       id: RESEND_TEMPLATES.IDENTITY_VERIFICATION,
       variables: {
-        TOKEN: code,
+        EDIT_URL: edit_url,
         ORIGIN: origin,
-        MEDAL_ID: medal_id,
       },
     },
   });

@@ -166,7 +166,7 @@ const { pet, medal, errors } = Astro.props;
 <div class="flex gap-4">
   {
     pet && (
-      <Button size="lg" variant="outline" href={`/medal/${medal.id}`} class="flex-1">
+      <Button size="lg" variant="outline" href={`/m/${medal.code}`} class="flex-1">
         Cancelar
       </Button>
     )

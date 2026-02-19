@@ -12,11 +12,12 @@ export const insertPetForm = defineAction({
   handler: async ({ avatar_file, ...input }, { params }) => {
     let avatar_path: string | null | undefined = undefined;
     let pet: Tables<'pets'> | null = null;
+    let medal: Tables<'medals'> | null = null;
     const { pet_payload, medal_payload } = buildPetAndMedalPayloads(input);
 
     // 1. Validar parámetro de URL medal_id con el del formulario
-    if (!params.medal_id || params.medal_id !== medal_payload.id) {
-      console.error('Medal ID mismatch:', { url_medal_id: params.medal_id, form_medal_id: medal_payload.id });
+    if (!params.id || params.id !== medal_payload.id) {
+      console.error('Medal ID mismatch:', { url_medal_id: params.id, form_medal_id: medal_payload.id });
       throw new ActionError({
         code: 'BAD_REQUEST',
         message: 'El ID de la medalla no coincide entre la URL y el formulario',
@@ -27,7 +28,7 @@ export const insertPetForm = defineAction({
     try{
       if (avatar_file && avatar_file.size) avatar_path = await uploadPetAvatar({ file: avatar_file, id: pet_payload.id });
       pet = await insertPet({ payload: { ...pet_payload, medal_id: medal_payload.id, avatar_path } });
-      await updateMedal({ id: medal_payload.id, payload: { ...medal_payload, status: 'ACTIVE' } });
+      medal = await updateMedal({ id: medal_payload.id, payload: { ...medal_payload, status: 'ACTIVE' } });
     } catch (error) {
       if (avatar_path) await removePetAvatar({ path: avatar_path });
       if (pet) await deletePet({ id: pet.id });
@@ -38,6 +39,6 @@ export const insertPetForm = defineAction({
       });
     }
 
-    return { success: true };
+    return { success: true, medal, pet };
   }
 });
