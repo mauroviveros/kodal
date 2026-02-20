@@ -1,0 +1,44 @@
+<div class="flex flex-col justify-between gap-4 py-4 sm:flex-row sm:items-center">
+  <input hlmInput class="w-full md:w-80" placeholder="Buscar por email" (input)="filterChanged($event)" />
+
+  <app-dashboard-medals-bulk-dialog />
+</div>
+
+<div class="overflow-hidden rounded-md border">
+  @defer {
+  <div hlmTableContainer>
+    <table hlmTable>
+      <thead hlmTHead>
+        @for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
+        <tr hlmTr>
+          @for (header of headerGroup.headers; track header.id) {
+          <th hlmTh [attr.colSpan]="header.colSpan">
+            <ng-container *flexRender="header.column.columnDef.header; props: header.getContext(); let headerText">
+              <div [innerHTML]="headerText"></div>
+            </ng-container>
+          </th>
+          }
+        </tr>
+        }
+      </thead>
+      <tbody hlmTBody>
+        @for (row of table.getRowModel().rows; track row.id) {
+        <tr hlmTr [attr.key]="row.id" [attr.data-state]="row.getIsSelected() && 'selected'">
+          @for (cell of row.getVisibleCells(); track $index) {
+          <td hlmTd>
+            <ng-container *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell">
+              <div [innerHTML]="cell"></div>
+            </ng-container>
+          </td>
+          }
+        </tr>
+        } @empty {
+        <tr hlmTr>
+          <td hlmTd class="h-24 text-center" [attr.colspan]="table.getAllColumns().length">No results.</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+</div>

@@ -1,0 +1,35 @@
+<hlm-dialog>
+  <button id="edit-profile" hlmDialogTrigger hlmBtn variant="outline">Open Dialog</button>
+  <hlm-dialog-content class="sm:max-w-106.25" *hlmDialogPortal="let ctx">
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>Agregar Medallas</h3>
+      <p hlmDialogDescription>Ingrese la cantidad de medallas a agregar</p>
+    </hlm-dialog-header>
+    <form id="bulk-medals-form" (submit)="onSubmit($event)" class="grid gap-4">
+        <hlm-form-field>
+          <label hlmLabel for="quantity" class="text-right">Cantidad</label>
+          <input hlmInput type="number" id="quantity" [formControl]="quantity" placeholder="Ingrese la cantidad de medallas a crear"/>
+          @if (quantity.errors) {
+          <hlm-error>
+              @if (quantity.hasError('required')) {
+                <span>La cantidad es requerida.</span>
+              }
+              @if (quantity.hasError('min')) {
+                <span>La cantidad debe ser al menos 1.</span>
+              }
+              @if (quantity.hasError('max')) {
+                <span>La cantidad no puede exceder 100.</span>
+              }
+            </hlm-error>
+          }
+        </hlm-form-field>
+    </form>
+    <hlm-dialog-footer>
+      <button hlmBtn variant="outline" hlmDialogClose>Cancel</button>
+      <button hlmBtn type="submit" form="bulk-medals-form" [disabled]="quantity.invalid || loading()">
+        @if (loading()) { <hlm-spinner />}
+        Generar
+      </button>
+    </hlm-dialog-footer>
+  </hlm-dialog-content>
+</hlm-dialog>

@@ -1,0 +1,37 @@
+@defer {
+<ul hlmSidebarMenu>
+  <li hlmSidebarMenuItem>
+    <button hlmSidebarMenuButton size="lg" [hlmDropdownMenuTrigger]="menu" [side]="menuSide()" align="end">
+      <hlm-avatar class="rounded-lg">
+        <img [src]="identity().avatar_url" [alt]="identity().name" hlmAvatarImage />
+      </hlm-avatar>
+      <div class="grid flex-1 text-left text-sm leading-tight">
+        <span class="truncate font-medium">{{ identity().name }}</span>
+        <span class="truncate text-xs">{{ identity().email }}</span>
+      </div>
+      <ng-icon name="lucideChevronsUpDown" class="ml-auto text-base" />
+    </button>
+  </li>
+</ul>
+
+<ng-template #menu>
+  <hlm-dropdown-menu class="min-w-56 rounded-lg">
+    <hlm-dropdown-menu-label>
+      <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+        <hlm-avatar class="rounded-lg">
+          <img [src]="identity().avatar_url" [alt]="identity().name" hlmAvatarImage />
+        </hlm-avatar>
+        <div class="grid flex-1 text-left text-sm leading-tight">
+          <span class="truncate font-medium">{{ identity().name }}</span>
+          <span class="truncate text-xs">{{ identity().email }}</span>
+        </div>
+      </div>
+    </hlm-dropdown-menu-label>
+    <hlm-dropdown-menu-separator />
+    <button hlmDropdownMenuItem>
+      <ng-icon name="lucideLogOut" />
+      Cerrar sesión
+    </button>
+  </hlm-dropdown-menu>
+</ng-template>
+}

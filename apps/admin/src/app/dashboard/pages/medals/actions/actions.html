@@ -1,0 +1,41 @@
+
+<button hlmBtn [hlmDropdownMenuTrigger]="menu" variant="ghost">
+  <ng-icon hlm size="sm" name="lucideMoreHorizontal" />
+</button>
+
+<ng-template #menu>
+  <hlm-dropdown-menu>
+    <!-- <hlm-dropdown-menu-label>My Account</hlm-dropdown-menu-label> -->
+    <!-- <hlm-dropdown-menu-separator /> -->
+    <hlm-dropdown-menu-group>
+      <button hlmDropdownMenuItem (click)="downloadQR()">
+        <ng-icon hlm size="sm" name="lucideQrCode" />
+        Download QR
+      </button>
+
+      <hlm-dialog>
+        <button id="edit-profile" hlmDropdownMenuItem hlmDialogTrigger>
+          <ng-icon hlm size="sm" name="lucideEye" />
+          Detalle
+        </button>
+        <hlm-dialog-content class="sm:max-w-106.25" *hlmDialogPortal="let ctx">
+          <hlm-dialog-header>
+            <h3 hlmDialogTitle>Agregar Medallas</h3>
+            <p hlmDialogDescription>Ingrese la cantidad de medallas a agregar</p>
+          </hlm-dialog-header>
+
+          <div class="grid gap-4">
+            <img [src]="QRsrc()" alt="QR Code">
+          </div>
+
+          <hlm-dialog-footer class="flex-col-reverse">
+            <button hlmBtn variant="outline" hlmDialogClose>Cerrar</button>
+            <button hlmBtn (click)="downloadQR()">Descargar QR</button>
+          </hlm-dialog-footer>
+        </hlm-dialog-content>
+      </hlm-dialog>
+
+      <!-- <hlm-dropdown-menu-separator /> -->
+    </hlm-dropdown-menu-group>
+  </hlm-dropdown-menu>
+</ng-template>
