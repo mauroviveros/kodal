@@ -1,13 +1,14 @@
 {
-  "name": "web",
+  "name": "@kodal/web",
   "type": "module",
-  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "build": "astro build --remote",
     "preview": "vercel dev",
     "astro": "astro"
   },
+  "packageManager": "pnpm@10.30.0",
   "dependencies": {
     "@astrojs/vercel": "^9.0.4",
     "@supabase/ssr": "^0.8.0",
@@ -15,7 +16,6 @@
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
     "lodash": "^4.17.23",
-    "nanoid": "^5.1.6",
     "resend": "^6.9.2",
     "tailwind-animations": "^1.0.1",
     "tailwindcss": "^4.2.0"
