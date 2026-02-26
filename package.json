@@ -5,6 +5,10 @@
   "license": "MIT",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev:web": "pnpm --filter @kodal/web dev",
+    "dev:admin": "pnpm --filter @kodal/admin start"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mauroviveros/kodal.git"
