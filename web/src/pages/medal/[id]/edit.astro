@@ -10,16 +10,16 @@ let token: Tables<'pet_tokens'> | null = null;
 const token_code = Astro.url.searchParams.get("token");
 const result = Astro.getActionResult(actions.updatePetForm);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
-if (result?.data?.medal?.code) return Astro.redirect(`/m/${result.data.medal.code}`);
+if (result?.data?.medal?.code) return Astro.redirect(`/medal/${result.data.medal.id}`);
 
 const { medal, pet } = Astro.locals;
 if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);
 if (token_code) token = await getToken({ code: token_code, pet_id: pet.id })
-if (!token && !import.meta.env.DISABLE_TOKEN) return Astro.redirect(`/m/${medal.code}`);
+if (!token && !import.meta.env.DISABLE_TOKEN) return Astro.redirect(`/medal/${medal.id}`);
 ---
 
 <Layout class="max-w-2xl" title={`Kodal - Editar medalla de ${pet.name}`}>
-  <Button href={`/m/${medal.code}`} size="xs" slot="actions">
+  <Button href={`/medal/${medal.id}`} size="xs" slot="actions">
     <Icon name="lucide:arrow-left" />
     Mascota
   </Button>

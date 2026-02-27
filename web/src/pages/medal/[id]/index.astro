@@ -6,7 +6,7 @@ import { MEDAL_RELATIONS } from "@constants";
 import { actions } from "astro:actions";
 
 const result = Astro.getActionResult(actions.sendTokenEmailForm);
-if (result?.data?.medal) return Astro.redirect(`/m/${result.data.medal.code}/email-sent`);
+if (result?.data?.medal) return Astro.redirect(`/medal/${result.data.medal.id}/email-sent`);
 
 const { medal, pet } = Astro.locals;
 if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);

@@ -5,7 +5,7 @@ import Layout from "@layout";
 
 const result = Astro.getActionResult(actions.insertPetForm);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
-if (result?.data?.medal?.code) return Astro.redirect(`/m/${result.data.medal.code}`);
+if (result?.data?.medal?.id) return Astro.redirect(`/medal/${result.data.medal.id}`);
 if (result?.error) {
   console.error(result.error);
   if (!Object.keys(inputErrors).length) {
@@ -14,7 +14,7 @@ if (result?.error) {
 }
 
 const { medal, pet } = Astro.locals;
-if (pet) return Astro.redirect(`/m/${medal.code}`);
+if (pet) return Astro.redirect(`/medal/${medal.id}`);
 ---
 
 <Layout class="max-w-2xl" title="Kodal - Nueva medalla">
