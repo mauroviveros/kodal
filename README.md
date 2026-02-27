@@ -24,7 +24,7 @@ Scan the code, access the profile, and make sure your best friend always finds t
 - [NodeJS](https://nodejs.org/) _v24.13.0_
 - [PNPM](https://pnpm.io/) _v10.30.0_
 
-<!-- ## 🧞 Commands
+## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
@@ -35,4 +35,4 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     | -->
+| `npm run astro -- --help` | Get help using the Astro CLI                     |

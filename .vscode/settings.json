@@ -1,6 +1,3 @@
 {
-    "conventionalCommits.scopes": [
-        "web",
-        "admin"
-    ]
+  "conventionalCommits.scopes": ["admin"]
 }
