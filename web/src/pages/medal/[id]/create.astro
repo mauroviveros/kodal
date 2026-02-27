@@ -6,6 +6,12 @@ import Layout from "@layout";
 const result = Astro.getActionResult(actions.insertPetForm);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 if (result?.data?.medal?.code) return Astro.redirect(`/m/${result.data.medal.code}`);
+if (result?.error) {
+  console.error(result.error);
+  if (!Object.keys(inputErrors).length) {
+    alert(result.error.message);
+  }
+}
 
 const { medal, pet } = Astro.locals;
 if (pet) return Astro.redirect(`/m/${medal.code}`);
