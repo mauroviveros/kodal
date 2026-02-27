@@ -7,7 +7,12 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kodal.pet',
+  site: 'https://www.kodal.pet',
+  security: {
+    allowedDomains: [
+      { hostname: 'www.kodal.pet' },
+    ]
+  },
   output: 'server',
   vite: {
     plugins: [tailwindcss()]
