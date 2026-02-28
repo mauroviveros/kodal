@@ -7,6 +7,7 @@ import { HlmBadgeImports } from '@spartan-ng/helm/badge';
 import { DatabaseService } from '@core/services/database.service';
 import { DashboardMedalsBulkDialog } from './bulk-dialog/bulk-dialog';
 import { DashboardMedalsActions } from './actions/actions';
+import { DashboardMedalsCodeCell } from './code-cell/code-cell';
 
 
 
@@ -27,8 +28,12 @@ export class DashboardMedals {
     data: this.db.medal(),
     columns: [
       {
+        id: 'code',
         accessorKey: 'code',
-        header: 'Codigo'
+        header: 'Codigo',
+        cell: info => flexRenderComponent(DashboardMedalsCodeCell, {
+          inputs: {code: info.getValue()}
+        })
       },
       {
         accessorKey: 'status',
