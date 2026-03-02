@@ -23,3 +23,32 @@
   --color-border: oklch(0.9 0.01 85);
   /* --color-input:  */
 }
+
+@layer components {
+  .card {
+    @apply bg-card text-card-foreground border-border border shadow-lg;
+    @apply flex flex-col gap-2 py-6 rounded-xl;
+  }
+
+  input, select {
+    @apply h-10 rounded-lg border border-border bg-black/5 p-1 text-sm;
+    @apply focus:ring-ring focus:ring-2 focus:outline-none;
+  }
+
+  button, a.btn {
+    @apply inline-flex items-center justify-center gap-1;
+    @apply transition-colors cursor-pointer rounded-md;
+    @apply focus:ring-ring focus:ring-1 focus:outline-none;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
+
+    &.btn-variant-solid { @apply bg-primary text-primary-foreground hover:bg-primary/90; }
+    &.btn-variant-outline { @apply border border-primary text-primary hover:bg-primary/10; }
+    &.btn-variant-ghost { @apply text-primary hover:bg-primary/10; }
+
+    &.btn-size-xs { @apply px-2 py-1 text-sm; }
+    &.btn-size-sm { @apply px-3 py-1.5 text-sm; }
+    &.btn-size-base { @apply px-4 py-2 text-sm; }
+    &.btn-size-lg { @apply px-6 py-3 text-base; }
+  }
+}
