@@ -66,6 +66,9 @@ importers:
       '@iconify-json/lucide':
         specifier: ^1.2.94
         version: 1.2.94
+      '@iconify/react':
+        specifier: ^6.0.2
+        version: 6.0.2(react@19.2.4)
       '@types/lodash':
         specifier: ^4.17.24
         version: 4.17.24
@@ -1434,6 +1437,11 @@ packages:
 
   '@iconify-json/lucide@1.2.94':
     resolution: {integrity: sha512-P54R7gqZs3t1GZQmzW2WkXIkGb9RPCq77iCb7IDU94IIsVegzuSQg52hSTjhvDKRXGUDc1HdwOBIuqg3iLIluw==}
+
+  '@iconify/react@6.0.2':
+    resolution: {integrity: sha512-SMmC2sactfpJD427WJEDN6PMyznTFMhByK9yLW0gOTtnjzzbsi/Ke/XqsumsavFPwNiXs8jSiYeZTmLCLwO+Fg==}
+    peerDependencies:
+      react: '>=16'
 
   '@iconify/tools@4.2.0':
     resolution: {integrity: sha512-WRxPva/ipxYkqZd1+CkEAQmd86dQmrwH0vwK89gmp2Kh2WyyVw57XbPng0NehP3x4V1LzLsXUneP1uMfTMZmUA==}
@@ -10007,6 +10015,11 @@ snapshots:
   '@iconify-json/lucide@1.2.94':
     dependencies:
       '@iconify/types': 2.0.0
+
+  '@iconify/react@6.0.2(react@19.2.4)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 19.2.4
 
   '@iconify/tools@4.2.0':
     dependencies:

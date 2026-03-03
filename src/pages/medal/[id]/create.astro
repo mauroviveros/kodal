@@ -1,7 +1,7 @@
 ---
 import { actions, isInputError } from "astro:actions";
-import { Form } from "@components";
 import Layout from "@layout";
+import { Form } from "@components";
 
 const result = Astro.getActionResult(actions.insertPetForm);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
@@ -13,7 +13,7 @@ if (result?.error) {
   }
 }
 
-const { medal, pet } = Astro.locals;
+const { medal, pet, owner } = Astro.locals;
 if (pet) return Astro.redirect(`/medal/${medal.id}`);
 ---
 
@@ -23,16 +23,10 @@ if (pet) return Astro.redirect(`/medal/${medal.id}`);
     <p class="text-muted-foreground">Completa los datos de tu mascota para crear su perfil.</p>
   </hgroup>
 
-  {
-    result?.error?.message && !Object.keys(inputErrors).length && (
-      <blockquote class="bg-destructive text-destructive-foreground rounded-lg p-4">
-        <h3 class="text-base font-medium">Error al crear la mascota</h3>
-        <p class="text-sm mt-1">{result.error.message}</p>
-      </blockquote>
-    )
-  }
-
-  <form class="flex flex-col gap-6" action={actions.insertPetForm} method="POST" enctype="multipart/form-data">
-    <Form medal={medal} errors={inputErrors} />
-  </form>
+  <Form
+    method="POST"
+    client:only="react"
+    medal_id={medal.id}
+    owner={owner}
+  />
 </Layout>

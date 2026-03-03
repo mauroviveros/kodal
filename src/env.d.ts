@@ -10,6 +10,8 @@ interface ImportMeta {
 declare namespace App {
   interface Locals {
     medal: import('@types').Database['public']['Tables']['medals']['Row'];
-    pet: import('@types').Database['public']['Tables']['pets']['Row'] | null;
+    pet: import('@types').Database['public']['Tables']['medal_pets']['Row'] | null;
+    owner: import('@types').Database['public']['Tables']['medal_owners']['Row'] | null;
+    avatar_url?: string | null;
   }
 }

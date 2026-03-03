@@ -1,26 +1,37 @@
 import { root } from '@/supabase';
 
 // Funcion para subir el avatar de la mascota a Supabase Storage
-export const uploadPetAvatar = async ({ file, id }: { file?: File; id: string }) => {
-  if (!file || !file.size) return null;
-
+export const uploadPetAvatar = async (
+  id: string,
+  file: File
+) => {
   const extension = file.name.split('.').pop() ?? 'png';
   const filePath = `${id}/avatar.${extension}`;
 
-  const { error } = await root.storage.from('pet_avatars').upload(filePath, file, {
-    upsert: true,
-    contentType: file.type,
-  });
+  const { data, error } = await root
+    .storage
+    .from('pet_avatars')
+    .upload(filePath, file, {
+      upsert: true,
+      contentType: file.type,
+    })
 
   if (error) {
     console.error('Failed to upload pet avatar:', error);
     throw new Error('Failed to upload pet avatar');
   }
 
-  const { data } = root.storage.from('pet_avatars').getPublicUrl(filePath);
+  return data.path;
+}
 
-  return data.publicUrl;
-};
+export const getPetAvatarUrl = async (path: string) => {
+  const { data: { publicUrl } } = await root
+    .storage
+    .from('pet_avatars')
+    .getPublicUrl(path);
+
+  return publicUrl;
+}
 
 // Funcion para eliminar el avatar de la mascota de Supabase Storage
 export const removePetAvatar = async ({ path }: { path: string }) => {
