@@ -20,7 +20,8 @@ export const onRequest = defineMiddleware(async ({ url, params: { id }, locals, 
   locals.pet = pet;
   locals.owner = owner;
   if(pet?.avatar_path){
-    locals.avatar_url = await getPetAvatarUrl(pet.avatar_path);
+    const avatar_url = await getPetAvatarUrl(pet.avatar_path);
+    locals.avatar_url = `${avatar_url}?v=${new Date(pet.updated_at || pet.created_at).getTime()}`;
   }
 
   return next();
