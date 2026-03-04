@@ -7,7 +7,7 @@ const getTimeSince = (birthdate: Date): string => {
   return since.replace('hace ', ''); // elimina "hace " para que quede solo "X años"
 };
 
-export const buildPetInfo = (pet: Tables<'pets'>) => {
+export const buildPetInfo = (pet: Tables<'medal_pets'>) => {
   return [
     {
       label: 'Raza',

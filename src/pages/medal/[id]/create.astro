@@ -1,17 +1,6 @@
 ---
-import { actions, isInputError } from "astro:actions";
 import Layout from "@layout";
 import { Form } from "@components";
-
-const result = Astro.getActionResult(actions.insertPetForm);
-const inputErrors = isInputError(result?.error) ? result.error.fields : {};
-if (result?.data?.medal?.id) return Astro.redirect(`/medal/${result.data.medal.id}`);
-if (result?.error) {
-  console.error(result.error);
-  if (!Object.keys(inputErrors).length) {
-    alert(result.error.message);
-  }
-}
 
 const { medal, pet, owner } = Astro.locals;
 if (pet) return Astro.redirect(`/medal/${medal.id}`);

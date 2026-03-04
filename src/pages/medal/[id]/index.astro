@@ -1,12 +1,8 @@
 ---
 import Layout from "@layout";
-import { Avatar, Background, Button, Card, DialogIdentityVerification, Icon } from "@components";
+import { Avatar, Background, Button, Card, Icon } from "@components";
 import { buildPetContactInfo, buildPetInfo } from "@utils";
 import { MEDAL_RELATIONS } from "@constants";
-import { actions } from "astro:actions";
-
-const result = Astro.getActionResult(actions.sendTokenEmailForm);
-if (result?.data?.medal) return Astro.redirect(`/medal/${result.data.medal.id}/email-sent`);
 
 const { medal, pet } = Astro.locals;
 if(!pet) return Astro.redirect(`/medal/${medal.id}/create`);
@@ -17,7 +13,7 @@ const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet
 ---
 
 <Layout class="max-w-2xl flex flex-col gap-8" title={`Kodal - medalla de ${pet.name}`}>
-  {
+  <!-- {
     import.meta.env.DISABLE_TOKEN ? (
       <Button href={`/medal/${medal.id}/edit`} size="xs" slot="actions">
         <Icon name="lucide:edit" />
@@ -26,12 +22,12 @@ const phone_message = encodeURIComponent(`Hola, he encontrado a tu mascota ${pet
     ) : (
       <DialogIdentityVerification pet={pet} medal={medal} />
     )
-  }
+  } -->
 
   <Card class="animate-zoom-in">
     <header class="relative z-10 flex flex-col items-center justify-items-center overflow-hidden p-8 text-center">
       <Background gender={pet.gender} species={pet.species} />
-      <Avatar pet={pet} class="size-52 shadow-xl select-none" transition:name={`medal-pet_avatar`} />
+      <Avatar class="size-52 shadow-xl select-none" transition:name={`medal-pet_avatar`} />
       <h1 class="my-2 break-all">{pet.name}</h1>
 
       {
