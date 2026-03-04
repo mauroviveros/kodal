@@ -26,7 +26,7 @@ export const Form = (
 ) => {
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState<string>('');
-  const { control, handleSubmit, formState: { errors } } = useForm<FormSchema>({
+  const { control, formState: { errors } } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     disabled,
     defaultValues: Object.assign({
