@@ -39,7 +39,7 @@ export const OwnerForm = ({ control, errors }: Props) => (
         render={({ field }) => (
           <Input
             label="Nombre completo"
-            placeholder="Ej: Brownie"
+            placeholder="Ej: Juan Pérez"
             helper="Nombre de la persona a contactar"
             error={errors.owner?.full_name}
             required

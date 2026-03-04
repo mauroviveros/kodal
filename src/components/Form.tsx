@@ -14,7 +14,16 @@ interface Props {
   avatar_url?: string | null;
 }
 
-export const Form = ({ method, medal_id, token_code, pet, owner, avatar_url }: Props) => {
+export const Form = (
+  {
+    method,
+    medal_id,
+    token_code,
+    pet,
+    owner,
+    avatar_url
+  }: Props
+) => {
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState<string>('');
   const { control, handleSubmit, formState: { errors } } = useForm<FormSchema>({
@@ -26,11 +35,13 @@ export const Form = ({ method, medal_id, token_code, pet, owner, avatar_url }: P
       avatar_file: undefined,
       pet: {
         ...pet,
+        id: pet?.id || undefined,
         species: pet?.species || 'OTHER',
         gender: pet?.gender || 'UNKNOWN'
       },
       owner: {
         ...owner,
+        id: owner?.id || undefined,
         relation_type: owner?.relation_type || 'OWNER'
       }
     })
