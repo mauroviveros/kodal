@@ -1,5 +1,5 @@
 import { root } from "@/supabase";
-import type { Tables, TablesInsert, TablesUpdate } from "@/types/database";
+import type { TablesInsert, TablesUpdate } from "@/types/database";
 
 export const insertOwner = async (
   { medal_id, relation_type, full_name, email, phone, address }: TablesInsert<'medal_owners'>

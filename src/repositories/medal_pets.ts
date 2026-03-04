@@ -1,6 +1,6 @@
 import { root } from "@/supabase";
 import { uploadPetAvatar } from "@libs";
-import type { Tables, TablesInsert, TablesUpdate } from "@types";
+import type { TablesInsert, TablesUpdate } from "@types";
 
 export const insertPet = async (
   { medal_id, species, gender, name, breed, birth_date, notes }: TablesInsert<'medal_pets'>

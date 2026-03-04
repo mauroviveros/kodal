@@ -43,7 +43,14 @@ export const Form = ({ method, medal_id, token_code, pet, owner, avatar_url }: P
       `/api/medal/${medal_id}`,
       { method, body }
     ).then(async (response) => {
-      console.log(response);
+      if (!response.ok) throw (await response.json()).error;
+
+      window.location.assign(`/medal/${medal_id}`);
+    }).catch((error: { message: string }) => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setError(error.message || 'An unexpected error occurred');
+    }).finally(() => {
+      setDisabled(false);
     })
 
 
@@ -51,22 +58,6 @@ export const Form = ({ method, medal_id, token_code, pet, owner, avatar_url }: P
     setTimeout(() => {
       setDisabled(false);
     }, 2000);
-    // fetch(
-    //   `/api/medal/${medal_id}`,
-    //   { method, body: JSON.stringify(data) }
-    // ).then(async (response) => {
-    //   if (!response.ok){
-    //     const json = await response.json();
-    //     throw json.error;
-    //   }
-
-    //   window.location.assign(`/medal/${medal_id}`);
-    // }).catch((error: { message: string }) => {
-    //   window.scrollTo({ top: 0, behavior: 'smooth' });
-    //   setError(error.message || 'An unexpected error occurred');
-    // }).finally(() => {
-    //   setDisabled(false);
-    // })
   };
 
   return (
