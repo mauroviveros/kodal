@@ -1,9 +1,9 @@
 
 import { Card } from "@/components/ui";
+import { PetAvatar } from "@/components";
+import { Background } from "./background";
 import { cn, petInfoMapper } from "@/utils";
 import { Tables } from "@/types";
-import { PetAvatar } from "@/components";
-import { Background } from "@/components/Background";
 
 export const HeroCard = async ({ pet }: { pet: Tables<"medal_pets"> }) => {
   const PET_INFO = petInfoMapper(pet);
