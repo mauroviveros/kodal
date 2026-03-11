@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Dialog,
   DialogClose,
@@ -8,18 +10,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldDescription } from "@/components/ui/field"
+import { Field, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Button } from "../ui/button"
-import { Edit, Mail, Shield } from "lucide-react"
+import { Edit, Loader2, Mail, Shield } from "lucide-react"
 import { Avatar } from "../Avatar"
 import { Tables } from "@/types"
+import { useActionState, useEffect } from "react"
+import { sendValidationIdentityEmail } from "@/app/actions"
+import { redirect } from "next/navigation"
 
 type Props = {
+  medal_id: string;
   pet: Tables<"medal_pets">;
 }
-export const VerificationIdentityDialog = ({ pet }: Props) => (
-  <form action="">
+export const VerificationIdentityDialog = ({ medal_id, pet }: Props) => {
+  const [state, action, isPending] = useActionState(sendValidationIdentityEmail, { error: '', success: false });
+
+  useEffect(() => {
+    if (state.success){
+      redirect(`/medal/${medal_id}/email-sent`)
+    }
+  }, [medal_id, state.success])
+
+  return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>
@@ -49,37 +63,51 @@ export const VerificationIdentityDialog = ({ pet }: Props) => (
             </div>
           </article>
 
-          <article>
+          <form action={action} id="verification-identity-form">
             <Field className="gap-1">
-              <FieldLabel className="gap-y-0 flex-wrap">
+              <FieldLabel className="gap-y-0 flex-wrap" htmlFor="verification-email">
                 Ingresa el email registrado:
                 <FieldDescription>mxxxxxxxxxxxxx@gxxxx.cxx</FieldDescription>
               </FieldLabel>
 
+              <input type="hidden" name="medal_id" value={medal_id} />
+
               <Input
                 type="email"
+                id="verification-email"
+                name="email"
                 placeholder="tu@email.com"
                 required
               />
-              {/* <FieldError>Validation message.</FieldError> */}
+
+              {state.error && (
+                <FieldError>{state.error}</FieldError>
+              )}
             </Field>
-          </article>
+          </form>
         </section>
 
 
 
         <DialogFooter className="gap-2">
           <DialogClose asChild>
-            <Button variant="outline" >
+            <Button variant="outline" disabled={isPending}>
               Cancelar
             </Button>
           </DialogClose>
-          <Button variant="default" className="space-x-2">
+          <Button
+            type="submit"
+            className="space-x-2"
+            disabled={isPending}
+            form="verification-identity-form"
+          >
             <Mail className="size-4" />
             Verificar
+
+            {isPending && <Loader2 className="size-4 animate-spin" />}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  </form>
-)
+  )
+}

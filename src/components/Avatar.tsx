@@ -6,14 +6,13 @@ type Props = {
   path?: string | null;
   name: string;
 }
-export const Avatar = async ({ path, name, className }: React.ComponentProps<"figure"> & Props) => {
+export const Avatar = ({ path, name, className }: React.ComponentProps<"figure"> & Props) => {
   const supabase = createClient();
-  let url: string | undefined;
+  const { data: { publicUrl } } = path
+    ? supabase.storage.from("pet_avatars").getPublicUrl(path)
+    : { data: { publicUrl: undefined as string | undefined } };
 
-  if (path) {
-    const { data: { publicUrl } } = await supabase.storage.from('pet_avatars').getPublicUrl(path);
-    url = publicUrl;
-  }
+  const url = publicUrl;
 
   return (
     <figure className={cn(
@@ -22,7 +21,7 @@ export const Avatar = async ({ path, name, className }: React.ComponentProps<"fi
     )}>
       {url ? (
         <Image
-          src={url || ''}
+          src={url}
           alt={`Foto de ${name}`}
           fill
           className="aspect-square size-full object-cover"

@@ -32,7 +32,7 @@ export default async function MedalDetailPage({ params }: Props) {
       <CTA/>
 
       <HeaderActions>
-        <VerificationIdentityDialog pet={medal.pet} />
+        <VerificationIdentityDialog medal_id={medal.id} pet={medal.pet} />
       </HeaderActions>
     </>
   );

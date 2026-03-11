@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={geist.className}>
-      <body className="min-h-screen bg-background">
+      <body className="bg-background text-foreground flex flex-col min-h-dvh">
         <HeaderActionsProvider>
           <Header/>
 
@@ -67,7 +67,7 @@ export const Footer = () => {
         <p className="mt-4 text-xs">© 2026 Kodal. Manteniendo a las mascotas seguras y conectadas.</p>
 
         <p className="mt-2 text-xs">
-          Diseñado y construido con ❤️ por 
+          Diseñado y construido con ❤️ por
           <Link
             href="https://mauroviveros.com.ar/"
             className="text-primary hover:text-primary/80 hover:underline"
