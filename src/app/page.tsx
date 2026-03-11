@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FEATURES_LIST } from "@/constants";
 import { ShoppingCart, Smartphone } from "lucide-react";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main className="grow">
       <section className="from-secondary/5 to-primary/15 bg-linear-to-br pt-16 h-dvh">
