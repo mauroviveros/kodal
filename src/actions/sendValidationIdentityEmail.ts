@@ -23,7 +23,7 @@ export const sendValidationIdentityEmail = async (
 
   if (!success) {
     const treeify = z.treeifyError(error);
-    const errorMessage = treeify.properties?.email?.errors[0] || treeify.properties?.medal_id?.errors[0] || "Error desconocido";
+    const errorMessage = treeify.properties?.email?.errors[0] || treeify.properties?.medal_id?.errors[0];
     return { error: errorMessage, success: false }
   }
 
