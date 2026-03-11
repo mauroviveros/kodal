@@ -1,6 +1,6 @@
 'use server'
 import { z } from 'zod'
-import { createClient } from '@/supabase';
+import { supabase } from '@/supabase';
 
 type ValidationIdentityState = {
   error: string;
@@ -16,7 +16,6 @@ export const sendValidationIdentityEmail = async (
   _prevState: ValidationIdentityState,
   formData: FormData
 ): Promise<ValidationIdentityState> => {
-  const supabase = createClient();
   const { data, success, error } = schema.safeParse({
     email: formData.get("email"),
     medal_id: formData.get("medal_id"),

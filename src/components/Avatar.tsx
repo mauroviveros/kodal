@@ -1,4 +1,4 @@
-import { createClient } from "@/supabase";
+import { supabase } from "@/supabase";
 import { cn } from "@/utils";
 import Image from "next/image";
 
@@ -7,7 +7,6 @@ type Props = {
   name: string;
 }
 export const Avatar = ({ path, name, className }: React.ComponentProps<"figure"> & Props) => {
-  const supabase = createClient();
   const { data: { publicUrl } } = path
     ? supabase.storage.from("pet_avatars").getPublicUrl(path)
     : { data: { publicUrl: undefined as string | undefined } };

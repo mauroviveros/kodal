@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { createClient } from "@/supabase";
+import { supabase } from "@/supabase";
 import { cn } from "@/utils";
 import { ArrowLeft, Clock, Headset, Mail, MailCheck } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +12,6 @@ type Props = {
 };
 export default async function EmailSentPage({ params }: Props) {
   const { id } = await params;
-  const supabase = createClient();
 
   const { data: medal } = await supabase.from("medals")
     .select("id, pet:medal_pets(name), owner:medal_owners(email)")

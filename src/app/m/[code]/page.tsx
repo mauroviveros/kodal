@@ -1,4 +1,4 @@
-import { createClient } from "@/supabase";
+import { supabase } from "@/supabase";
 import { redirect, notFound } from "next/navigation";
 
 type Props = {
@@ -8,7 +8,6 @@ type Props = {
 }
 export default async function Page({ params }: Props) {
   const { code } = await params;
-  const supabase = createClient();
   const { data: medal } = await supabase.from("medals")
     .select("id")
     .eq("code", code)
