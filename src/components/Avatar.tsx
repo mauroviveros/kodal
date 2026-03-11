@@ -25,6 +25,7 @@ export const Avatar = ({ path, name, className }: React.ComponentProps<"figure">
           alt={`Foto de ${name}`}
           fill
           className="aspect-square size-full object-cover"
+          loading="eager"
         />
       ) : (
         <span className="flex size-full items-center justify-center text-6xl font-bold bg-primary/80 text-primary-foreground">
