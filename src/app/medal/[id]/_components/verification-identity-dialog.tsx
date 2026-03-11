@@ -9,22 +9,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Field, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Button } from "../ui/button"
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  Input,
+  Button
+} from "@/components/ui"
+import { PetAvatar } from "@/components"
 import { Edit, Loader2, Mail, Shield } from "lucide-react"
-import { Avatar } from "../Avatar"
 import { Tables } from "@/types"
 import { useActionState, useEffect } from "react"
 import { sendValidationIdentityEmail } from "@/actions"
 import { redirect } from "next/navigation"
 
-type Props = {
-  medal_id: string;
-  pet: Tables<"medal_pets">;
-}
-export const VerificationIdentityDialog = ({ medal_id, pet }: Props) => {
+export const VerificationIdentityDialog = ({ medal_id, pet }: { medal_id: string; pet: Tables<"medal_pets"> }) => {
   const [state, action, isPending] = useActionState(sendValidationIdentityEmail, { error: '', success: false });
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export const VerificationIdentityDialog = ({ medal_id, pet }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button size="sm">
           <Edit />
           Editar
         </Button>
@@ -55,7 +54,7 @@ export const VerificationIdentityDialog = ({ medal_id, pet }: Props) => {
 
         <section className="space-y-2">
           <article className="bg-muted/50 rounded-lg p-4 flex items-center gap-3">
-            <Avatar path={pet.avatar_path} name={pet.name} className="w-10 h-10" />
+            <PetAvatar path={pet.avatar_path} name={pet.name} className="w-10 h-10" />
 
             <div>
               <p className="font-medium">{pet.name}</p>

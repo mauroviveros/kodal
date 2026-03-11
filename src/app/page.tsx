@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@/components/ui";
 import { FEATURES_LIST } from "@/constants";
 import { ShoppingCart, Smartphone } from "lucide-react";
 

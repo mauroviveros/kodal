@@ -1,8 +1,8 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui";
 import { Tables } from "@/types";
 import { ChevronRight, MessageCircle, Phone } from "lucide-react";
 
-export const Emergency = ({ owner, petName }: { owner: Tables<'medal_owners'>; petName: string }) => {
+export const EmergencyCard = ({ owner, petName }: { owner: Tables<'medal_owners'>; petName: string }) => {
   const message = encodeURIComponent(`Hola, encontré a ${petName}. Por favor, contáctame lo antes posible. Mensaje enviado desde la medalla inteligente Kodal.`);
   return (
     <Card className="shadow-lg border-red-200 border">

@@ -6,7 +6,7 @@ type Props = {
   path?: string | null;
   name: string;
 }
-export const Avatar = ({ path, name, className }: React.ComponentProps<"figure"> & Props) => {
+export const PetAvatar = ({ path, name, className }: React.ComponentProps<"figure"> & Props) => {
   const { data: { publicUrl } } = path
     ? supabase.storage.from("pet_avatars").getPublicUrl(path)
     : { data: { publicUrl: undefined as string | undefined } };

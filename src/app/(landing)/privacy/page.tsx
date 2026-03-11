@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
 import { POLICY_OF_PRIVACY } from '@/constants'
 import { Shield } from 'lucide-react'
 

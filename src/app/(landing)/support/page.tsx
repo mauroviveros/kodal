@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui";
 import { SUPPORT_CONTACT_METHODS, SUPPORT_FREQUENTLY_ASKED_QUESTIONS } from "@/constants";
 import { Headset, HelpCircle, MessageCircle } from "lucide-react";
 

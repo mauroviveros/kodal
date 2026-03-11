@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui";
 import { TERMS_OF_SERVICE } from "@/constants";
 import { FileText } from "lucide-react";
 

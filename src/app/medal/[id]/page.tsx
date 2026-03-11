@@ -1,18 +1,10 @@
-import { Hero } from "./Hero";
-import { Emergency } from "./Emergency";
-import { CTA } from "./CTA";
-import { supabase } from "@/supabase";
-import { HeaderActions } from "@/components/HeaderActions";
-import { VerificationIdentityDialog } from "@/components/dialogs/VerificationIdentityDialog";
 import { notFound, redirect } from "next/navigation";
+import { supabase } from "@/supabase";
+import { HeaderActions } from "@/components";
+import { CtaCard, EmergencyCard, HeroCard, VerificationIdentityDialog } from "./_components";
 
-type Props = {
-  params: Promise<{
-    id: string;
-  }>;
-};
 
-export default async function MedalPage({ params }: Props) {
+export default async function MedalPage({ params }: { params: Promise<{id: string}> }) {
   const { id } = await params;
 
   const { data: medal } = await supabase.from("medals")
@@ -25,9 +17,9 @@ export default async function MedalPage({ params }: Props) {
 
   return (
     <>
-      <Hero pet={medal.pet} />
-      <Emergency owner={medal.owner} petName={medal.pet.name} />
-      <CTA/>
+      <HeroCard pet={medal.pet} />
+      <EmergencyCard owner={medal.owner} petName={medal.pet.name} />
+      <CtaCard />
 
       <HeaderActions>
         <VerificationIdentityDialog medal_id={medal.id} pet={medal.pet} />

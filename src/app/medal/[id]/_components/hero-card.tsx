@@ -1,11 +1,11 @@
 
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/ui";
 import { cn, petInfoMapper } from "@/utils";
 import { Tables } from "@/types";
-import { Avatar } from "@/components/Avatar";
+import { PetAvatar } from "@/components";
 import { Background } from "@/components/Background";
 
-export const Hero = async ({ pet }: { pet: Tables<"medal_pets"> }) => {
+export const HeroCard = async ({ pet }: { pet: Tables<"medal_pets"> }) => {
   const PET_INFO = petInfoMapper(pet);
   return (
     <Card className="shadow-lg py-6 gap-6">
@@ -13,7 +13,7 @@ export const Hero = async ({ pet }: { pet: Tables<"medal_pets"> }) => {
         <Background gender={pet.gender} species={pet.species} />
 
         <figure className="relative size-52 overflow-hidden rounded-full ring-primary/20 bg-primary/20 ring-4 shadow-xl select-none mx-auto">
-          <Avatar path={pet.avatar_path} name={pet.name} className="size-52" />
+          <PetAvatar path={pet.avatar_path} name={pet.name} className="size-52" />
         </figure>
 
         <h1 className="text-3xl font-bold text-foreground mb-1 text-balance">{pet.name}</h1>

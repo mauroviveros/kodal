@@ -2,13 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { supabase } from "@/supabase";
 import { FormMedalInsert } from "@/components/form/FormMedal";
 
-type Props = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
-export default async function MedalCreatePage({ params }: Props) {
+export default async function MedalCreatePage({ params }: { params: Promise<{id: string}> }) {
   const { id } = await params;
   const { data: medal } = await supabase.from("medals")
     .select(`

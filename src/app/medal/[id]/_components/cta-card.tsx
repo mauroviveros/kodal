@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button, Card, CardContent } from "@/components/ui";
 import Link from "next/link";
 
-export const CTA = () => (
+export const CtaCard = () => (
   <Card className="shadow-lg">
     <CardContent className="p-6 text-center">
       <h3 className="text-xl font-bold text-foreground mb-3">Te gusta esta medalla inteligente?</h3>

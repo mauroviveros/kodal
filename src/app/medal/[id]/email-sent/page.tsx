@@ -1,16 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button, Card, CardContent } from "@/components/ui";
 import { supabase } from "@/supabase";
 import { cn } from "@/utils";
 import { ArrowLeft, Clock, Headset, Mail, MailCheck } from "lucide-react";
 import Link from "next/link";
 
-type Props = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-export default async function EmailSentPage({ params }: Props) {
+export default async function MedalEmailSentPage({ params }: { params: Promise<{id: string}> }) {
   const { id } = await params;
 
   const { data: medal } = await supabase.from("medals")
