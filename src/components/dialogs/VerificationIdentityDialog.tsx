@@ -17,7 +17,7 @@ import { Edit, Loader2, Mail, Shield } from "lucide-react"
 import { Avatar } from "../Avatar"
 import { Tables } from "@/types"
 import { useActionState, useEffect } from "react"
-import { sendValidationIdentityEmail } from "@/app/actions"
+import { sendValidationIdentityEmail } from "@/actions"
 import { redirect } from "next/navigation"
 
 type Props = {

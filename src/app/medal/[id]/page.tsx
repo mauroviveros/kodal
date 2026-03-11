@@ -1,9 +1,10 @@
 import { Hero } from "./Hero";
 import { Emergency } from "./Emergency";
 import { CTA } from "./CTA";
-import { createClient } from "@/supabase";
+import { supabase } from "@/supabase";
 import { HeaderActions } from "@/components/HeaderActions";
 import { VerificationIdentityDialog } from "@/components/dialogs/VerificationIdentityDialog";
+import { notFound, redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{
@@ -11,19 +12,16 @@ type Props = {
   }>;
 };
 
-export default async function MedalDetailPage({ params }: Props) {
+export default async function MedalPage({ params }: Props) {
   const { id } = await params;
-  const supabase = createClient();
 
   const { data: medal } = await supabase.from("medals")
     .select("*, pet:medal_pets(*), owner:medal_owners(*)")
     .eq("id", id)
     .maybeSingle()
 
-  // TODO: mejorar el manejo de errores
-  if (!medal || !medal.pet || !medal.owner) {
-    return <div>Medal not found</div>;
-  }
+  if(!medal) return notFound();
+  if(!medal.pet || !medal.owner) return redirect(`/medal/${id}/create`);
 
   return (
     <>
