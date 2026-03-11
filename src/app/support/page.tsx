@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SUPPORT_CONTACT_METHODS, SUPPORT_FREQUENTLY_ASKED_QUESTIONS } from "@/constants";
-import { Headset, HelpCircle, Icon, MessageCircle } from "lucide-react";
+import { Headset, HelpCircle, MessageCircle } from "lucide-react";
 
 export default function SupportPage() {
   return (
