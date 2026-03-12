@@ -1,2 +1,2 @@
-export * from './landing'
-export * from './pet'
+export * from './labels';
+export * from './landing';
