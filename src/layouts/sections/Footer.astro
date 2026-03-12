@@ -1,0 +1,31 @@
+---
+const LINKS = [
+  { href: '/privacy', text: 'Políticas de Privacidad' },
+  { href: '/terms', text: 'Términos de Servicio' },
+  { href: '/support', text: 'Soporte' },
+  { href: '/admin', text: 'Administración' }
+]
+---
+<footer class="border-t border-border bg-muted/30 text-muted-foreground">
+  <div class="container mx-auto px-4 py-6 text-center">
+     <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+      {LINKS.map(({href, text}) => (
+        <li><a href={href} class="hover:underline hover:text-primary/80">{text}</a></li>
+      ))}
+    </ul>
+
+    <p class="mt-4 text-xs">© 2026 Kodal. Manteniendo a las mascotas seguras y conectadas.</p>
+
+    <p class="mt-2 text-xs">
+      Diseñado y construido con ❤️ por
+      <a
+        href="https://mauroviveros.com.ar/"
+        class="text-primary hover:text-primary/80 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Mauro Daniel Viveros
+      </a>
+    </p>
+  </div>
+</footer>

@@ -120,7 +120,7 @@ export const POLICY_OF_PRIVACY: { title: string; content: string; items?: string
   },
 ];
 
-export const FEATURES_LIST: { title: string; description: string; icon: string }[] = [
+export const FEATURES: { title: string; description: string; icon: string }[] = [
   {
     title: 'Acceso Instantáneo',
     description: 'Cualquier persona puede escanear el código QR y acceder inmediatamente a la información de contacto.',
