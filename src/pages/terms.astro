@@ -19,7 +19,7 @@ import { Icon } from "astro-icon/components";
           <CardTitle>{index + 1}. {title}</CardTitle>
         </CardHeader>
         <CardContent class="space-y-2">
-          <p class="text-muted-foreground">{content}</p>
+          <p class="text-muted-foreground" set:html={content}/>
           {items && (
             <ul class="list-disc list-inside space-y-2 text-muted-foreground ml-1">
               {items.map((item) => (
