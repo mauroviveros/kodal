@@ -1,0 +1,41 @@
+---
+import Background from "../Background.astro";
+import { Card, CardContent, CardHeader } from "../starwind/card";
+
+interface Props {
+  name: string;
+  breed?: string;
+  birth_date?: string;
+}
+const { name, breed, birth_date } = Astro.props;
+---
+
+<Card>
+  <CardHeader class="relative text-center p-8 pb-12 overflow-hidden">
+    <Background/>
+      <figure class="relative size-36 overflow-hidden rounded-full ring-primary/20 bg-primary/20 ring-4 shadow-xl mx-auto mb-5">
+        <img
+          src="https://picsum.photos/200"
+          alt={`Foto de ${name}`}
+          class="aspect-square size-full object-cover"
+        />
+      </figure>
+
+      <h1 class="text-3xl font-bold text-foreground mb-1 text-balance">{name}</h1>
+  </CardHeader>
+  <CardContent class="sm:divide-x sm:divide-y-0 divide-border border-y divide-y flex flex-col sm:flex-row px-0">
+    { breed && (
+      <div class="text-center py-4 grow">
+        <div class="text-xl font-bold text-primary">{breed}</div>
+        <div class="text-sm text-muted-foreground">Raza</div>
+      </div>
+    )}
+
+    { birth_date && (
+      <div class="text-center py-4 grow">
+        <div class="text-xl font-bold text-primary">{birth_date}</div>
+        <div class="text-sm text-muted-foreground">Edad</div>
+      </div>
+    )}
+  </CardContent>
+</Card>

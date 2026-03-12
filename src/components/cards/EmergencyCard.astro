@@ -1,0 +1,43 @@
+---
+import { Card, CardContent } from "../starwind/card";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string,
+  phone: string,
+}
+const { name, phone } = Astro.props;
+const message = encodeURIComponent(`Hola, encontré a ${name}. Por favor, contáctame lo antes posible. Mensaje enviado desde la medalla inteligente Kodal.`);
+---
+
+<Card class="border-red-200 border">
+  <CardContent class="p-0">
+    <a
+      href={`tel:${phone}`}
+      class="flex items-center gap-4 p-5 bg-red-50 hover:bg-red-100 transition-colors group"
+    >
+      <span class="size-10 sm:size-14 bg-red-500 rounded-full flex items-center justify-center shrink-0">
+        <Icon name="lucide:phone" class="size-5 sm:size-7 text-white"/>
+      </span>
+
+      <div class="flex-1">
+        <p class="font-bold text-red-700 text-lg">Encontraste a {name}?</p>
+        <p class="text-red-600 text-sm">Toca para llamar al duenio ahora</p>
+      </div>
+
+      <Icon name="lucide:chevron-right" class="size-5 text-red-400 group-hover:translate-x-1 transition-transform" />
+    </a>
+
+    <section class="flex divide-x divide-red-200 border-t border-red-200">
+      <a
+        href={`https://wa.me/${phone}?text=${message}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex-1 flex items-center justify-center gap-2 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
+      >
+        <Icon name="lucide:message-circle" class="size-4" />
+        Enviar WhatsApp
+      </a>
+    </section>
+  </CardContent>
+</Card>
