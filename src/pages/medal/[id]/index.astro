@@ -1,1 +1,32 @@
-<h1>Medal Details</h1>
+---
+import Background from "@/components/Background.astro";
+import { Card, CardContent, CardHeader } from "@/components/starwind/card";
+import Layout from "@/layouts/Layout.astro";
+---
+<Layout class="max-w-2xl space-y-6" container>
+  <Card>
+    <CardHeader class="relative text-center p-8 pb-12 overflow-hidden">
+      <Background/>
+        <figure class="relative size-36 overflow-hidden rounded-full ring-primary/20 bg-primary/20 ring-4 shadow-xl mx-auto mb-5">
+          <img
+            src="https://picsum.photos/200"
+            alt="Foto de Max"
+            class="aspect-square size-full object-cover"
+          />
+        </figure>
+
+        <h1 class="text-3xl font-bold text-foreground mb-1 text-balance">Max</h1>
+    </CardHeader>
+    <CardContent class="sm:divide-x sm:divide-y-0 divide-border border-y divide-y flex flex-col sm:flex-row px-0">
+      <div class="text-center py-4 grow">
+        <div class="text-xl font-bold text-primary">Panterita</div>
+        <div class="text-sm text-muted-foreground">Raza</div>
+      </div>
+
+      <div class="text-center py-4 grow">
+        <div class="text-xl font-bold text-primary">1 año</div>
+        <div class="text-sm text-muted-foreground">Edad</div>
+      </div>
+    </CardContent>
+  </Card>
+</Layout>
