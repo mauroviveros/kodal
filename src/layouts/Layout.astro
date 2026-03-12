@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Footer from "./sections/Footer.astro";
+import Header from "./sections/Header.astro";
+import Body from "./Body.astro";
+
+interface Props extends HTMLAttributes<'main'> {
+  container?: boolean;
+}
+const { container, class: className, ...props } = Astro.props;
+---
+<Body>
+  <Header/>
+
+  <main
+    class:list={[
+      "grow",
+      container && "container mx-auto px-4 mt-16 py-8 max-w-4xl",
+      className
+    ]}
+    {...props}
+  >
+    <slot />
+  </main>
+
+  <Footer/>
+</Body>

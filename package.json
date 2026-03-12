@@ -29,6 +29,7 @@
     "tw-animate-css": "^1"
   },
   "devDependencies": {
+    "@iconify-json/devicon": "^1.2.60",
     "@iconify-json/lucide": "^1.2.97"
   }
 }

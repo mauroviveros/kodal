@@ -1,0 +1,49 @@
+---
+import Button from "@/components/starwind/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/starwind/card";
+import Body from "@/layouts/Body.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Body class="bg-linear-to-br from-primary/10 via-background to-secondary/10 items-center justify-center">
+  <main class="w-full max-w-md">
+    <Card>
+      <CardHeader class="text-center space-y-4">
+        <div class="mx-auto size-16 bg-primary rounded-full flex items-center justify-center">
+          <Icon name="lucide:user-lock" class="size-8 text-primary-foreground" />
+        </div>
+        <hgroup>
+          <CardTitle class="text-2xl">Panel de Administración</CardTitle>
+          <CardDescription>Acceso exclusivo para administradores autorizados</CardDescription>
+        </hgroup>
+      </CardHeader>
+
+      <CardContent class="space-y-6">
+        <Button size="lg" variant="outline" class="w-full text-base">
+          <Icon name="devicon:github"/>
+          Continuar con GitHub
+        </Button>
+
+        <div class="before:border-on-muted relative flex justify-center text-xs uppercase before:absolute before:top-1/2 before:w-full before:border-t">
+          <span class="text-on-muted bg-card z-0 px-2">Acceso restringido</span>
+        </div>
+
+        <div class="bg-muted/50 rounded-lg p-4 space-y-2">
+          <p class="text-sm text-muted-foreground text-center">
+            Solo los administradores autorizados pueden acceder a este panel.
+            El acceso se verifica mediante tu cuenta de Github corporativa.
+          </p>
+        </div>
+      </CardContent>
+
+      <CardFooter class="justify-center">
+        <a
+          href="/"
+          class="text-sm text-muted-foreground hover:text-primary transition-colors"
+        >
+          Volver al inicio
+        </a>
+      </CardFooter>
+    </Card>
+  </main>
+</Body>

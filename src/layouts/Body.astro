@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Head from "./sections/Head.astro";
+
+interface Props extends HTMLAttributes<'body'> {}
+const { class: className, ...props } = Astro.props;
+---
+
+<html lang="es">
+  <Head />
+  <body
+    class:list={[
+      "bg-background text-foreground min-h-dvh flex flex-col",
+      className
+    ]}
+    {...props}
+  >
+    <slot />
+  </body>
+</html>
