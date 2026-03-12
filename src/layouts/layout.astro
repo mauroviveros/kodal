@@ -4,8 +4,10 @@ import type { HTMLAttributes } from "astro/types";
 import Footer from "./sections/Footer.astro";
 import Header from "./sections/Header.astro";
 
-interface Props extends HTMLAttributes<'main'> {}
-const { class: className, ...props } = Astro.props;
+interface Props extends HTMLAttributes<'main'> {
+  container?: boolean;
+}
+const { container, class: className, ...props } = Astro.props;
 ---
 
 <html lang="en">
@@ -20,7 +22,15 @@ const { class: className, ...props } = Astro.props;
   <body class="bg-background text-foreground flex flex-col min-h-dvh">
     <Header />
 
-    <main class:list={["grow", className]} {...props}>
+    <main
+      class:list={[
+        "grow",
+
+        container && "container mx-auto px-4 mt-16 py-8 max-w-4xl",
+        className
+      ]}
+      {...props}
+    >
       <slot />
     </main>
 
