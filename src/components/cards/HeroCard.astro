@@ -4,18 +4,21 @@ import Background from "../Background.astro";
 import { Card, CardContent, CardHeader } from "../starwind/card";
 import type { Tables } from "@/interfaces";
 
-type Props = Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path'>;
-const { name, avatar_path } = Astro.props;
+type Props = Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path' | 'gender' | 'species'>;
+const { avatar_path, gender, species, name, breed, birth_date } = Astro.props;
 const avatar_url = avatar_path ? supabase.storage.from('pet_avatars').getPublicUrl(avatar_path).data.publicUrl : null;
 const FIELDS = [
-  { label: 'Raza', display: Astro.props.breed },
-  { label: 'Edad', display: Astro.props.birth_date }
+  { label: 'Raza', display: breed },
+  { label: 'Edad', display: birth_date }
 ];
 ---
 
 <Card>
   <CardHeader class="relative text-center p-8 pb-12 overflow-hidden">
-    <Background/>
+    <Background
+      gender={gender}
+      species={species}
+    />
       <figure class="relative size-36 overflow-hidden rounded-full ring-primary/20 bg-primary/20 ring-4 shadow-xl mx-auto mb-5">
         <img
           src={avatar_url}

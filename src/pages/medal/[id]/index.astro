@@ -13,7 +13,7 @@ const { data: medal } = await supabase
   .from("medals")
   .select(`
     id,
-    pet:pets(name, breed, birth_date, avatar_path),
+    pet:pets(name, breed, birth_date, avatar_path, gender, species),
     owner:owners(phone, email, full_name, relation_type)
   `)
   .eq("id", id)
@@ -27,6 +27,8 @@ if(!medal || !medal.pet || !medal.owner) return Astro.redirect("/404");
     breed={medal.pet.breed}
     birth_date={medal.pet.birth_date}
     avatar_path={medal.pet.avatar_path}
+    gender={medal.pet.gender}
+    species={medal.pet.species}
   />
   <EmergencyCard
     name={medal.pet.name}
