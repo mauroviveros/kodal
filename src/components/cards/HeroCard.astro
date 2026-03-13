@@ -4,6 +4,7 @@ import Background from "../Background.astro";
 import { Card, CardContent, CardHeader } from "../starwind/card";
 import type { Tables } from "@/interfaces";
 import { age_format } from "@/utils";
+import { Icon } from "astro-icon/components";
 
 type Props = Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path' | 'gender' | 'species'>;
 const { avatar_path, gender, species, name, breed, birth_date } = Astro.props;
@@ -20,12 +21,24 @@ const FIELDS = [
       gender={gender}
       species={species}
     />
-      <figure class="relative size-36 overflow-hidden rounded-full ring-primary/20 bg-primary/20 ring-4 shadow-xl mx-auto mb-5">
-        <img
-          src={avatar_url}
-          alt={`Foto de ${name}`}
-          class="aspect-square size-full object-cover"
-        />
+      <figure
+        class:list={[
+          "relative size-36 overflow-hidden rounded-full ring-primary/20 ring-4 shadow-xl mx-auto mb-5",
+          avatar_url ? "bg-secondary/20" : "bg-muted/70 text-muted-foreground"
+        ]}
+      >
+        {
+          avatar_url ? (
+            <img
+              src={avatar_url}
+              alt={`Foto de ${name}`}
+              class="aspect-square size-full object-cover"
+            />
+          ) : (
+            <Icon name="lucide:image-off" class="size-16 m-10" />
+          )
+        }
+
       </figure>
 
       <h1 class="text-3xl font-bold text-foreground mb-1 text-balance">{name}</h1>
