@@ -20,7 +20,8 @@ const { data: medal } = await supabase
   .eq("id", id)
   .single();
 
-if(!medal || !medal.pet || !medal.owner) return Astro.redirect("/404");
+if(!medal) return Astro.redirect("/404");
+if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
 ---
 <Layout class="max-w-2xl space-y-6" container>
   <HeroCard

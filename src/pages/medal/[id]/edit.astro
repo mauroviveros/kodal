@@ -1,1 +1,27 @@
-<h1>Edit Medal</h1>
+---
+import Layout from "@/layouts/Layout.astro";
+import { supabase } from "@/supabase";
+
+const { id } = Astro.params;
+if (!id) return Astro.redirect("/404");
+
+const { data: medal } = await supabase
+  .from("medals")
+  .select(`
+    id,
+    pet:pets(name, breed, birth_date, avatar_path, gender, species, notes),
+    owner:owners(phone, email, full_name, relation_type)
+  `)
+  .eq("id", id)
+  .single();
+
+if(!medal) return Astro.redirect("/404");
+if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
+---
+
+<Layout class="max-w-2xl space-y-6" container>
+  <hgroup class="space-y-2">
+    <h1 class="text-3xl font-bold text-foreground">Editar Información de {medal.pet.name}</h1>
+    <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
+  </hgroup>
+</Layout>
