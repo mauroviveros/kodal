@@ -86,23 +86,26 @@ export type Database = {
       }
       medals: {
         Row: {
-          code: string
+          alias: string | null
           created_at: string
           id: string
+          legacy_code: string | null
           status: Database["public"]["Enums"]["MEDAL_STATUS"]
           updated_at: string | null
         }
         Insert: {
-          code: string
+          alias?: string | null
           created_at?: string
           id?: string
+          legacy_code?: string | null
           status?: Database["public"]["Enums"]["MEDAL_STATUS"]
           updated_at?: string | null
         }
         Update: {
-          code?: string
+          alias?: string | null
           created_at?: string
           id?: string
+          legacy_code?: string | null
           status?: Database["public"]["Enums"]["MEDAL_STATUS"]
           updated_at?: string | null
         }
