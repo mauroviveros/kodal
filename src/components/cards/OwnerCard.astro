@@ -3,13 +3,14 @@ import { Icon } from "astro-icon/components";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../starwind/card";
 import type { Tables } from "@/interfaces";
 import { OWNER_RELATION_LABELS } from "@/constants";
+import { email_mask } from "@/utils";
 
 type Props = Pick<Tables<'owners'>, 'full_name' | 'phone' | 'email' | 'relation_type'>;
-const { full_name, relation_type } = Astro.props;
+const { phone, email, full_name, relation_type } = Astro.props;
 
 const FIELDS = [
-  { label: 'Teléfono', icon: 'lucide:phone', display: Astro.props.phone },
-  { label: 'Correo electrónico', icon: 'lucide:mail', display: Astro.props.email }
+  { label: 'Teléfono', icon: 'lucide:phone', display: phone },
+  { label: 'Correo electrónico', icon: 'lucide:mail', display: email_mask(email) },
 ];
 ---
 <Card>

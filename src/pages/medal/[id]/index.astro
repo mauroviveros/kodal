@@ -1,6 +1,7 @@
 ---
 import EmergencyCard from "@/components/cards/EmergencyCard.astro";
 import HeroCard from "@/components/cards/HeroCard.astro";
+import NotesCard from "@/components/cards/NotesCard.astro";
 import OwnerCard from "@/components/cards/OwnerCard.astro";
 import PromoCard from "@/components/cards/PromoCard.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -13,7 +14,7 @@ const { data: medal } = await supabase
   .from("medals")
   .select(`
     id,
-    pet:pets(name, breed, birth_date, avatar_path, gender, species),
+    pet:pets(name, breed, birth_date, avatar_path, gender, species, notes),
     owner:owners(phone, email, full_name, relation_type)
   `)
   .eq("id", id)
@@ -33,6 +34,9 @@ if(!medal || !medal.pet || !medal.owner) return Astro.redirect("/404");
   <EmergencyCard
     name={medal.pet.name}
     phone={medal.owner.phone}
+  />
+  <NotesCard
+    notes={medal.pet.notes}
   />
   <OwnerCard
     full_name={medal.owner.full_name}
