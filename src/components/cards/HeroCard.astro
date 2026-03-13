@@ -3,13 +3,14 @@ import { supabase } from "@/supabase";
 import Background from "../Background.astro";
 import { Card, CardContent, CardHeader } from "../starwind/card";
 import type { Tables } from "@/interfaces";
+import { age_format } from "@/utils";
 
 type Props = Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path' | 'gender' | 'species'>;
 const { avatar_path, gender, species, name, breed, birth_date } = Astro.props;
 const avatar_url = avatar_path ? supabase.storage.from('pet_avatars').getPublicUrl(avatar_path).data.publicUrl : null;
 const FIELDS = [
   { label: 'Raza', display: breed },
-  { label: 'Edad', display: birth_date }
+  { label: 'Edad', display: birth_date && age_format(new Date(birth_date)) }
 ];
 ---
 
