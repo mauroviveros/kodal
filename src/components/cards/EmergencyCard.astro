@@ -1,13 +1,12 @@
 ---
+import type { Tables } from "@/interfaces";
 import { Card, CardContent } from "../starwind/card";
 import { Icon } from "astro-icon/components";
 
-interface Props {
-  name: string,
-  phone: string,
-}
+type Props = Pick<Tables<'pets'>, 'name'> & Partial<Pick<Tables<'owners'>, 'phone'>>;
 const { name, phone } = Astro.props;
 const message = encodeURIComponent(`Hola, encontré a ${name}. Por favor, contáctame lo antes posible. Mensaje enviado desde la medalla inteligente Kodal.`);
+if (!phone) return null;
 ---
 
 <Card class="border-red-200 border">

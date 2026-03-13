@@ -1,13 +1,16 @@
 ---
+import { supabase } from "@/supabase";
 import Background from "../Background.astro";
 import { Card, CardContent, CardHeader } from "../starwind/card";
+import type { Tables } from "@/interfaces";
 
-interface Props {
-  name: string;
-  breed?: string;
-  birth_date?: string;
-}
-const { name, breed, birth_date } = Astro.props;
+type Props = Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path'>;
+const { name, avatar_path } = Astro.props;
+const avatar_url = avatar_path ? supabase.storage.from('pet_avatars').getPublicUrl(avatar_path).data.publicUrl : null;
+const FIELDS = [
+  { label: 'Raza', display: Astro.props.breed },
+  { label: 'Edad', display: Astro.props.birth_date }
+];
 ---
 
 <Card>
@@ -15,7 +18,7 @@ const { name, breed, birth_date } = Astro.props;
     <Background/>
       <figure class="relative size-36 overflow-hidden rounded-full ring-primary/20 bg-primary/20 ring-4 shadow-xl mx-auto mb-5">
         <img
-          src="https://picsum.photos/200"
+          src={avatar_url}
           alt={`Foto de ${name}`}
           class="aspect-square size-full object-cover"
         />
@@ -24,18 +27,14 @@ const { name, breed, birth_date } = Astro.props;
       <h1 class="text-3xl font-bold text-foreground mb-1 text-balance">{name}</h1>
   </CardHeader>
   <CardContent class="sm:divide-x sm:divide-y-0 divide-border border-y divide-y flex flex-col sm:flex-row px-0">
-    { breed && (
-      <div class="text-center py-4 grow">
-        <div class="text-xl font-bold text-primary">{breed}</div>
-        <div class="text-sm text-muted-foreground">Raza</div>
+    {FIELDS
+      .filter(({ display }) => display)
+      .map(({ label, display }) => (
+        <div class="text-center py-4 grow">
+        <div class="text-xl font-bold text-primary">{display}</div>
+        <div class="text-sm text-muted-foreground">{label}</div>
       </div>
-    )}
-
-    { birth_date && (
-      <div class="text-center py-4 grow">
-        <div class="text-xl font-bold text-primary">{birth_date}</div>
-        <div class="text-sm text-muted-foreground">Edad</div>
-      </div>
-    )}
+      ))
+    }
   </CardContent>
 </Card>

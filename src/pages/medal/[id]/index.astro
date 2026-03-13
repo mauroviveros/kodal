@@ -4,17 +4,39 @@ import HeroCard from "@/components/cards/HeroCard.astro";
 import OwnerCard from "@/components/cards/OwnerCard.astro";
 import PromoCard from "@/components/cards/PromoCard.astro";
 import Layout from "@/layouts/Layout.astro";
+import { supabase } from "@/supabase";
+
+const { id } = Astro.params;
+if (!id) return Astro.redirect("/404");
+
+const { data: medal } = await supabase
+  .from("medals")
+  .select(`
+    id,
+    pet:pets(name, breed, birth_date, avatar_path),
+    owner:owners(phone, email, full_name, relation_type)
+  `)
+  .eq("id", id)
+  .single();
+
+if(!medal || !medal.pet || !medal.owner) return Astro.redirect("/404");
 ---
 <Layout class="max-w-2xl space-y-6" container>
   <HeroCard
-    name="Brownie"
-    breed="Panterita"
-    birth_date="1 año"
+    name={medal.pet.name}
+    breed={medal.pet.breed}
+    birth_date={medal.pet.birth_date}
+    avatar_path={medal.pet.avatar_path}
   />
   <EmergencyCard
-    name="Brownie",
-    phone="+5491151423888"
+    name={medal.pet.name}
+    phone={medal.owner.phone}
   />
-  <OwnerCard/>
+  <OwnerCard
+    full_name={medal.owner.full_name}
+    email={medal.owner.email}
+    relation_type={medal.owner.relation_type}
+    phone={medal.owner.phone}
+  />
   <PromoCard />
 </Layout>

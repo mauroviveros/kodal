@@ -1,23 +1,38 @@
 ---
 import { Icon } from "astro-icon/components";
-import { Card, CardContent, CardHeader, CardTitle } from "../starwind/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../starwind/card";
+import type { Tables } from "@/interfaces";
+import { OWNER_RELATION_LABELS } from "@/constants";
 
+type Props = Pick<Tables<'owners'>, 'full_name' | 'phone' | 'email' | 'relation_type'>;
+const { full_name, relation_type } = Astro.props;
 
+const FIELDS = [
+  { label: 'Teléfono', icon: 'lucide:phone', display: Astro.props.phone },
+  { label: 'Correo electrónico', icon: 'lucide:mail', display: Astro.props.email }
+];
 ---
 <Card>
   <CardHeader class="flex items-center gap-2">
     <Icon name="lucide:contact" class="size-6 text-primary" />
-    <CardTitle>Informacion de Contacto</CardTitle>
+    <hgroup>
+      <CardTitle>Informacion de Contacto</CardTitle>
+      <CardDescription>Mi {OWNER_RELATION_LABELS[relation_type]} es {full_name}</CardDescription>
+    </hgroup>
   </CardHeader>
 
   <CardContent class="space-y-3">
-    <dl class="bg-muted/30 grid grid-cols-[auto_1fr] grid-rows-2 items-center gap-x-2 rounded-lg p-4">
-      <span class="bg-primary/10 row-span-2 flex size-10 items-center justify-center rounded-full">
-        <Icon name="lucide:layout-dashboard" class="text-primary size-5" />
-      </span>
-
-      <dt class="font-medium">label</dt>
-      <dd class="text-primary">display</dd>
-    </dl>
+    {FIELDS
+      .filter(({ display }) => display)
+      .map(({ icon, label, display }) => (
+        <dl class="bg-muted/30 grid grid-cols-[auto_1fr] grid-rows-2 items-center gap-x-2 rounded-lg p-4">
+          <span class="bg-primary/10 row-span-2 flex size-10 items-center justify-center rounded-full">
+            <Icon name={icon} class="text-primary size-5" />
+          </span>
+          <dt class="font-medium">{label}</dt>
+          <dd class="text-primary">{display}</dd>
+        </dl>
+      ))
+    }
   </CardContent>
 </Card>
