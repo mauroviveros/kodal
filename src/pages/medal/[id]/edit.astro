@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase";
+import { Form } from "@/components/forms/edit/Form";
 
 const { id } = Astro.params;
 if (!id) return Astro.redirect("/404");
@@ -24,4 +25,6 @@ if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
     <h1 class="text-3xl font-bold text-foreground">Editar Información de {medal.pet.name}</h1>
     <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
+
+  <Form/>
 </Layout>
