@@ -1,18 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase";
-import { Form } from "@/components/forms/edit/Form";
+import { EditForm } from "@/components/forms/edit/Form";
 
 const { id } = Astro.params;
 if (!id) return Astro.redirect("/404");
 
 const { data: medal } = await supabase
   .from("medals")
-  .select(`
-    id,
-    pet:pets(name, breed, birth_date, avatar_path, gender, species, notes),
-    owner:owners(phone, email, full_name, relation_type)
-  `)
+  .select('id, pet:pets(*), owner:owners(*)')
   .eq("id", id)
   .single();
 
@@ -26,5 +22,10 @@ if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
     <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
 
-  <Form/>
+  <EditForm
+    medal_id={medal.id}
+    pet={medal.pet}
+    owner={medal.owner}
+    client:only="react"
+  />
 </Layout>
