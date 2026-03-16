@@ -1,4 +1,11 @@
-import { z } from "astro/zod";
+import { z } from "zod";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+export * from "./converters";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export const email_mask = (email: string) => {
     const result = z.email().safeParse(email);
