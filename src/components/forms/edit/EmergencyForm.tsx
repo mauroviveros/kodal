@@ -14,19 +14,19 @@ export const EmergencyNotesForm = ({ control, errors }: MedalFormProps) => {
       </CardHeader>
 
       <CardContent>
-        <Field data-invalid={!!errors.pet_notes}>
+        <Field data-invalid={!!errors.pet?.notes}>
           <FormField
-            htmlFor="pet_notes"
+            htmlFor="pet.notes"
             label="Mensaje para quien encuentre a tu mascota"
-            error={errors.pet_notes?.message}
+            error={errors.pet?.notes?.message}
             description="Este mensaje se mostrará en la medalla por si tu mascota se pierde. Máximo 500 caracteres."
           >
             <Textarea
-              id="pet_notes"
+              id="pet.notes"
               placeholder="Incluye información relevante como condiciones médicas, alergias o instrucciones especiales."
-              aria-invalid={!!errors.pet_notes}
+              aria-invalid={!!errors.pet?.notes}
               className="h-40"
-              {...control.register('pet_notes')}
+              {...control.register('pet.notes')}
             />
           </FormField>
         </Field>

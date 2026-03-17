@@ -1,31 +1,29 @@
 import { Constants } from "@/interfaces";
 import { z } from "zod";
 
-const medal = z.object({
-  id: z.uuid(),
-})
-
 const pet = z.object({
-  pet_name: z.string().trim().max(20).nonempty(),
-  pet_breed: z.string().trim().max(20).optional(),
-  pet_species: z.enum(Constants.public.Enums.PET_SPECIES).optional(),
-  pet_gender: z.enum(Constants.public.Enums.PET_GENDER).optional(),
-  pet_birth_date: z.string().optional(),
-  pet_notes: z.string().trim().max(500).optional(),
+  name: z.string().trim().max(20).nonempty(),
+  breed: z.string().trim().max(20).optional().nullable(),
+  species: z.enum(Constants.public.Enums.PET_SPECIES).optional(),
+  gender: z.enum(Constants.public.Enums.PET_GENDER).optional(),
+  birth_date: z.string().optional().nullable(),
+  notes: z.string().trim().max(500).optional().nullable(),
 });
 
 const owner = z.object({
-  owner_full_name: z.string().trim().max(50).nonempty(),
-  owner_email: z.email().max(100).nonempty(),
-  owner_phone: z.string().trim().max(20).optional(),
-  owner_address: z.string().trim().max(100).optional(),
-  owner_relation_type: z.enum(Constants.public.Enums.OWNER_RELATION).optional(),
+  full_name: z.string().trim().max(50).nonempty(),
+  email: z.email().max(100).nonempty(),
+  phone: z.string().trim().max(20).optional().nullable(),
+  address: z.string().trim().max(100).optional().nullable(),
+  relation_type: z.enum(Constants.public.Enums.OWNER_RELATION).optional(),
+});
+
+const form = z.object({
+  medal_id: z.uuid()
 })
 
 export const MedalFormSchema = z
-  .object({})
-  .extend(medal.shape)
-  .extend(pet.shape)
-  .extend(owner.shape);
+  .object({ pet, owner })
+  .extend(form.shape)
 
 export type MedalFormInput = z.infer<typeof MedalFormSchema>;

@@ -49,41 +49,6 @@ export type Database = {
           },
         ]
       }
-      medal_tokens: {
-        Row: {
-          code: string
-          created_at: string
-          expires_at: string
-          id: number
-          medal_id: string
-          revoked_at: string | null
-        }
-        Insert: {
-          code: string
-          created_at?: string
-          expires_at: string
-          id?: number
-          medal_id: string
-          revoked_at?: string | null
-        }
-        Update: {
-          code?: string
-          created_at?: string
-          expires_at?: string
-          id?: number
-          medal_id?: string
-          revoked_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "medal_tokens_medal_id_fkey"
-            columns: ["medal_id"]
-            isOneToOne: false
-            referencedRelation: "medals"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       medals: {
         Row: {
           alias: string | null
@@ -197,6 +162,41 @@ export type Database = {
             foreignKeyName: "pets_medal_id_fkey1"
             columns: ["medal_id"]
             isOneToOne: true
+            referencedRelation: "medals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tokens: {
+        Row: {
+          code: string
+          created_at: string
+          expires_at: string
+          id: number
+          medal_id: string
+          revoked_at: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          expires_at: string
+          id?: number
+          medal_id: string
+          revoked_at?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          expires_at?: string
+          id?: number
+          medal_id?: string
+          revoked_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medal_tokens_medal_id_fkey"
+            columns: ["medal_id"]
+            isOneToOne: false
             referencedRelation: "medals"
             referencedColumns: ["id"]
           },

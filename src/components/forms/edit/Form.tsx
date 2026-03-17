@@ -1,10 +1,9 @@
 import type { Tables } from "@/interfaces";
-import { actions } from "astro:actions";
-import { withState } from "@astrojs/react/actions";
-import { Form, useForm, type FormSubmitHandler } from "react-hook-form"
+import { ActionError, actions, type SafeResult } from "astro:actions";
+import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form"
 import { MedalFormSchema, type MedalFormInput } from "@/schemas";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { startTransition, useActionState } from "react";
 import { BasicForm } from "./BasicForm";
 import { convertToDefaultValues } from "@/utils";
 import { Button } from "@/components/shadcn/button";
@@ -19,43 +18,46 @@ type Props = {
 };
 
 export const MedalFormEdit = ({ medal_id, pet, owner }: Props) => {
-  const [state, action, pending] = useActionState(
-    withState(actions.updatePet),
-    { data: medal_id, error: undefined },
-  );
-  const { control, formState: { errors, isValid } } = useForm<MedalFormInput>({
+  const [state, setState] = useState<SafeResult<MedalFormInput, string> | null>(null);
+  const { control, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm<MedalFormInput>({
     resolver: zodResolver(MedalFormSchema),
-    disabled: pending,
-    defaultValues: { id: medal_id, ...convertToDefaultValues(pet, owner)},
+    defaultValues: {
+      medal_id,
+      pet: Object.assign({...pet}),
+      owner: Object.assign({...owner}),
+    }
   });
 
-  const onSubmit: FormSubmitHandler<MedalFormInput> = ({ formData }) => {
-    startTransition(() => action(formData));
+  const onSubmit: SubmitHandler<MedalFormInput> = async (data) => {
+    setState(null);
+    const result = await actions.updatePet(data);
+    setState(result);
   }
 
   return (
-    <Form onSubmit={onSubmit} control={control} className="space-y-4" encType="multipart/form-data">
-      {state.error && (
-        <div className="p-4 text-sm text-red-700 bg-red-100 rounded-md" role="alert">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {state?.error && (
+        <div className="p-4 bg-red-100 text-red-700 rounded">
           <Icon icon="lucide:x-circle" className="size-5 inline-block mr-2" />
           {state.error.message}
         </div>
       )}
 
-      <input type="hidden" {...control.register('id')} />
+      <input type="hidden" {...control.register('medal_id')} />
+
       <BasicForm control={control} errors={errors} />
       <OwnerForm control={control} errors={errors} />
       <EmergencyNotesForm control={control} errors={errors} />
 
       <footer className="flex flex-col-reverse md:grid md:grid-cols-2 gap-2">
-        <Button type="button" variant="outline" disabled={pending}>
+        <Button type="button" variant="outline" disabled={isSubmitting}>
           Cancelar
         </Button>
-        <Button type="submit" variant="default" disabled={pending || !isValid}>
+        <Button type="submit" variant="default" disabled={isSubmitting || !isValid}>
           <Icon icon="lucide:save" className="size-4" />
-          {pending ? "Guardando..." : "Guardar"}
+          {isSubmitting ? "Guardando..." : "Guardar"}
         </Button>
       </footer>
-    </Form>
+    </form>
   );
 };

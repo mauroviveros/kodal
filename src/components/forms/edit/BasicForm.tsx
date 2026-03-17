@@ -17,33 +17,33 @@ export const BasicForm = ({ control, errors }: MedalFormProps) => {
       </CardHeader>
 
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-2">
-        <Field className="md:col-span-2" data-invalid={!!errors.pet_name}>
+        <Field className="md:col-span-2" data-invalid={!!errors.pet?.name}>
           <FormField
-            htmlFor="pet_name"
+            htmlFor="pet.name"
             label="Nombre"
-            error={errors.pet_name?.message}
+            error={errors.pet?.name?.message}
             description="Nombre visible en el perfil de la mascota."
             required
           >
             <Input
-              id="pet_name"
+              id="pet.name"
               placeholder="Ej: Brownie"
-              aria-invalid={!!errors.pet_name}
-              {...control.register('pet_name')}
+              aria-invalid={!!errors.pet?.name}
+              {...control.register('pet.name', { value: '' })}
             />
           </FormField>
         </Field>
 
-        <Field data-invalid={!!errors.pet_species}>
+        <Field data-invalid={!!errors.pet?.species}>
           <FormField
-            htmlFor="pet_species"
+            htmlFor="pet.species"
             label="Especie"
-            error={errors.pet_species?.message}
+            error={errors.pet?.species?.message}
             description="La especie personaliza la medalla."
             required
           >
             <Controller
-              name="pet_species"
+              name="pet.species"
               control={control}
               render={({ field: { onChange, value, ...field }}) => (
                 <Select
@@ -52,7 +52,7 @@ export const BasicForm = ({ control, errors }: MedalFormProps) => {
                   {...field}
                 >
                   <SelectTrigger
-                    aria-invalid={!!errors.pet_species}
+                    aria-invalid={!!errors.pet?.species}
                   >
                     <SelectValue placeholder="Selecciona una especie" aria-invalid />
                   </SelectTrigger>
@@ -70,32 +70,32 @@ export const BasicForm = ({ control, errors }: MedalFormProps) => {
           </FormField>
         </Field>
 
-        <Field data-invalid={!!errors.pet_breed}>
+        <Field data-invalid={!!errors.pet?.breed}>
           <FormField
-            htmlFor="pet_breed"
+            htmlFor="pet.breed"
             label="Raza"
-            error={errors.pet_breed?.message}
+            error={errors.pet?.breed?.message}
             description="Opcional. Ayuda a identificarla mejor."
           >
             <Input
-              id="pet_breed"
+              id="pet.breed"
               placeholder="Ej: Panterita"
-              aria-invalid={!!errors.pet_breed}
-              {...control.register('pet_breed')}
+              aria-invalid={!!errors.pet?.breed}
+              {...control.register('pet.breed', { value: '' })}
             />
           </FormField>
         </Field>
 
-        <Field data-invalid={!!errors.pet_gender}>
+        <Field data-invalid={!!errors.pet?.gender}>
           <FormField
-            htmlFor="pet_gender"
+            htmlFor="pet.gender"
             label="Género"
-            error={errors.pet_gender?.message}
+            error={errors.pet?.gender?.message}
             description="El género personaliza la medalla."
             required
           >
             <Controller
-              name="pet_gender"
+              name="pet.gender"
               control={control}
               render={({ field: { onChange, value, ...field }}) => (
                 <Select
@@ -104,7 +104,7 @@ export const BasicForm = ({ control, errors }: MedalFormProps) => {
                   {...field}
                 >
                   <SelectTrigger
-                    aria-invalid={!!errors.pet_gender}
+                    aria-invalid={!!errors.pet?.gender}
                   >
                     <SelectValue placeholder="Selecciona un género" aria-invalid />
                   </SelectTrigger>
@@ -122,18 +122,18 @@ export const BasicForm = ({ control, errors }: MedalFormProps) => {
           </FormField>
         </Field>
 
-        <Field data-invalid={!!errors.pet_birth_date}>
+        <Field data-invalid={!!errors.pet?.birth_date}>
           <FormField
-            htmlFor="pet_birth_date"
+            htmlFor="pet.birth_date"
             label="Fecha de nacimiento"
-            error={errors.pet_birth_date?.message}
+            error={errors.pet?.birth_date?.message}
             description="Si no la conoces, deja el campo vacío."
           >
             <Input
               type="date"
-              id="pet_birth_date"
-              aria-invalid={!!errors.pet_birth_date}
-              {...control.register('pet_birth_date')}
+              id="pet.birth_date"
+              aria-invalid={!!errors.pet?.birth_date}
+              {...control.register('pet.birth_date', { value: '' })}
             />
           </FormField>
         </Field>
