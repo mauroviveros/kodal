@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn/card";
 import { Field } from "@/components/shadcn/field";
-import type { MedalFormProps } from "@/interfaces";
 import { FormField } from "../FormField";
 import { Icon } from "@iconify/react";
 import { Textarea } from "@/components/shadcn/textarea";
+import type { MedalFormEditProps } from "@/schemas";
 
-export const EmergencyNotesForm = ({ control, errors }: MedalFormProps) => {
+export const EmergencyNotesForm = ({ control, errors }: MedalFormEditProps) => {
   return (
     <Card>
       <CardHeader className="flex items-center gap-2">

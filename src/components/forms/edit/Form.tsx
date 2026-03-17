@@ -1,8 +1,8 @@
 import type { Tables } from "@/interfaces";
-import { ActionError, actions, type SafeResult } from "astro:actions";
-import { useState } from "react";
+import { actions, type SafeResult } from "astro:actions";
+import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { MedalFormSchema, type MedalFormInput } from "@/schemas";
+import { MedalFormEditSchema, type MedalFormEditInput } from "@/schemas";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BasicForm } from "./BasicForm";
 import { convertToDefaultValues } from "@/utils";
@@ -12,23 +12,29 @@ import { OwnerForm } from "./OwnerForm";
 import { EmergencyNotesForm } from "./EmergencyForm";
 
 type Props = {
-  medal_id: string;
+  medal_id: Tables<'medals'>['id'];
+  token_code: Tables<'tokens'>['code'];
   pet: Tables<'pets'>,
   owner: Tables<'owners'>,
 };
 
-export const MedalFormEdit = ({ medal_id, pet, owner }: Props) => {
-  const [state, setState] = useState<SafeResult<MedalFormInput, string> | null>(null);
-  const { control, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm<MedalFormInput>({
-    resolver: zodResolver(MedalFormSchema),
+export const MedalFormEdit = ({ medal_id, token_code, pet, owner }: Props) => {
+  const [state, setState] = useState<SafeResult<MedalFormEditInput, string> | null>(null);
+  const { control, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm<MedalFormEditInput>({
+    resolver: zodResolver(MedalFormEditSchema),
     defaultValues: {
       medal_id,
+      token_code,
       pet: Object.assign({...pet}),
       owner: Object.assign({...owner}),
     }
   });
 
-  const onSubmit: SubmitHandler<MedalFormInput> = async (data) => {
+  useEffect(() => {
+    console.log(state);
+  }, [state])
+
+  const onSubmit: SubmitHandler<MedalFormEditInput> = async (data) => {
     setState(null);
     const result = await actions.updatePet(data);
     setState(result);
@@ -44,6 +50,7 @@ export const MedalFormEdit = ({ medal_id, pet, owner }: Props) => {
       )}
 
       <input type="hidden" {...control.register('medal_id')} />
+      <input type="hidden" {...control.register('token_code')} />
 
       <BasicForm control={control} errors={errors} />
       <OwnerForm control={control} errors={errors} />

@@ -2,13 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn/ca
 import { Field } from "@/components/shadcn/field";
 import { Input } from "@/components/shadcn/input";
 import { Icon } from "@iconify/react";
-import type { MedalFormProps } from "@/interfaces";
 import { FormField } from "../FormField";
 import { Controller } from "react-hook-form";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/select";
 import { OWNER_RELATION_LABELS } from "@/constants";
+import type { MedalFormEditProps } from "@/schemas";
 
-export const OwnerForm = ({ control, errors }: MedalFormProps) => {
+export const OwnerForm = ({ control, errors }: MedalFormEditProps) => {
   return (
     <Card>
       <CardHeader className="flex items-center gap-2">

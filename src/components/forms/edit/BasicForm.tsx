@@ -3,12 +3,12 @@ import { Field } from "@/components/shadcn/field";
 import { Input } from "@/components/shadcn/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/select";
 import { PET_GENDER_LABELS, PET_SPECIES_LABELS } from "@/constants";
-import type { MedalFormProps } from "@/interfaces";
 import { Icon } from '@iconify/react';
 import { Controller } from "react-hook-form";
 import { FormField } from "../FormField";
+import type { MedalFormEditProps } from "@/schemas";
 
-export const BasicForm = ({ control, errors }: MedalFormProps) => {
+export const BasicForm = ({ control, errors }: MedalFormEditProps) => {
   return (
     <Card>
       <CardHeader className="flex items-center gap-2">

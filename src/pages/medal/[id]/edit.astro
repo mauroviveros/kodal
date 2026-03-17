@@ -2,18 +2,24 @@
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase";
 import { MedalFormEdit } from "@/components/forms/edit/Form";
+import { token_validate } from "@/repositories";
 
-const { id } = Astro.params;
-if (!id) return Astro.redirect("/404");
+const { id: medal_id } = Astro.params;
+if (!medal_id) return Astro.redirect("/404");
+
+const token_code = Astro.url.searchParams.get("token");
+if (!token_code) return Astro.redirect(`/medal/${medal_id}`);
+const isTokenValid = await token_validate({ medal_id, token_code });
+if (!isTokenValid) return Astro.redirect(`/medal/${medal_id}`);
 
 const { data: medal } = await supabase
   .from("medals")
   .select('id, pet:pets(*), owner:owners(*)')
-  .eq("id", id)
+  .eq("id", medal_id)
   .single();
 
 if(!medal) return Astro.redirect("/404");
-if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
+if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${medal_id}/create`);
 ---
 
 <Layout class="max-w-2xl space-y-6" container>
@@ -24,6 +30,7 @@ if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
 
   <MedalFormEdit
     medal_id={medal.id}
+    token_code={token_code}
     pet={medal.pet}
     owner={medal.owner}
     client:only="react"
