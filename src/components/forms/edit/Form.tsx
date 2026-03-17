@@ -1,11 +1,10 @@
 import type { Tables } from "@/interfaces";
 import { actions, type SafeResult } from "astro:actions";
-import { useEffect, useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { MedalFormEditSchema, type MedalFormEditInput } from "@/schemas";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BasicForm } from "./BasicForm";
-import { convertToDefaultValues } from "@/utils";
 import { Button } from "@/components/shadcn/button";
 import { Icon } from "@iconify/react";
 import { OwnerForm } from "./OwnerForm";
@@ -19,9 +18,12 @@ type Props = {
 };
 
 export const MedalFormEdit = ({ medal_id, token_code, pet, owner }: Props) => {
+  const [isSubmitting, startSubmiting] = useTransition();
   const [state, setState] = useState<SafeResult<MedalFormEditInput, string> | null>(null);
-  const { control, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm<MedalFormEditInput>({
+  const { control, handleSubmit, formState: { errors, isValid, isReady } } = useForm<MedalFormEditInput>({
     resolver: zodResolver(MedalFormEditSchema),
+    mode: "all",
+    disabled: isSubmitting,
     defaultValues: {
       medal_id,
       token_code,
@@ -30,23 +32,24 @@ export const MedalFormEdit = ({ medal_id, token_code, pet, owner }: Props) => {
     }
   });
 
-  useEffect(() => {
-    console.log(state);
-  }, [state])
-
-  const onSubmit: SubmitHandler<MedalFormEditInput> = async (data) => {
+  const onSubmit: SubmitHandler<MedalFormEditInput> = (data) => {
     setState(null);
-    const result = await actions.updatePet(data);
-    setState(result);
+    startSubmiting(async () => {
+      const result = await actions.updatePet(data);
+      setState(result);
+      if(result?.data) window.location.assign(`/medal/${medal_id}`);
+      else if(result?.error) window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
+  if(!isReady) return null;
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {state?.error && (
-        <div className="p-4 bg-red-100 text-red-700 rounded">
+        <blockquote className="bg-danger text-danger-foreground p-4 flex items-center">
           <Icon icon="lucide:x-circle" className="size-5 inline-block mr-2" />
           {state.error.message}
-        </div>
+        </blockquote>
       )}
 
       <input type="hidden" {...control.register('medal_id')} />

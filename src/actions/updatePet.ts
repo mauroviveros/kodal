@@ -2,7 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { MedalFormEditSchema } from "@/schemas";
 import { owner_update, pet_update, token_revoke, token_validate } from "@/repositories";
 
-export const updatePet = defineAction({
+export default defineAction({
   accept: "json",
   input: MedalFormEditSchema,
   handler: async ({ medal_id, token_code, pet, owner }) => {
