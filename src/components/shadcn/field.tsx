@@ -233,4 +233,5 @@ export {
   FieldSet,
   FieldContent,
   FieldTitle,
+  fieldVariants
 }

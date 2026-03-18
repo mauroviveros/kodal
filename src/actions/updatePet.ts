@@ -7,7 +7,7 @@ export default defineAction({
   input: MedalFormEditSchema,
   handler: async ({ medal_id, token_code, pet, owner }) => {
     // 1. Validar el token de acceso y asegurarse de que el usuario tenga permiso para actualizar la mascota
-    const isTokenValid = await token_validate({ medal_id, token_code });
+    const isTokenValid = await token_validate({ medal_id, code: token_code });
     if (!isTokenValid) throw new ActionError({ code: 'UNAUTHORIZED', message: 'Token invalido o expirado' });
 
     try{
@@ -21,7 +21,7 @@ export default defineAction({
 
     try{
       // 3. Revocar el token de acceso para evitar que se vuelva a usar;
-      await token_revoke({ medal_id, token_code });
+      await token_revoke({ medal_id, code: token_code });
     } catch(error) {
       console.error("Failed to revoke token:", { error, medal_id, token_code });
     }

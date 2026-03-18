@@ -3,7 +3,7 @@ import { supabase } from "@/supabase";
 
 export const owner_update = async (
   { medal_id, relation_type, full_name, email, phone, address }:
-  { medal_id: Tables<"pets">["medal_id"]} & Partial<Tables<"owners">>
+  { medal_id: Tables<"owners">["medal_id"]} & Partial<Tables<"owners">>
 ) => {
   const { error } = await supabase
     .from('owners')
@@ -17,4 +17,23 @@ export const owner_update = async (
     })
     .eq('medal_id', medal_id);
   if (error) throw error;
+}
+
+export const owner_exists = async (
+  { email, medal_id }:
+  Pick<Tables<"owners">, 'email' | 'medal_id'>
+) => {
+  const { data, error } = await supabase
+    .from('owners')
+    .select('email')
+    .eq('email', email)
+    .eq('medal_id', medal_id)
+    .maybeSingle();
+
+  if(error){
+    console.error("Error checking if owner exists:", { error, email, medal_id });
+    return false;
+  }
+
+  return !!data;
 }

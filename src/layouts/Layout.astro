@@ -10,7 +10,9 @@ interface Props extends HTMLAttributes<'main'> {
 const { container, class: className, ...props } = Astro.props;
 ---
 <Body>
-  <Header/>
+  <Header>
+    <slot name="actions" slot="actions" />
+  </Header>
 
   <main
     class:list={[

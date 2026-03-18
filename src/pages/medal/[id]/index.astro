@@ -4,8 +4,10 @@ import HeroCard from "@/components/cards/HeroCard.astro";
 import NotesCard from "@/components/cards/NotesCard.astro";
 import OwnerCard from "@/components/cards/OwnerCard.astro";
 import PromoCard from "@/components/cards/PromoCard.astro";
+import { SendVerificationCodeDialog } from "@/components/dialogs/SendVerificationCodeDialog";
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase";
+import { email_mask } from "@/utils";
 
 const { id } = Astro.params;
 if (!id) return Astro.redirect("/404");
@@ -24,6 +26,13 @@ if(!medal) return Astro.redirect("/404");
 if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
 ---
 <Layout class="max-w-2xl space-y-6" container>
+  <SendVerificationCodeDialog
+    email_hint={email_mask(medal.owner.email)}
+    medal_id={medal.id}
+    client:only="react"
+    slot="actions"
+  />
+
   <HeroCard
     name={medal.pet.name}
     breed={medal.pet.breed}
