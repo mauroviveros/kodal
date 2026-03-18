@@ -9,9 +9,7 @@ import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase";
 import { email_mask } from "@/utils";
 
-const { id } = Astro.params;
-if (!id) return Astro.redirect("/404");
-
+const { id } = Astro.params as { id: string };
 const { data: medal } = await supabase
   .from("medals")
   .select(`
@@ -29,6 +27,7 @@ if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
   <SendVerificationCodeDialog
     email_hint={email_mask(medal.owner.email)}
     medal_id={medal.id}
+    pet_name={medal.pet.name}
     client:only="react"
     slot="actions"
   />

@@ -63,7 +63,6 @@ export const token_insert = async (
   const { data, error } = await root
     .from('tokens')
     .insert({
-      id: 0,
       medal_id,
       code,
       expires_at

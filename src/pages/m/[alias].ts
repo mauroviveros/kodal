@@ -2,8 +2,7 @@ import { supabase } from '@/supabase';
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ params, redirect }) => {
-  const { alias } = params;
-  if(!alias) return redirect('/404');
+  const { alias } = params as { alias: string };
   const { data } = await supabase
     .from('medals')
     .select('id')

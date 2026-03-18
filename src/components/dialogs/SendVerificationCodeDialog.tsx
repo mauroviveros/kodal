@@ -11,9 +11,10 @@ import { withState } from '@astrojs/react/actions';
 
 interface Props {
   medal_id: Tables<'medals'>['id'];
+  pet_name: Tables<'pets'>['name'];
   email_hint: string;
 }
-export const SendVerificationCodeDialog = ({ medal_id, email_hint }: Props) => {
+export const SendVerificationCodeDialog = ({ medal_id, pet_name, email_hint }: Props) => {
   const [state, action, pending] = useActionState(
     withState(actions.sendVerificationCode),
     { data: '', error: undefined }
@@ -43,6 +44,7 @@ export const SendVerificationCodeDialog = ({ medal_id, email_hint }: Props) => {
 
           <form action={action} className="space-y-4">
             <input type="hidden" name="medal_id" value={medal_id} />
+            <input type="hidden" name="pet_name" value={pet_name} />
 
             <Field
               label="Ingresa el email registrado"

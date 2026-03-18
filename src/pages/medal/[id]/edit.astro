@@ -4,12 +4,10 @@ import { supabase } from "@/supabase";
 import { MedalFormEdit } from "@/components/forms/edit/Form";
 import { token_validate } from "@/repositories";
 
-const { id: medal_id } = Astro.params;
-if (!medal_id) return Astro.redirect("/404");
-
+const { id: medal_id } = Astro.params as { id: string };
 const token_code = Astro.url.searchParams.get("token");
 if (!token_code) return Astro.redirect(`/medal/${medal_id}`);
-const isTokenValid = await token_validate({ medal_id, token_code });
+const isTokenValid = await token_validate({ medal_id, code: token_code });
 if (!isTokenValid) return Astro.redirect(`/medal/${medal_id}`);
 
 const { data: medal } = await supabase

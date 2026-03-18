@@ -1,1 +1,88 @@
-<h1>Email Sent</h1>
+---
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/starwind/card";
+import Layout from "@/layouts/Layout.astro";
+import { supabase } from "@/supabase";
+import { Icon } from "astro-icon/components";
+
+const { id } = Astro.params as { id: string };
+const { data: medal } = await supabase.from("medals")
+  .select("id, pet:pets(name), owner:owners(email), token:tokens(expires_at)")
+  .eq("id", id)
+  .gt('token.expires_at', new Date().toISOString())
+  .is('token.revoked_at', null)
+  .maybeSingle();
+
+if(!medal || !medal.pet || !medal.owner) return Astro.redirect("/404");
+if(!medal.token || !medal.token.length) return Astro.redirect(`/medal/${id}`);
+
+const STEPS = [
+  {
+    title: "Revisa tu bandeja de entrada",
+    description: `Busca un correo de Kodal con el asunto "<u>Verificación de Identidad para ${medal.pet.name}</u>"`,
+  },
+  {
+    title: "Haz clic en el enlace",
+    description: "El email contiene un botón directo",
+  },
+  {
+    title: `Edita el perfil de ${medal.pet.name}`,
+    description: "Una vez verificado, podras actualizar toda la información",
+  },
+];
+---
+
+<Layout class="max-w-lg space-y-4" container>
+  <header class="mb-8 text-center">
+    <div class="size-24 bg-primary/10 relative mx-auto flex items-center justify-center rounded-full">
+      <Icon name="lucide:mail-check" class="text-primary size-12" />
+      <span class="bg-primary text-primary-foreground text-sm font-bold absolute -top-1 -right-1 size-8 rounded-full flex items-center justify-center animate-bounce">1</span>
+    </div>
+  </header>
+
+  <Card>
+    <CardContent class="text-center">
+      <h1 class="text-2xl font-bold text-foreground mb-2 text-balance">Email de verificación enviado</h1>
+      <p class="text-muted-foreground mb-6 text-pretty">Hemos enviado un enlace de verificación para que puedas editar el perfil de <strong>{medal.pet.name}</strong></p>
+
+      <article class="bg-muted/50 rounded-lg p-4 mb-6 flex items-center justify-center gap-3">
+        <Icon name="lucide:mail" class="size-5 text-primary" />
+        <span class="font-medium text-foreground">{medal.owner.email}</span>
+      </article>
+
+      <ol class="space-y-4 text-left mb-6">
+        {STEPS.map(({ title, description }, index) => (
+          <li class="relative pl-8">
+            <span
+              class:list={[
+                "absolute left-0 flex size-6 items-center justify-center rounded-full text-sm font-bold",
+                STEPS.length - 1 === index ? "bg-muted-foreground/20 text-muted-foreground" : "bg-primary text-primary-foreground"
+              ]}
+            >
+              {index + 1}
+            </span>
+            <h5 class="text-foreground font-medium">{title}</h5>
+            <p class="text-muted-foreground text-sm text-balance" set:html={description}></p>
+          </li>
+        ))}
+      </ol>
+
+      <article class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-700 dark:text-amber-400 rounded-full px-4 py-2 text-sm">
+        <Icon name="lucide:clock" class="size-4" />
+        <span>El enlace expira en 15 minutos</span>
+      </article>
+    </CardContent>
+  </Card>
+
+  <Card class="gap-2">
+    <CardHeader>
+      <CardDescription class="font-semibold text-foreground">¿No recibiste el correo?</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <ul class="marker:text-primary list-inside list-disc">
+        <li>Revisa tu carpeta de spam o correo no deseado</li>
+        <li>Verifica que el email registrado sea correcto</li>
+        <li>Espera unos minutos, a veces puede demorar</li>
+      </ul>
+    </CardContent>
+  </Card>
+</Layout>
