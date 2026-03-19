@@ -1,14 +1,16 @@
 ---
 import { WelcomeCreateDialog } from "@/components/dialogs/WelcomeCreateDialog";
+import { MedalForm } from "@/components/medal/Form";
 import Layout from "@/layouts/Layout.astro";
 const { id: medal_id } = Astro.params as { id: string };
 
 ---
 
 <Layout class="max-w-2xl space-y-6" container>
+  <hgroup class="space-y-2">
+    <h1 class="text-3xl font-bold text-foreground">Crear Información</h1>
+    <p class="text-muted-foreground">Generå los datos de tu mascota para mantener su perfil al día.</p>
+  </hgroup>
   <WelcomeCreateDialog client:only="react"/>
-  <!-- <hgroup class="space-y-2">
-    <h1 class="text-3xl font-bold text-foreground">Editar Información de <span class="text-primary">{medal.pet.name}</span></h1>
-    <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
-  </hgroup> -->
+  <MedalForm client:only="react" method="POST" />
 </Layout>

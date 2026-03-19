@@ -1,11 +1,21 @@
 import { ActionError, defineAction } from "astro:actions";
-import { MedalFormEditSchema } from "@/schemas";
+import { MedalEditSchema, type MedalEditInput } from "@/schemas";
 import { owner_update, pet_update, token_revoke, token_validate } from "@/repositories";
+import { formDataToObject } from "@/utils";
+
 
 export default defineAction({
-  accept: "json",
-  input: MedalFormEditSchema,
-  handler: async ({ medal_id, token_code, pet, owner }) => {
+  accept: "form",
+  handler: async (input) => {
+    const object = formDataToObject<MedalEditInput>(input);
+    const parsed = MedalEditSchema.safeParse(object);
+
+    if(parsed.error){
+      console.error("Validation error:", { errors: parsed.error, input, object, parsed });
+      throw new ActionError({ code: 'BAD_REQUEST', message: 'Los datos proporcionados no son válidos' });
+    }
+    const { pet, owner, medal_id, token_code } = parsed.data;
+
     // 1. Validar el token de acceso y asegurarse de que el usuario tenga permiso para actualizar la mascota
     const isTokenValid = await token_validate({ medal_id, code: token_code });
     if (!isTokenValid) throw new ActionError({ code: 'UNAUTHORIZED', message: 'Token invalido o expirado' });

@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../shadcn/dialog"
-import { Field } from "../forms/Field"
+import { Field } from "../Field"
 import { Input } from "../shadcn/input"
 import { Button } from "../shadcn/button"
 import { FieldDescription } from "../shadcn/field"

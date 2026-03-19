@@ -1,13 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn/card";
-import { Input } from "@/components/shadcn/input";
-import { Icon } from "@iconify/react";
-import { Field } from "../Field";
-import { Controller } from "react-hook-form";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/select";
-import { OWNER_RELATION_LABELS } from "@/constants";
-import type { MedalFormEditProps } from "@/schemas";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn/card"
+import { Icon } from "@iconify/react"
+import { Controller, useFormContext, useFormState } from "react-hook-form"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/select"
+import { OWNER_RELATION_LABELS } from "@/constants"
+import { Input } from "@/components/shadcn/input"
+import type { MedalInput } from "../types";
+import { Field } from "@/components/Field";
 
-export const OwnerForm = ({ control, errors }: MedalFormEditProps) => {
+export const OwnerForm = () => {
+  const { register, control } = useFormContext<MedalInput>();
+  const { errors: { owner: errors } } = useFormState({control, name: ['owner.address', 'owner.email', 'owner.full_name', 'owner.phone', 'owner.relation_type']});
   return (
     <Card>
       <CardHeader className="flex items-center gap-2">
@@ -17,10 +19,10 @@ export const OwnerForm = ({ control, errors }: MedalFormEditProps) => {
 
       <CardContent className="space-y-2">
         <Field
-          data-invalid={!!errors.owner?.relation_type}
+          data-invalid={!!errors?.relation_type}
           htmlFor="owner.relation_type"
           label="Relación con la mascota"
-          error={errors.owner?.relation_type?.message}
+          error={errors?.relation_type?.message}
           description="Indica tu relación con la mascota."
           required
         >
@@ -34,7 +36,7 @@ export const OwnerForm = ({ control, errors }: MedalFormEditProps) => {
                 {...field}
               >
                 <SelectTrigger
-                  aria-invalid={!!errors.owner?.relation_type}
+                  aria-invalid={!!errors?.relation_type}
                 >
                   <SelectValue placeholder="Selecciona una relación" aria-invalid />
                 </SelectTrigger>
@@ -52,26 +54,26 @@ export const OwnerForm = ({ control, errors }: MedalFormEditProps) => {
         </Field>
 
         <Field
-          data-invalid={!!errors.owner?.full_name}
+          data-invalid={!!errors?.full_name}
           htmlFor="owner.full_name"
           label="Nombre completo"
-          error={errors.owner?.full_name?.message}
+          error={errors?.full_name?.message}
           description="Nombre de la persona a contactar en caso de pérdida."
           required
         >
           <Input
             id="owner.full_name"
             placeholder="Ej: Julieta Carabajal"
-            aria-invalid={!!errors.owner?.full_name}
-            {...control.register('owner.full_name')}
+            aria-invalid={!!errors?.full_name}
+            {...register('owner.full_name', { value: '' })}
           />
         </Field>
 
         <Field
-          data-invalid={!!errors.owner?.email}
+          data-invalid={!!errors?.email}
           htmlFor="owner.email"
           label="Correo electrónico"
-          error={errors.owner?.email?.message}
+          error={errors?.email?.message}
           description="Correo de contacto para recibir notificaciones."
           required
         >
@@ -79,44 +81,43 @@ export const OwnerForm = ({ control, errors }: MedalFormEditProps) => {
             type="email"
             id="owner.email"
             placeholder="Ej: tu@email.com"
-            aria-invalid={!!errors.owner?.email}
-            {...control.register('owner.email')}
+            aria-invalid={!!errors?.email}
+            {...register('owner.email', { value: '' })}
           />
         </Field>
 
         <Field
-          data-invalid={!!errors.owner?.phone}
+          data-invalid={!!errors?.phone}
           htmlFor="owner.phone"
           label="Teléfono de contacto"
-          error={errors.owner?.phone?.message}
+          error={errors?.phone?.message}
           description="Incluye el código de área para asegurar que podamos contactarte por Whatsapp."
         >
           <Input
             type="tel"
             id="owner.phone"
             placeholder="Ej: Julieta Carabajal"
-            aria-invalid={!!errors.owner?.phone}
-            {...control.register('owner.phone')}
+            aria-invalid={!!errors?.phone}
+            {...register('owner.phone', { value: '' })}
           />
         </Field>
 
         <Field
-          data-invalid={!!errors.owner?.address}
+          data-invalid={!!errors?.address}
           htmlFor="owner.address"
           label="Dirección"
-          error={errors.owner?.address?.message}
+          error={errors?.address?.message}
           description="Opcional. Ayuda a identificar la ubicación de la mascota en caso de pérdida."
         >
           <Input
             type="text"
             id="owner.address"
             placeholder="Ej: Av. Siempre Viva 123"
-            aria-invalid={!!errors.owner?.address}
-            {...control.register('owner.address')}
-            disabled
+            aria-invalid={!!errors?.address}
+            {...register('owner.address', { value: '' })}
           />
         </Field>
       </CardContent>
     </Card>
-  );
+  )
 }

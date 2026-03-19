@@ -1,16 +1,8 @@
 import { Icon } from "@iconify/react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/dialog";
-import { useEffect, useState } from "react";
 import { Button } from "../shadcn/button";
 
 export const WelcomeCreateDialog = () => {
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => { setOpen(true); }, 50);
-    return () => clearTimeout(timer);
-  }, []);
-
   const FEATURES = [
     {
       icon: "lucide:qr-code",
@@ -30,8 +22,8 @@ export const WelcomeCreateDialog = () => {
   ]
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-lg gap-2 max-h-[calc(100%-2rem)] overflow-y-auto">
+    <Dialog defaultOpen={true}>
+      <DialogContent className="sm:max-w-lg gap-2 max-h-[calc(100%-2rem)] overflow-y-auto" showCloseButton={false}>
         <DialogHeader className="text-center space-y-4">
           <span className="mx-auto size-20 bg-linear-to-br from-primary to-primary/60 rounded-full flex items-center justify-center">
             <Icon icon="lucide:sparkles" className="size-10 text-primary-foreground" />

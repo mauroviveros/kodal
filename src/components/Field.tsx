@@ -1,5 +1,5 @@
 import type { VariantProps } from "class-variance-authority";
-import { Field as FieldCN, FieldDescription, FieldError, FieldLabel, fieldVariants } from "../shadcn/field";
+import { Field as FieldCN, FieldDescription, FieldError, FieldLabel, fieldVariants } from "./shadcn/field";
 
 type Props = {
   label: string;

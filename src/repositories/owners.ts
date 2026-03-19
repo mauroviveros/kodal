@@ -1,5 +1,5 @@
-import type { Tables } from "@/interfaces";
-import { supabase } from "@/supabase";
+import type { Tables, TablesInsert } from "@/interfaces";
+import { root, supabase } from "@/supabase";
 
 export const owner_update = async (
   { medal_id, relation_type, full_name, email, phone, address }:
@@ -16,6 +16,24 @@ export const owner_update = async (
       updated_at: new Date().toISOString(),
     })
     .eq('medal_id', medal_id);
+  if (error) throw error;
+}
+
+export const owner_create = async (
+  { medal_id, relation_type, full_name, email, phone, address }:
+  { medal_id: Tables<"owners">["medal_id"]} & TablesInsert<"owners">
+) => {
+  const { error } = await root
+    .from('owners')
+    .insert({
+      relation_type,
+      full_name,
+      email,
+      phone,
+      address,
+      created_at: new Date().toISOString(),
+      medal_id,
+    })
   if (error) throw error;
 }
 

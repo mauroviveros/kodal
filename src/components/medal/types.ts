@@ -1,4 +1,4 @@
-import { Constants, type FormProps } from "@/interfaces";
+import { Constants } from "@/interfaces";
 import { z } from "zod";
 
 const pet = z.object({
@@ -18,11 +18,5 @@ const owner = z.object({
   relation_type: z.enum(Constants.public.Enums.OWNER_RELATION).optional(),
 });
 
-const medal_id = z.uuid();
-const token_code = z.string().nonempty();
-
-export const MedalSchema = z.object({ medal_id, pet, owner });
+export const MedalSchema = z.object({ pet, owner });
 export type MedalInput = z.infer<typeof MedalSchema>;
-
-export const MedalEditSchema = MedalSchema.extend({ token_code });
-export type MedalEditInput = z.infer<typeof MedalEditSchema>;

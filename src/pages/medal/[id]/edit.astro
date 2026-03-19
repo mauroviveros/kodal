@@ -1,8 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase";
-import { MedalFormEdit } from "@/components/forms/edit/Form";
 import { token_validate } from "@/repositories";
+import { MedalForm } from "@/components/medal/Form";
 
 const { id: medal_id } = Astro.params as { id: string };
 const token_code = Astro.url.searchParams.get("token");
@@ -26,11 +26,12 @@ if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${medal_id}/create`
     <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
 
-  <MedalFormEdit
+  <MedalForm
     medal_id={medal.id}
     token_code={token_code}
     pet={medal.pet}
     owner={medal.owner}
+    method="PUT"
     client:only="react"
   />
 </Layout>
