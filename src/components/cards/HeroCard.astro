@@ -43,7 +43,7 @@ const FIELDS = [
 
       <h1 class="text-3xl font-bold text-foreground mb-1 text-balance">{name}</h1>
   </CardHeader>
-  <CardContent class="sm:divide-x sm:divide-y-0 divide-border border-y divide-y flex flex-col sm:flex-row px-0">
+  <CardContent class="sm:divide-x sm:divide-y-0 border-y divide-y flex flex-col sm:flex-row px-0">
     {FIELDS
       .filter(({ display }) => display)
       .map(({ label, display }) => (

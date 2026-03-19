@@ -63,7 +63,7 @@ export const SendVerificationCodeDialog = ({ medal_id, pet_name, email_hint }: P
             </Field>
 
             {state?.error && (
-              <blockquote className="bg-danger text-danger-foreground border border-danger rounded-lg p-3">
+              <blockquote className="bg-error text-error-foreground border border-danger rounded-lg p-3">
                 <p className="text-sm">{(isInputError(state.error) ? state.error.issues[0].message : state.error.message)}</p>
               </blockquote>
             )}

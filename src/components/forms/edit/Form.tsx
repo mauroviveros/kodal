@@ -46,7 +46,7 @@ export const MedalFormEdit = ({ medal_id, token_code, pet, owner }: Props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {state?.error && (
-        <blockquote className="bg-danger text-danger-foreground p-4 flex items-center">
+        <blockquote className="bg-error text-error-foreground p-4 flex items-center">
           <Icon icon="lucide:x-circle" className="size-5 inline-block mr-2" />
           {state.error.message}
         </blockquote>
