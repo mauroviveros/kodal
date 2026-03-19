@@ -21,7 +21,7 @@ const { data: medal } = await supabase
   .single();
 
 if(!medal) return Astro.redirect("/404");
-if(!medal.pet || !medal.owner) return Astro.redirect(`medal/${id}/create`);
+if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${id}/create`);
 ---
 <Layout class="max-w-2xl space-y-6" container>
   <SendVerificationCodeDialog
