@@ -38,6 +38,15 @@ const meta_title = title ? `${title} | ${default_title}` : default_title;
 
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <Favicon />
+
+    <script is:inline>
+      (function(){
+        const query = window.matchMedia('(prefers-color-scheme: dark)');
+        const setTheme = () => document.documentElement.setAttribute('data-theme', query.matches ? 'dark' : 'light');
+        query.addEventListener('change', setTheme);
+        setTheme();
+      })();
+    </script>
   </head>
   <body
     class:list={[
