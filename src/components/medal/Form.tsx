@@ -32,11 +32,11 @@ export const MedalForm = (props: Props) => {
     mode: "onBlur",
     reValidateMode: "onChange",
     defaultValues: {
+      medal_id: props.medal_id,
       pet: props.method === "PUT" ? Object.assign({...props.pet}) : {},
       owner: props.method === "PUT" ? Object.assign({...props.owner}) : {},
     }
   });
-
 
   const onSubmit: FormSubmitHandler<MedalInput> = async ({ data, formData }) => {
     setIsSubmitting(true);
