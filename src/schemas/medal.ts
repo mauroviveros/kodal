@@ -1,25 +1,64 @@
-import { Constants, type FormProps } from "@/interfaces";
+import { Constants } from "@/interfaces";
 import { z } from "zod";
 
 const pet = z.object({
-  name: z.string().trim().max(20).nonempty(),
-  breed: z.string().trim().max(20).optional().nullable(),
-  species: z.enum(Constants.public.Enums.PET_SPECIES).optional(),
-  gender: z.enum(Constants.public.Enums.PET_GENDER).optional(),
-  birth_date: z.string().optional().nullable(),
-  notes: z.string().trim().max(500).optional().nullable(),
+  name: z
+    .string()
+    .trim()
+    .max(20, { message: "El nombre no puede superar los 20 caracteres." })
+    .nonempty({ message: "El nombre es obligatorio." }),
+  breed: z
+    .string()
+    .trim()
+    .max(20, { message: "La raza no puede superar los 20 caracteres." })
+    .optional()
+    .nullable(),
+  species: z
+    .enum(Constants.public.Enums.PET_SPECIES)
+    .optional(),
+  gender: z
+    .enum(Constants.public.Enums.PET_GENDER)
+    .optional(),
+  birth_date: z
+    .string()
+    .optional()
+    .nullable(),
+  notes: z
+    .string()
+    .trim()
+    .max(500, { message: "Las notas no pueden superar los 500 caracteres." })
+    .optional()
+    .nullable(),
 });
 
 const owner = z.object({
-  full_name: z.string().trim().max(50).nonempty(),
-  email: z.email().max(100).nonempty(),
-  phone: z.string().trim().max(20).optional().nullable(),
-  address: z.string().max(100).optional().nullable(),
-  relation_type: z.enum(Constants.public.Enums.OWNER_RELATION).optional(),
+  full_name: z.
+    string()
+    .trim()
+    .max(50, { message: "El nombre completo no puede superar los 50 caracteres." })
+    .nonempty({ message: "El nombre completo es obligatorio." }),
+  email: z
+    .email({ message: "Ingresa un correo electronico valido." })
+    .max(100, { message: "El correo electronico no puede superar los 100 caracteres." })
+    .nonempty({ message: "El correo electronico es obligatorio." }),
+  phone: z
+    .string()
+    .trim()
+    .max(20, { message: "El telefono no puede superar los 20 caracteres." })
+    .optional()
+    .nullable(),
+  address: z
+    .string()
+    .max(100, { message: "La direccion no puede superar los 100 caracteres." })
+    .optional()
+    .nullable(),
+  relation_type: z
+    .enum(Constants.public.Enums.OWNER_RELATION)
+    .optional(),
 });
 
-const medal_id = z.uuid();
-const token_code = z.string().nonempty();
+const medal_id = z.uuid({ message: "El ID de la medalla no es valido." });
+const token_code = z.string().nonempty({ message: "El codigo de verificacion es obligatorio." });
 const avatar_file = z
   .instanceof(File, { message: "Solo se permiten archivos JPG, JPEG o PNG. Máximo 5MB." })
   .refine(file => {

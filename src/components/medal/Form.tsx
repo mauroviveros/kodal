@@ -29,7 +29,7 @@ export const MedalForm = (props: Props) => {
   const methods = useForm<MedalInput>({
     resolver: zodResolver(MedalSchema),
     disabled: isSubmitting,
-    mode: "onBlur",
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       medal_id: props.medal_id,
