@@ -66,7 +66,7 @@ export const AvatarForm = ({ avatar_path, updated_at }: { avatar_path?: string |
                 htmlFor="pet_avatar_file"
                 label="Foto de perfil"
                 error={errors?.message}
-                description="Solo se permiten archivos JPG, JPEG o PNG. Máximo 5MB."
+               description="Formatos permitidos: JPG, JPEG, PNG o WEBP. Tamano maximo: 5MB."
               >
                 <Input
                   type="file"

@@ -60,11 +60,12 @@ const owner = z.object({
 const medal_id = z.uuid({ message: "El ID de la medalla no es valido." });
 const token_code = z.string().nonempty({ message: "El codigo de verificacion es obligatorio." });
 const avatar_file = z
-  .instanceof(File, { message: "Solo se permiten archivos JPG, JPEG o PNG. Máximo 5MB." })
-  .refine(file => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    return allowedTypes.includes(file.type) && file.size <= 5 * 1024 * 1024; // 5MB
-  }, { message: "Solo se permiten archivos JPG, JPEG o PNG. Máximo 5MB." })
+  .instanceof(File, { message: "Debes seleccionar un archivo de imagen valido." })
+  .refine((file) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+    return allowedTypes.includes(file.type);
+  }, { message: "Formato no permitido. Usa JPG, JPEG, PNG o WEBP." })
+  .refine((file) => file.size <= 5 * 1024 * 1024, { message: "La imagen supera el tamano maximo de 5MB." })
   .optional();
 
 export const MedalSchema = z.object({ medal_id, pet, owner, avatar_file });

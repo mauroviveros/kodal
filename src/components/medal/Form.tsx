@@ -38,27 +38,36 @@ export const MedalForm = (props: Props) => {
     }
   });
 
-  const onSubmit: FormSubmitHandler<MedalInput> = async ({ data, formData }) => {
+  const onSubmit: FormSubmitHandler<MedalInput> = async ({ formData }) => {
     setIsSubmitting(true);
     setErrors(null);
-    let result;
-    formData.append("medal_id", props.medal_id);
 
-    if (props.method === "PUT") {
-      formData.append("token_code", props.token_code);
-      result = await actions.updatePet(formData);
-    } else {
-      result = await actions.createPet(formData);
-    }
+    try {
+      let result;
+      formData.append("medal_id", props.medal_id);
 
-    if(result?.data) {
-      window.location.assign(`/medal/${props.medal_id || ''}`);
-    } else if(result?.error) {
-      setErrors(result.error);
+      if (props.method === "PUT") {
+        formData.append("token_code", props.token_code);
+        result = await actions.updatePet(formData);
+      } else {
+        result = await actions.createPet(formData);
+      }
+
+      if(result?.data) {
+        window.location.assign(`/medal/${props.medal_id || ''}`);
+      } else if(result?.error) {
+        setErrors(result.error);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } catch {
+      setErrors({
+        type: 'server',
+        message: 'Ocurrio un error inesperado. Intentalo nuevamente.'
+      } as ActionError);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   }
 
   return (
