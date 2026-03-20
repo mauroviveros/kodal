@@ -14,7 +14,7 @@ const owner = z.object({
   full_name: z.string().trim().max(50).nonempty(),
   email: z.email().max(100).nonempty(),
   phone: z.string().trim().max(20).optional().nullable(),
-  address: z.string().trim().max(100).optional().nullable(),
+  address: z.string().max(100).optional().nullable(),
   relation_type: z.enum(Constants.public.Enums.OWNER_RELATION).optional(),
 });
 

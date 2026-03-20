@@ -61,8 +61,11 @@ export const BasicForm = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Especies</SelectLabel>
-                    {Object.entries(PET_SPECIES_LABELS).map(([key, label]) => (
-                      <SelectItem key={key} value={key}>{label}</SelectItem>
+                    {Object.entries(PET_SPECIES_LABELS).map(([key, { label, icon }]) => (
+                      <SelectItem key={key} value={key}>
+                        <Icon icon={icon} />
+                        {label}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
@@ -111,8 +114,11 @@ export const BasicForm = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Géneros</SelectLabel>
-                    {Object.entries(PET_GENDER_LABELS).map(([key, label]) => (
-                      <SelectItem key={key} value={key}>{label}</SelectItem>
+                    {Object.entries(PET_GENDER_LABELS).map(([key, {label, icon}]) => (
+                      <SelectItem key={key} value={key}>
+                        <Icon icon={icon} />
+                        {label}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>

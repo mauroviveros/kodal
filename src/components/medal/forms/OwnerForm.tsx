@@ -43,8 +43,11 @@ export const OwnerForm = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Relaciones</SelectLabel>
-                    {Object.entries(OWNER_RELATION_LABELS).map(([key, label]) => (
-                      <SelectItem key={key} value={key}>{label}</SelectItem>
+                    {Object.entries(OWNER_RELATION_LABELS).map(([key, {label, icon}]) => (
+                      <SelectItem key={key} value={key}>
+                        <Icon icon={icon} />
+                        {label}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
@@ -96,7 +99,7 @@ export const OwnerForm = () => {
           <Input
             type="tel"
             id="owner.phone"
-            placeholder="Ej: Julieta Carabajal"
+            placeholder="Ej: +54 9 11 1234-5678"
             aria-invalid={!!errors?.phone}
             {...register('owner.phone', { value: '' })}
           />
