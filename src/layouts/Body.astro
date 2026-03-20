@@ -1,13 +1,41 @@
 ---
+import "@/global.css";
 import type { HTMLAttributes } from "astro/types";
-import Head from "./sections/Head.astro";
+import Favicon from "./components/Favicon.astro";
 
-interface Props extends HTMLAttributes<'body'> {}
-const { class: className, ...props } = Astro.props;
+interface Props extends HTMLAttributes<'body'> {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Kodal - Siempre vuelven a casa",
+  description = "Kodal es una plataforma para registrar y gestionar la información de tus mascotas, ayudándote a mantener todo organizado y accesible en un solo lugar.",
+  class: className,
+  ...props
+} = Astro.props;
 ---
 
 <html lang="es">
-  <Head />
+  <head>
+    <title>{title}</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="author" content="Mauro Daniel Viveros">
+    <meta name="theme-color" content="#fefbf4" />
+    <meta name="description" content={description} />
+
+    <meta name="og:locale" content="es_AR" />
+    <meta name="og:type" content="website" />
+    <meta name="og:title" content={title} />
+    <meta name="og:description" content={description} />
+    <meta name="og:image" content="/og-image.png" />
+    <meta name="og:url" content={Astro.site} />
+
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <Favicon />
+  </head>
   <body
     class:list={[
       "bg-background text-foreground font-inter min-h-dvh flex flex-col",
