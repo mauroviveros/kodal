@@ -8,16 +8,19 @@ interface Props extends HTMLAttributes<'body'> {
   description?: string;
 }
 const {
-  title = "Kodal - Siempre vuelven a casa",
+  title,
   description = "Kodal es una plataforma para registrar y gestionar la información de tus mascotas, ayudándote a mantener todo organizado y accesible en un solo lugar.",
   class: className,
   ...props
 } = Astro.props;
+
+const default_title = 'Kodal - Siempre vuelven a casa';
+const meta_title = title ? `${title} | ${default_title}` : default_title;
 ---
 
 <html lang="es">
   <head>
-    <title>{title}</title>
+    <title>{meta_title}</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

@@ -4,8 +4,11 @@ import { SUPPORT_CONTACT_METHODS, SUPPORT_FREQUENTLY_ASKED_QUESTIONS } from "@/c
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 export const prerender = true;
+
+const title = "Centro de Soporte";
+const description = "Estamos aquí para ayudarte con tu medalla inteligente Kodal. Encuentra nuestros métodos de contacto y respuestas a las preguntas más frecuentes para brindarte la mejor asistencia posible.";
 ---
-<Layout class="max-w-4xl" container>
+<Layout class="max-w-4xl" title={title} description={description} container>
   <header class="mb-8 text-center">
     <Icon name="lucide:headset" class="size-16 text-primary mx-auto mb-4"/>
     <h1 class="text-3xl font-bold text-foreground mb-2">Centro de Soporte</h1>

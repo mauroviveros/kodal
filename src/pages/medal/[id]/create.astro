@@ -4,9 +4,11 @@ import { MedalForm } from "@/components/medal/Form";
 import Layout from "@/layouts/Layout.astro";
 const { id: medal_id } = Astro.params as { id: string };
 
+const title = "Bienvenido a Kodal";
+const description = "Completa el formulario para registrar los datos de tu mascota, y así facilitar que puedan volver a casa rápidamente en caso de pérdida. ¡Empecemos!";
 ---
 
-<Layout class="max-w-2xl space-y-6" container>
+<Layout class="max-w-2xl space-y-6" title={title} description={description} container>
   <hgroup class="space-y-2">
     <h1 class="text-3xl font-bold text-foreground">Crear Información</h1>
     <p class="text-muted-foreground">Generå los datos de tu mascota para mantener su perfil al día.</p>

@@ -4,9 +4,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Body from "@/layouts/Body.astro";
 import { Icon } from "astro-icon/components";
 export const prerender = true;
----
 
-<Body class="bg-linear-to-br from-primary/10 via-background to-secondary/10 items-center justify-center">
+const title = "Panel de Administración";
+const description = "Acceso exclusivo para administradores autorizados. El acceso se verifica mediante tu cuenta de Github corporativa. Si no eres un administrador autorizado, por favor regresa al inicio.";
+---
+<Body class="bg-linear-to-br from-primary/10 via-background to-secondary/10 items-center justify-center" title={title} description={description}>
   <main class="w-full max-w-md">
     <Card>
       <CardHeader class="text-center space-y-4">

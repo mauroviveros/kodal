@@ -29,9 +29,12 @@ const STEPS = [
     description: "Una vez verificado, podras actualizar toda la información",
   },
 ];
+
+const title = "Email de verificación enviado";
+const description = `Hemos enviado un enlace de verificación para que puedas editar el perfil de ${medal.pet.name}. Sigue los pasos para completar el proceso y mantener la información de tu mascota actualizada.`;
 ---
 
-<Layout class="max-w-lg space-y-4" container>
+<Layout class="max-w-lg space-y-4" title={title} description={description} container>
   <header class="mb-8 text-center">
     <div class="size-24 bg-primary/10 relative mx-auto flex items-center justify-center rounded-full">
       <Icon name="lucide:mail-check" class="text-primary size-12" />

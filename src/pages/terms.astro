@@ -4,8 +4,11 @@ import { TERMS_OF_SERVICE } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 export const prerender = true;
+
+const title = "Términos de Servicio";
+const description = "Lee los términos de servicio de Kodal para entender las condiciones y políticas que rigen el uso de nuestra plataforma. Asegúrate de revisar esta información para conocer tus derechos y responsabilidades al utilizar nuestros servicios.";
 ---
-<Layout class="max-w-4xl" container>
+<Layout class="max-w-4xl" title={title} description={description} container>
   <header class="mb-8 text-center">
     <Icon name="lucide:file-text" class="size-16 text-primary mx-auto mb-4"/>
     <h1 class="text-3xl font-bold text-foreground mb-2">Términos de Servicio</h1>

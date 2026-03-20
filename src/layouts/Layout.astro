@@ -5,11 +5,13 @@ import Header from "./sections/Header.astro";
 import Body from "./Body.astro";
 
 interface Props extends HTMLAttributes<'main'> {
+  title?: string;
+  description?: string;
   container?: boolean;
 }
 const { container, class: className, ...props } = Astro.props;
 ---
-<Body>
+<Body title={Astro.props.title} description={Astro.props.description}>
   <Header>
     <slot name="actions" slot="actions" />
   </Header>

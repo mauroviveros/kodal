@@ -19,10 +19,11 @@ const { data: medal } = await supabase
 if(!medal) return Astro.redirect("/404");
 if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${medal_id}/create`);
 
-
+const title = `Editar Información de ${medal.pet.name}`;
+const description = `Con Kodal puedes mantener la información de tu mascota siempre actualizada. Edita los datos de ${medal.pet.name} para asegurarte de que su perfil refleje su apariencia y detalles actuales, facilitando que puedan volver a casa rápidamente en caso de pérdida.`;
 ---
 
-<Layout class="max-w-2xl space-y-6" container>
+<Layout class="max-w-2xl space-y-6" title={title} description={description} container>
   <hgroup class="space-y-2">
     <h1 class="text-3xl font-bold text-foreground">Editar Información de <span class="text-primary">{medal.pet.name}</span></h1>
     <p class="text-muted-foreground">Actualiza los datos de tu mascota para mantener su perfil al día.</p>

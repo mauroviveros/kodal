@@ -5,6 +5,7 @@ import NotesCard from "@/components/cards/NotesCard.astro";
 import OwnerCard from "@/components/cards/OwnerCard.astro";
 import PromoCard from "@/components/cards/PromoCard.astro";
 import { SendVerificationCodeDialog } from "@/components/dialogs/SendVerificationCodeDialog";
+import { OWNER_RELATION_LABELS, PET_GENDER_LABELS, PET_SPECIES_LABELS } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 import { supabase } from "@/supabase/client";
 import { email_mask } from "@/utils";
@@ -22,8 +23,13 @@ const { data: medal } = await supabase
 
 if(!medal) return Astro.redirect("/404");
 if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${id}/create`);
+
+const title = `Medalla de ${medal.pet.name}`;
+
+const pet_description = `Soy ${medal.pet.name} un ${PET_SPECIES_LABELS[medal.pet.species].label} ${PET_GENDER_LABELS[medal.pet.gender].label} de raza ${medal.pet.breed}.`;
+const description = `Hola! ${pet_description} una mascota registrada en Kodal. Si me has encontrado, por favor contacta a mi ${OWNER_RELATION_LABELS[medal.owner.relation_type].label}: ${medal.owner.full_name} para que pueda volver a casa lo antes posible. ¡Gracias por tu ayuda!`
 ---
-<Layout class="max-w-2xl space-y-6" container>
+<Layout class="max-w-2xl space-y-6" title={title} description={description} container>
   <SendVerificationCodeDialog
     email_hint={email_mask(medal.owner.email)}
     medal_id={medal.id}

@@ -4,8 +4,11 @@ import { POLICY_OF_PRIVACY } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 export const prerender = true;
+
+const title = "Política de Privacidad";
+const description = "Conoce cómo Kodal protege tu información personal y garantiza la privacidad de tus datos. Nuestra política de privacidad detalla las prácticas que seguimos para mantener tu confianza y seguridad.";
 ---
-<Layout class="max-w-4xl" container>
+<Layout class="max-w-4xl" title={title} description={description} container>
   <header class="mb-8 text-center">
     <Icon name="lucide:shield" class="size-16 text-primary mx-auto mb-4"/>
     <h1 class="text-3xl font-bold text-foreground mb-2">Política de Privacidad</h1>
