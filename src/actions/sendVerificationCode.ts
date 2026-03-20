@@ -8,7 +8,9 @@ export default defineAction({
   input: z.object({
     medal_id: z.uuid(),
     pet_name: z.string(),
-    email: z.email(),
+    email: z.email({ message: "Ingresa un correo electronico valido." })
+    .max(100, { message: "El correo electronico no puede superar los 100 caracteres." })
+    .nonempty({ message: "El correo electronico es obligatorio." })
   }),
   handler: async ({ medal_id, pet_name, email }, { url }) => {
     let token_code;
