@@ -6,7 +6,7 @@ import OwnerCard from "@/components/cards/OwnerCard.astro";
 import PromoCard from "@/components/cards/PromoCard.astro";
 import { SendVerificationCodeDialog } from "@/components/dialogs/SendVerificationCodeDialog";
 import Layout from "@/layouts/Layout.astro";
-import { supabase } from "@/supabase";
+import { supabase } from "@/supabase/client";
 import { email_mask } from "@/utils";
 
 const { id } = Astro.params as { id: string };

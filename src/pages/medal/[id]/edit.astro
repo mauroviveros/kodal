@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { supabase } from "@/supabase";
+import { supabase } from "@/supabase/client";
 import { token_validate } from "@/repositories";
 import { MedalForm } from "@/components/medal/Form";
 
@@ -18,6 +18,8 @@ const { data: medal } = await supabase
 
 if(!medal) return Astro.redirect("/404");
 if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${medal_id}/create`);
+
+
 ---
 
 <Layout class="max-w-2xl space-y-6" container>
@@ -27,11 +29,11 @@ if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${medal_id}/create`
   </hgroup>
 
   <MedalForm
+    client:only="react"
     medal_id={medal.id}
     token_code={token_code}
     pet={medal.pet}
     owner={medal.owner}
     method="PUT"
-    client:only="react"
   />
 </Layout>

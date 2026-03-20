@@ -12,5 +12,9 @@ const { id: medal_id } = Astro.params as { id: string };
     <p class="text-muted-foreground">Generå los datos de tu mascota para mantener su perfil al día.</p>
   </hgroup>
   <WelcomeCreateDialog client:only="react"/>
-  <MedalForm client:only="react" method="POST" />
+  <MedalForm
+    client:only="react"
+    medal_id={medal_id}
+    method="POST"
+  />
 </Layout>

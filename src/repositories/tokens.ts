@@ -1,5 +1,5 @@
 import type { Tables } from "@/interfaces";
-import { root } from "@/supabase";
+import { root } from "@/supabase/server";
 
 type token_params = Pick<Tables<'tokens'>, 'medal_id' | 'code'>;
 type token_insert_params = { medal_id: Tables<'tokens'>['medal_id'] } & Partial<Tables<'tokens'>>;

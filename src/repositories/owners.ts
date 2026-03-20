@@ -1,5 +1,6 @@
 import type { Tables, TablesInsert } from "@/interfaces";
-import { root, supabase } from "@/supabase";
+import { supabase } from "@/supabase/client";
+import { root } from "@/supabase/server";
 
 export const owner_update = async (
   { medal_id, relation_type, full_name, email, phone, address }:

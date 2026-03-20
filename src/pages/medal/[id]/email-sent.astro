@@ -1,7 +1,7 @@
 ---
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/starwind/card";
 import Layout from "@/layouts/Layout.astro";
-import { supabase } from "@/supabase";
+import { supabase } from "@/supabase/client";
 import { Icon } from "astro-icon/components";
 
 const { id } = Astro.params as { id: string };

@@ -9,6 +9,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import type { Tables } from "@/interfaces";
 import { ActionError, actions, type SafeResult } from "astro:actions";
+import { AvatarForm } from "./forms/AvatarForm";
 
 type PropsCreate = {
   method: "POST";
@@ -74,14 +75,18 @@ export const MedalForm = (props: Props) => {
           </blockquote>
         )}
 
+        <AvatarForm
+          avatar_path={props.method === "PUT" ? props.pet.avatar_path : null}
+          updated_at={props.method === "PUT" ? props.pet.updated_at : null}
+        />
         <BasicForm />
         <OwnerForm />
         <NotesForm />
 
         <footer className="flex flex-col-reverse md:grid md:grid-cols-2 gap-2">
           {props.method === "PUT" && (
-            <Button type="button" variant="outline" disabled={isSubmitting}>
-              Cancelar
+            <Button type="button" variant="outline" disabled={isSubmitting} asChild>
+              <a href={`/medal/${props.medal_id}`}>Cancelar</a>
             </Button>
           )}
           <Button

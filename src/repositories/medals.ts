@@ -1,5 +1,5 @@
 import type { Tables } from "@/interfaces";
-import { root } from "@/supabase";
+import { root } from "@/supabase/server";
 
 export const medal_active = async (
   { medal_id }: { medal_id: Tables<"medals">["id"] }

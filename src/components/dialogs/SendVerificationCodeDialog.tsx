@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../shadcn/dialog"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../shadcn/dialog"
 import { Field } from "../Field"
 import { Input } from "../shadcn/input"
 import { Button } from "../shadcn/button"
@@ -59,7 +59,7 @@ export const SendVerificationCodeDialog = ({ medal_id, pet_name, email_hint }: P
                 aria-invalid={!!state.error}
                 disabled={pending}
                 />
-                <FieldDescription>{`Pista2: ${email_hint}`}</FieldDescription>
+                <FieldDescription>{`Pista: ${email_hint}`}</FieldDescription>
             </Field>
 
             {state?.error && (
@@ -73,9 +73,11 @@ export const SendVerificationCodeDialog = ({ medal_id, pet_name, email_hint }: P
             </blockquote>
 
             <DialogFooter>
-              <Button type="button" variant="outline" disabled={pending}>
-                Cancelar
-              </Button>
+              <DialogClose asChild>
+                <Button type="button" variant="outline" disabled={pending}>
+                  Cancelar
+                </Button>
+              </DialogClose>
 
               <Button type="submit" disabled={pending}>
                 <Icon icon="lucide:mail" />
