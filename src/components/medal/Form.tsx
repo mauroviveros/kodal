@@ -1,14 +1,14 @@
 import { Form, FormProvider, useForm, type FormSubmitHandler } from "react-hook-form"
 import { BasicForm } from "./forms/BasicForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MedalSchema, type MedalInput } from "./types";
+import { MedalSchema, type MedalInput } from "@/schemas";
 import { OwnerForm } from "./forms/OwnerForm";
 import { NotesForm } from "./forms/NotesForm";
 import { Button } from "../shadcn/button";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import type { Tables } from "@/interfaces";
-import { ActionError, actions, type SafeResult } from "astro:actions";
+import { ActionError, actions } from "astro:actions";
 import { AvatarForm } from "./forms/AvatarForm";
 
 type PropsCreate = {

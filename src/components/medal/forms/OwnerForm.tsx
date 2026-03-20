@@ -4,7 +4,7 @@ import { Controller, useFormContext, useFormState } from "react-hook-form"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/select"
 import { OWNER_RELATION_LABELS } from "@/constants"
 import { Input } from "@/components/shadcn/input"
-import type { MedalInput } from "../types";
+import type { MedalInput } from "@/schemas";
 import { Field } from "@/components/Field";
 
 export const OwnerForm = () => {

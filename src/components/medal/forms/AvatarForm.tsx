@@ -9,9 +9,11 @@ import { useEffect, useState } from "react";
 import { Controller, useFormContext, useFormState } from "react-hook-form";
 
 export const AvatarForm = ({ avatar_path, updated_at }: { avatar_path?: string | null, updated_at: string | null }) => {
+  const accept_types = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
   const { control } = useFormContext<MedalInput>();
   const { errors: { avatar_file: errors } } = useFormState({control, name: ['avatar_file']});
   const [src, setSrc] = useState<string | null>(null);
+
   const [avatar_url] = useState<string | null>(() => {
     if (!avatar_path) return null;
     const avatar_storage_url = supabase
@@ -71,9 +73,12 @@ export const AvatarForm = ({ avatar_path, updated_at }: { avatar_path?: string |
                   id="pet_avatar_file"
                   aria-invalid={!!errors}
                   {...field}
+                  accept={accept_types.join(', ')}
                   onChange={(e) => {
                     const file = e.target.files?.[0];
-                    setSrc(file ? URL.createObjectURL(file) : null);
+                    if(file && accept_types.includes(file.type)) {
+                      setSrc(file ? URL.createObjectURL(file) : null);
+                    }
                     onChange(file);
                   }}
                 />

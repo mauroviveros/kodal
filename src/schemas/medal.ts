@@ -21,7 +21,7 @@ const owner = z.object({
 const medal_id = z.uuid();
 const token_code = z.string().nonempty();
 const avatar_file = z
-  .instanceof(File, { message: "El archivo debe ser una imagen válida." })
+  .instanceof(File, { message: "Solo se permiten archivos JPG, JPEG o PNG. Máximo 5MB." })
   .refine(file => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
     return allowedTypes.includes(file.type) && file.size <= 5 * 1024 * 1024; // 5MB

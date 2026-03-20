@@ -4,7 +4,7 @@ import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { Input } from "@/components/shadcn/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/select";
 import { PET_GENDER_LABELS, PET_SPECIES_LABELS } from "@/constants";
-import type { MedalInput } from "../types";
+import type { MedalInput } from "@/schemas";
 import { Field } from "@/components/Field";
 
 export const BasicForm = () => {

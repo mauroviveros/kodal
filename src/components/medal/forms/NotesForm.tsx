@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn/ca
 import { Icon } from "@iconify/react"
 import { Textarea } from "@/components/shadcn/textarea"
 import { useFormContext, useFormState } from "react-hook-form"
-import type { MedalInput } from "../types";
+import type { MedalInput } from "@/schemas";
 import { Field } from "@/components/Field";
 
 export const NotesForm = () => {
