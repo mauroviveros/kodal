@@ -2,7 +2,7 @@
 import Badge from "@/components/starwind/badge";
 import Button from "@/components/starwind/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/starwind/card";
-import { FEATURES } from "@/constants";
+import { FEATURES, PURCHASE_LINK } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 export const prerender = true;
@@ -24,7 +24,7 @@ export const prerender = true;
       </p>
 
       <article class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button size="lg" disabled>
+        <Button size="lg" variant="primary" href={PURCHASE_LINK} target="_blank" rel="noopener noreferrer">
           Consigue tu Medalla
           <Icon name="lucide:shopping-cart" />
         </Button>
@@ -67,7 +67,7 @@ export const prerender = true;
       </hgroup>
 
       <article class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button size="lg" variant="secondary" disabled>
+        <Button size="lg" variant="outline" href={PURCHASE_LINK} target="_blank" rel="noopener noreferrer">
           Consigue tu Medalla Ahora
           <Icon name="lucide:arrow-right" />
         </Button>
