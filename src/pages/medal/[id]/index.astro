@@ -1,7 +1,10 @@
 ---
-import { SendVerificationCodeDialog } from "@/components/dialogs/SendVerificationCodeDialog";
+import EmergencyCard from "@/components/medal/detail/EmergencyCard.astro";
+import HeroCard from "@/components/medal/detail/HeroCard.astro";
+import NotesCard from "@/components/medal/detail/NotesCard.astro";
+import OwnerCard from "@/components/medal/detail/OwnerCard.astro";
 import PromoCard from "@/components/medal/detail/PromoCard.astro";
-import Medal from "@/components/medal/Medal.astro";
+import { SendVerificationCodeDialog } from "@/components/dialogs/SendVerificationCodeDialog";
 import { OWNER_RELATION_LABELS, PET_GENDER_LABELS, PET_SPECIES_LABELS } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 import { medal_details } from "@/repositories";
@@ -27,9 +30,26 @@ const description = `Hola! ${pet_description} una mascota registrada en Kodal. S
     slot="actions"
   />
 
-  <Medal
-    pet={medal.pet}
-    owner={medal.owner}
+  <HeroCard
+    name={medal.pet.name}
+    breed={medal.pet.breed}
+    birth_date={medal.pet.birth_date}
+    avatar_path={medal.pet.avatar_path}
+    gender={medal.pet.gender}
+    species={medal.pet.species}
+  />
+  <EmergencyCard
+    name={medal.pet.name}
+    phone={medal.owner.phone}
+  />
+  <NotesCard
+    notes={medal.pet.notes}
+  />
+  <OwnerCard
+    full_name={medal.owner.full_name}
+    email={medal.owner.email}
+    relation_type={medal.owner.relation_type}
+    phone={medal.owner.phone}
   />
 
   <PromoCard />

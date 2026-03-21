@@ -1,7 +1,8 @@
 ---
 import { medal_details } from "@/repositories";
-import Medal from "./medal/Medal.astro";
 import type { HTMLAttributes } from "astro/types";
+import HeroCard from "./medal/detail/HeroCard.astro";
+import EmergencyCard from "./medal/detail/EmergencyCard.astro";
 
 interface Props extends HTMLAttributes<'div'> {
   medal_id: string;
@@ -16,9 +17,17 @@ if (!medal.pet || !medal.owner) return null;
   Astro.props.class
 ]}>
 <section class="px-4 py-8 space-y-6 overflow-y-scroll h-full bg-accent/20">
-  <Medal
-    pet={medal.pet}
-    owner={medal.owner}
+  <HeroCard
+    name={medal.pet.name}
+    breed={medal.pet.breed}
+    birth_date={medal.pet.birth_date}
+    avatar_path={medal.pet.avatar_path}
+    gender={medal.pet.gender}
+    species={medal.pet.species}
+  />
+  <EmergencyCard
+    name={medal.pet.name}
+    phone={medal.owner.phone}
     disabled
   />
 </section>
