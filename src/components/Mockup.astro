@@ -3,6 +3,7 @@ import { medal_details } from "@/repositories";
 import type { HTMLAttributes } from "astro/types";
 import HeroCard from "./medal/detail/HeroCard.astro";
 import EmergencyCard from "./medal/detail/EmergencyCard.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props extends HTMLAttributes<'div'> {
   medal_id: string;
@@ -12,23 +13,27 @@ if (!medal.pet || !medal.owner) return null;
 ---
 
 <div class:list={[
-  "border-black border-8 rounded-4xl w-72 h-150 relative overflow-hidden rotate-6",
+  "border-black border-8 rounded-4xl relative overflow-hidden rotate-6",
+  "md:w-72 md:h-150 w-64 h-120 my-8",
   "after:block after:left-1/2 after:-translate-x-1/2 after:absolute after:top-0 after:w-24 after:h-5 after:bg-black after:rounded-b-lg",
   Astro.props.class
 ]}>
-<section class="px-4 py-8 space-y-6 overflow-y-scroll h-full bg-accent/20">
-  <HeroCard
-    name={medal.pet.name}
-    breed={medal.pet.breed}
-    birth_date={medal.pet.birth_date}
-    avatar_path={medal.pet.avatar_path}
-    gender={medal.pet.gender}
-    species={medal.pet.species}
-  />
-  <EmergencyCard
-    name={medal.pet.name}
-    phone={medal.owner.phone}
-    disabled
-  />
-</section>
+  <section class="px-4 py-8 space-y-6 overflow-y-scroll h-full bg-accent/20">
+    <HeroCard
+      name={medal.pet.name}
+      breed={medal.pet.breed}
+      birth_date={medal.pet.birth_date}
+      avatar_path={medal.pet.avatar_path}
+      gender={medal.pet.gender}
+      species={medal.pet.species}
+    />
+    <EmergencyCard
+      name={medal.pet.name}
+      phone={medal.owner.phone}
+      disabled
+    />
+  </section>
 </div>
+  <!-- <div class="bg-white size-40 rounded-full absolute -right-25 bottom-5 border-black border-8">
+    <Icon name="lucide:qr-code" class="size-28 text-black m-4" />
+  </div> -->
