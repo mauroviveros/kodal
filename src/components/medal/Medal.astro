@@ -1,0 +1,38 @@
+---
+import EmergencyCard from "./detail/EmergencyCard.astro";
+import HeroCard from "./detail/HeroCard.astro";
+import NotesCard from "./detail/NotesCard.astro";
+import OwnerCard from "./detail/OwnerCard.astro";
+import type { Tables } from "@/interfaces";
+
+interface Props {
+  pet: Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path' | 'gender' | 'species' | 'notes'>;
+  owner: Pick<Tables<'owners'>, 'full_name' | 'phone' | 'email' | 'relation_type'>;
+  disabled?: boolean;
+}
+const { pet, owner, disabled } = Astro.props;
+---
+
+<HeroCard
+  name={pet.name}
+  breed={pet.breed}
+  birth_date={pet.birth_date}
+  avatar_path={pet.avatar_path}
+  gender={pet.gender}
+  species={pet.species}
+/>
+<EmergencyCard
+  name={pet.name}
+  phone={owner.phone}
+  disabled={disabled}
+
+/>
+<NotesCard
+  notes={pet.notes}
+/>
+<OwnerCard
+  full_name={owner.full_name}
+  email={owner.email}
+  relation_type={owner.relation_type}
+  phone={owner.phone}
+/>

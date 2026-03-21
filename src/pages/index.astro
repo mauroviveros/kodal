@@ -1,4 +1,5 @@
 ---
+import Mockup from "@/components/Mockup.astro";
 import Badge from "@/components/starwind/badge";
 import Button from "@/components/starwind/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/starwind/card";
@@ -8,27 +9,36 @@ import { Icon } from "astro-icon/components";
 export const prerender = true;
 ---
 <Layout>
-  <section class="from-secondary/5 to-primary/15 bg-linear-to-br h-dvh max-h-300 pt-16">
-    <div class="container mx-auto max-w-4xl h-full flex flex-col items-center justify-center p-4 text-center animate-zoom-in">
-      <Badge variant="secondary" class="mb-2">
-        <Icon name="lucide:smartphone" class="size-3"/>
-        Tecnología Inteligente para Mascotas
-      </Badge>
+  <section class="from-secondary/5 to-primary/15 bg-linear-to-br min-h-dvh md:max-h-300 pt-16 flex items-center">
+    <div class="container mx-auto max-w-5xl h-full p-4 flex flex-col md:flex-row items-center justify-between gap-y-8">
+      <div class="flex-2 flex flex-col items-center justify-center text-center md:text-left md:items-start animate-zoom-in">
+        <Badge variant="secondary" class="mb-2">
+          <Icon name="lucide:smartphone" class="size-3"/>
+          Tecnología Inteligente para Mascotas
+        </Badge>
 
-      <h1 class="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
-        Mantén a tu mascota <span class="text-primary">segura y conectada</span> siempre
-      </h1>
+        <h1 class="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
+          Mantén a tu mascota <span class="text-primary">segura y conectada</span> siempre
+        </h1>
 
-      <p class="text-xl text-muted-foreground mb-8 text-pretty max-w-2xl mx-auto">
-        Medallas inteligentes con tecnología digital que permiten a cualquier persona contactarte inmediatamente si encuentran a tu mascota perdida.
-      </p>
+        <p class="text-xl text-muted-foreground mb-8 text-pretty max-w-2xl mx-auto">
+          Medallas inteligentes con tecnología digital que permiten a cualquier persona contactarte inmediatamente si encuentran a tu mascota perdida.
+        </p>
 
-      <article class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button size="lg" variant="primary" href={PURCHASE_LINK} target="_blank" rel="noopener noreferrer">
-          Consigue tu Medalla
-          <Icon name="lucide:shopping-cart" />
-        </Button>
-      </article>
+        <article class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button size="lg" variant="primary" href={PURCHASE_LINK} target="_blank" rel="noopener noreferrer">
+            Consigue tu Medalla
+            <Icon name="lucide:shopping-cart" />
+          </Button>
+        </article>
+      </div>
+
+      <div class="flex-1 flex items-center justify-center animate-zoom-in animate-delay-100">
+        <Mockup
+          medal_id="ef1f70fb-c2b5-4c91-b21b-8837c06cadd3"
+          class="shrink-0"
+        />
+      </div>
     </div>
   </section>
 

@@ -1,10 +1,10 @@
 ---
 import { supabase } from "@/supabase/client";
-import Background from "../Background.astro";
-import { Card, CardContent, CardHeader } from "../starwind/card";
+import { Card, CardContent, CardHeader } from "@/components/starwind/card";
 import type { Tables } from "@/interfaces";
 import { age_format } from "@/utils";
 import { Icon } from "astro-icon/components";
+import Background from "@/components/Background.astro";
 
 type Props = Pick<Tables<'pets'>, 'name' | 'breed' | 'birth_date' | 'avatar_path' | 'gender' | 'species'>;
 const { avatar_path, gender, species, name, breed, birth_date } = Astro.props;

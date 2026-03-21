@@ -1,25 +1,14 @@
 ---
-import EmergencyCard from "@/components/cards/EmergencyCard.astro";
-import HeroCard from "@/components/cards/HeroCard.astro";
-import NotesCard from "@/components/cards/NotesCard.astro";
-import OwnerCard from "@/components/cards/OwnerCard.astro";
-import PromoCard from "@/components/cards/PromoCard.astro";
 import { SendVerificationCodeDialog } from "@/components/dialogs/SendVerificationCodeDialog";
+import PromoCard from "@/components/medal/detail/PromoCard.astro";
+import Medal from "@/components/medal/Medal.astro";
 import { OWNER_RELATION_LABELS, PET_GENDER_LABELS, PET_SPECIES_LABELS } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
-import { supabase } from "@/supabase/client";
+import { medal_details } from "@/repositories";
 import { email_mask } from "@/utils";
 
 const { id } = Astro.params as { id: string };
-const { data: medal } = await supabase
-  .from("medals")
-  .select(`
-    id,
-    pet:pets(name, breed, birth_date, avatar_path, gender, species, notes),
-    owner:owners(phone, email, full_name, relation_type)
-  `)
-  .eq("id", id)
-  .single();
+const medal = await medal_details({ medal_id: id });
 
 if(!medal) return Astro.redirect("/404");
 if(!medal.pet || !medal.owner) return Astro.redirect(`/medal/${id}/create`);
@@ -38,26 +27,10 @@ const description = `Hola! ${pet_description} una mascota registrada en Kodal. S
     slot="actions"
   />
 
-  <HeroCard
-    name={medal.pet.name}
-    breed={medal.pet.breed}
-    birth_date={medal.pet.birth_date}
-    avatar_path={medal.pet.avatar_path}
-    gender={medal.pet.gender}
-    species={medal.pet.species}
+  <Medal
+    pet={medal.pet}
+    owner={medal.owner}
   />
-  <EmergencyCard
-    name={medal.pet.name}
-    phone={medal.owner.phone}
-  />
-  <NotesCard
-    notes={medal.pet.notes}
-  />
-  <OwnerCard
-    full_name={medal.owner.full_name}
-    email={medal.owner.email}
-    relation_type={medal.owner.relation_type}
-    phone={medal.owner.phone}
-  />
+
   <PromoCard />
 </Layout>

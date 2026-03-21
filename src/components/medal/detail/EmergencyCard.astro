@@ -1,10 +1,10 @@
 ---
 import type { Tables } from "@/interfaces";
-import { Card, CardContent } from "../starwind/card";
+import { Card, CardContent } from "@/components/starwind/card";
 import { Icon } from "astro-icon/components";
 
-type Props = Pick<Tables<'pets'>, 'name'> & Partial<Pick<Tables<'owners'>, 'phone'>>;
-const { name, phone } = Astro.props;
+type Props = Pick<Tables<'pets'>, 'name'> & Partial<Pick<Tables<'owners'>, 'phone'>> & { disabled?: boolean };
+const { name, phone, disabled } = Astro.props;
 const message = encodeURIComponent(`Hola, encontré a ${name}. Por favor, contáctame lo antes posible. Mensaje enviado desde la medalla inteligente Kodal.`);
 if (!phone) return null;
 ---
@@ -13,15 +13,19 @@ if (!phone) return null;
   <CardContent class="p-0">
     <a
       href={`tel:${phone}`}
-      class="flex items-center gap-4 p-5 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors group"
+      class:list={[
+        "flex items-center gap-4 p-5 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors group",
+        "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none"
+      ]}
+      aria-disabled={disabled}
     >
       <span class="size-10 sm:size-14 bg-red-500 dark:bg-red-600 rounded-full flex items-center justify-center shrink-0">
         <Icon name="lucide:phone" class="size-5 sm:size-7 text-white"/>
       </span>
 
-      <div class="flex-1">
-        <p class="font-bold text-red-700 dark:text-red-300 text-lg">Encontraste a {name}?</p>
-        <p class="text-red-600 dark:text-red-400 text-sm">Toca para llamar al dueño ahora</p>
+      <div class="flex-1 truncate">
+        <p class="font-bold text-red-700 dark:text-red-300 text-lg truncate">Encontraste a {name}?</p>
+        <p class="text-red-600 dark:text-red-400 text-sm truncate">Toca para llamar al dueño ahora</p>
       </div>
 
       <Icon name="lucide:chevron-right" class="size-5 text-red-400 dark:text-red-500 group-hover:translate-x-1 transition-transform" />
@@ -32,7 +36,11 @@ if (!phone) return null;
         href={`https://wa.me/${phone}?text=${message}`}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex-1 flex items-center justify-center gap-2 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+        aria-disabled={disabled}
+        class:list={[
+          "flex-1 flex items-center justify-center gap-2 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors",
+          "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none"
+        ]}
       >
         <Icon name="lucide:message-circle" class="size-4" />
         Enviar WhatsApp

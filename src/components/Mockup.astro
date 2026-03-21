@@ -1,0 +1,25 @@
+---
+import { medal_details } from "@/repositories";
+import Medal from "./medal/Medal.astro";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<'div'> {
+  medal_id: string;
+}
+const medal = await medal_details({ medal_id: Astro.props.medal_id });
+if (!medal.pet || !medal.owner) return null;
+---
+
+<div class:list={[
+  "border-black border-8 rounded-4xl w-72 h-150 relative overflow-hidden rotate-6",
+  "after:block after:left-1/2 after:-translate-x-1/2 after:absolute after:top-0 after:w-24 after:h-5 after:bg-black after:rounded-b-lg",
+  Astro.props.class
+]}>
+<section class="px-4 py-8 space-y-6 overflow-y-scroll h-full bg-accent/20">
+  <Medal
+    pet={medal.pet}
+    owner={medal.owner}
+    disabled
+  />
+</section>
+</div>
