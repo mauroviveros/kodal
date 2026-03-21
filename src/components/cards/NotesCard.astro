@@ -4,6 +4,6 @@ type Props = Pick<Tables<'pets'>, 'notes'>;
 const { notes } = Astro.props;
 if (!notes) return null;
 ---
-<blockquote class="p-4 bg-primary/5 rounded-lg border-primary/20 mx-auto border-dotted border-2"> <!-- max-w-10/12 -->
+<blockquote class="p-4 bg-primary/5 rounded-lg border-primary/20 mx-auto border-dotted border-2 animate-fade-in-up"> <!-- max-w-10/12 -->
   <p class="text-muted-foreground text-center text-pretty">{notes}</p>
 </blockquote>

@@ -9,7 +9,7 @@ export const prerender = true;
 ---
 <Layout>
   <section class="from-secondary/5 to-primary/15 bg-linear-to-br h-dvh max-h-300 pt-16">
-    <div class="container mx-auto max-w-4xl h-full flex flex-col items-center justify-center p-4 text-center">
+    <div class="container mx-auto max-w-4xl h-full flex flex-col items-center justify-center p-4 text-center animate-zoom-in">
       <Badge variant="secondary" class="mb-2">
         <Icon name="lucide:smartphone" class="size-3"/>
         Tecnología Inteligente para Mascotas
@@ -34,14 +34,13 @@ export const prerender = true;
 
   <section class="py-20 bg-muted/30">
     <div class="container mx-auto px-4">
-      <hgroup class="text-center mb-16">
+      <hgroup class="text-center mb-16 timeline-view animate-blurred-fade-in animate-duration-slower animate-range-[entry_5%_contain_20%]">
         <h2 class="text-3xl lg:text-4xl font-bold text-foreground mb-4">¿Por qué elegir Kodal?</h2>
         <p class="text-xl text-muted-foreground max-w-2xl mx-auto">Tecnología avanzada diseñada específicamente para la seguridad de tu mascota</p>
       </hgroup>
-
       <article class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {FEATURES.map(({title, description, icon }) => (
-          <Card class="text-center">
+          <Card class="text-center timeline-view animate-zoom-in animate-duration-slower animate-range-[entry_5%_contain_20%]">
             <CardHeader>
               <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Icon name={icon} class="size-6 text-primary" />
@@ -59,7 +58,7 @@ export const prerender = true;
 
   <section class="py-20 bg-primary text-primary-foreground">
     <div class="container mx-auto px-4 text-center">
-      <hgroup class="mb-8 space-y-4">
+      <hgroup class="mb-8 space-y-4 timeline-view animate-blurred-fade-in animate-duration-slower animate-range-[entry_5%_contain_20%]">
         <h2 class="text-3xl lg:text-4xl font-bold">¿Listo para proteger a tu mascota?</h2>
         <p class="text-xl opacity-90 max-w-2xl mx-auto">
           Únete a esta comunidad de dueños que ya confían en Kodal para mantener a sus mascotas seguras.
@@ -67,7 +66,7 @@ export const prerender = true;
       </hgroup>
 
       <article class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button size="lg" variant="outline" href={PURCHASE_LINK} target="_blank" rel="noopener noreferrer">
+        <Button class="animate-bounce" size="lg" variant="outline" href={PURCHASE_LINK} target="_blank" rel="noopener noreferrer">
           Consigue tu Medalla Ahora
           <Icon name="lucide:arrow-right" />
         </Button>
