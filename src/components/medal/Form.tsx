@@ -38,13 +38,14 @@ export const MedalForm = (props: Props) => {
     }
   });
 
-  const onSubmit: FormSubmitHandler<MedalInput> = async ({ formData }) => {
+  const onSubmit: FormSubmitHandler<MedalInput> = async ({ data: { avatar_file }, formData }) => {
     setIsSubmitting(true);
     setErrors(null);
 
     try {
       let result;
       formData.append("medal_id", props.medal_id);
+      if (!!avatar_file) formData.set("avatar_file", avatar_file);
 
       if (props.method === "PUT") {
         formData.append("token_code", props.token_code);
@@ -76,6 +77,7 @@ export const MedalForm = (props: Props) => {
         control={methods.control}
         className="space-y-4"
         onSubmit={onSubmit}
+        encType="multipart/form-data"
       >
         {errors && (
           <blockquote className="bg-error text-error-foreground p-4 flex items-center">

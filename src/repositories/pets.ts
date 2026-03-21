@@ -48,7 +48,7 @@ export const pet_update_avatar = async (
   const extension = avatar_file.name.split('.').pop();
   const file_path = `${medal_id}/avatar` + (extension ? `.${extension}` : '');
 
-  const { error: storage_error } = await supabase
+  const { error: storage_error } = await root
     .storage
     .from('medals')
     .upload(file_path, avatar_file, {

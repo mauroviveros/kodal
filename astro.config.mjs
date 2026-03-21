@@ -9,6 +9,9 @@ import react from '@astrojs/react';
 export default defineConfig({
   site: 'https://www.kodal.pet',
   output: 'server',
+  security: {
+    actionBodySizeLimit: 6 * 1024 * 1024, // 6MB
+  },
   vite: {
     plugins: [tailwindcss()]
   },
