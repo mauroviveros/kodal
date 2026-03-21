@@ -13,16 +13,19 @@ import { AvatarForm } from "./forms/AvatarForm";
 
 type PropsCreate = {
   method: "POST";
-  medal_id: Tables<"medals">["id"];
+  pet?: Tables<"pets">;
+  owner?: Tables<"owners">;
 }
 type PropsEdit = {
   method: "PUT";
-  medal_id: Tables<"medals">["id"];
   token_code: Tables<"tokens">["code"];
   pet: Tables<"pets">;
   owner: Tables<"owners">;
 };
-type Props = PropsCreate | PropsEdit;
+
+type Props = {
+  medal_id: Tables<"medals">["id"];
+} & (PropsCreate | PropsEdit);
 export const MedalForm = (props: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<ActionError | null>(null);
@@ -33,8 +36,21 @@ export const MedalForm = (props: Props) => {
     reValidateMode: "onChange",
     defaultValues: {
       medal_id: props.medal_id,
-      pet: props.method === "PUT" ? Object.assign({...props.pet}) : {},
-      owner: props.method === "PUT" ? Object.assign({...props.owner}) : {},
+      pet: {
+        name: props.pet?.name || '',
+        species: props.pet?.species || 'OTHER',
+        breed: props.pet?.breed || '',
+        gender: props.pet?.gender || 'UNKNOWN',
+        birth_date: props.pet?.birth_date || '',
+        notes: props.pet?.notes || '',
+      },
+      owner: {
+        full_name: props.owner?.full_name || '',
+        email: props.owner?.email || '',
+        phone: props.owner?.phone || '',
+        address: props.owner?.address || '',
+        relation_type: props.owner?.relation_type || 'OWNER',
+      }
     }
   });
 
@@ -45,7 +61,8 @@ export const MedalForm = (props: Props) => {
     try {
       let result;
       formData.append("medal_id", props.medal_id);
-      if (!!avatar_file) formData.set("avatar_file", avatar_file);
+      if (avatar_file instanceof File) formData.set("avatar_file", avatar_file);
+      else if(formData.has("avatar_file")) formData.delete("avatar_file");
 
       if (props.method === "PUT") {
         formData.append("token_code", props.token_code);
