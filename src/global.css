@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
 @import 'tailwind-animations';
 @plugin "@tailwindcss/forms";
 
@@ -10,7 +9,6 @@
 @theme{
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.35 0 0);
-  --font-inter: 'Inter Variable', sans-serif;
 
   --color-card: oklch(0.98 0.02 85);
   --color-card-foreground: oklch(0.35 0 0);

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
 import icon from 'astro-icon';
@@ -16,5 +16,13 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   integrations: [icon(), react()],
-  adapter: vercel()
+  adapter: vercel(),
+  fonts: [{
+    provider: fontProviders.npm(),
+    name: 'Inter Variable',
+    cssVariable: '--font-inter',
+    options: {
+      package: '@fontsource-variable/inter',
+    }
+  }]
 });
