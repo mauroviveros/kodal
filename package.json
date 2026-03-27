@@ -37,7 +37,7 @@
     "radix-ui": "^1.4.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-hook-form": "^7.71.2",
+    "react-hook-form": "^7.72.0",
     "resend": "^6.9.4",
     "shadcn": "^4.0.8",
     "tailwind-animations": "^1.0.1",
