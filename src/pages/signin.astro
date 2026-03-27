@@ -22,8 +22,9 @@ const description = "Acceso exclusivo para administradores autorizados. El acces
       </CardHeader>
 
       <CardContent class="space-y-6">
-        <form action="">
+        <form action="/api/auth/signin" method="POST">
           <input type="hidden" name="provider" value="github" />
+          <input type="hidden" name="redirectTo">
 
           <Button
             type="submit"
@@ -58,4 +59,10 @@ const description = "Acceso exclusivo para administradores autorizados. El acces
       </CardFooter>
     </Card>
   </main>
+
+  <script is:inline>
+    const input = document.querySelector('input[name="redirectTo"]');
+    const redirectTo = decodeURIComponent(window.location.search.split("redirectTo=")[1] || '');
+    if(redirectTo) input.setAttribute("value", redirectTo);
+  </script>
 </Body>
