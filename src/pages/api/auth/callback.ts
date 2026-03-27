@@ -10,5 +10,6 @@ export const GET = (async ({ request, cookies, url, redirect }) => {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) return new Response(error.message, { status: 500 });
-  return redirect(redirectTo || "/");
+  const safeRedirect = redirectTo?.startsWith("/") ? redirectTo : "/";
+  return redirect(safeRedirect);
 }) satisfies APIRoute;
