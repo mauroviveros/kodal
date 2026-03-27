@@ -22,12 +22,22 @@ const description = "Acceso exclusivo para administradores autorizados. El acces
       </CardHeader>
 
       <CardContent class="space-y-6">
-        <Button size="lg" variant="outline" class="w-full text-base">
-          <Icon name="devicon:github"/>
-          Continuar con GitHub
-        </Button>
+        <form action="/api/auth/signin" method="POST">
+          <input type="hidden" name="provider" value="github" />
+          <input type="hidden" name="redirectTo">
 
-        <div class="before:border-on-muted relative flex justify-center text-xs uppercase before:absolute before:top-1/2 before:w-full before:border-t">
+          <Button
+            type="submit"
+            size="lg"
+            variant="outline"
+            class="w-full text-base"
+          >
+            <Icon name="devicon:github"/>
+            Continuar con GitHub
+          </Button>
+        </form>
+
+        <div class="before:border-on-muted relative flex justify-center text-xs uppercase before:absolute before:top-1/2 before:w-full before:border-t before:border-border">
           <span class="text-on-muted bg-card z-0 px-2">Acceso restringido</span>
         </div>
 
@@ -49,4 +59,13 @@ const description = "Acceso exclusivo para administradores autorizados. El acces
       </CardFooter>
     </Card>
   </main>
+
+  <script is:inline>
+    const input = document.querySelector('input[name="redirectTo"]');
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = params.get('redirectTo') || '';
+    if (input && redirectTo) {
+      input.value = redirectTo;
+    }
+  </script>
 </Body>
