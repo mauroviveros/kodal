@@ -62,7 +62,10 @@ const description = "Acceso exclusivo para administradores autorizados. El acces
 
   <script is:inline>
     const input = document.querySelector('input[name="redirectTo"]');
-    const redirectTo = decodeURIComponent(window.location.search.split("redirectTo=")[1] || '');
-    if(redirectTo) input.setAttribute("value", redirectTo);
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = params.get('redirectTo') || '';
+    if (input && redirectTo) {
+      input.value = redirectTo;
+    }
   </script>
 </Body>
