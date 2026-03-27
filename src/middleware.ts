@@ -10,6 +10,7 @@ const shouldSkipAuth = (path: string) => {
 }
 
 export const onRequest = defineMiddleware(async ({ request, cookies, url, locals, redirect }, next) => {
+  locals.user = null;
   if (shouldSkipAuth(url.pathname)) return next();
 
   const supabase = createClient({ request, cookies });
