@@ -9,9 +9,9 @@ interface Props extends HTMLAttributes<'main'> {
   description?: string;
   container?: boolean;
 }
-const { container, class: className, ...props } = Astro.props;
+const { container, title, description, class: className, ...props } = Astro.props;
 ---
-<Body title={Astro.props.title} description={Astro.props.description}>
+<Body title={title} description={description}>
   <Header>
     <slot name="actions" slot="actions" />
   </Header>
