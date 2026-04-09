@@ -20,8 +20,8 @@ export const sendVerificationCodeEmail = async (
     template: {
       id: SEND_VERIFICATION_EMAIL.template_id,
       variables: {
-        EDIT_URL: `${origin}/medal/${medal_id}/edit?token=${token_code}`,
-        ORIGIN: origin,
+        EDIT_PATH: `medal/${medal_id}/edit?token=${token_code}`,
+        ORIGIN: origin
       },
     },
   })

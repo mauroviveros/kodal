@@ -30,13 +30,13 @@ export default function VerifyIdentityToken({
       <Preview>Verifica tu identidad para editar el perfil de tu mascota</Preview>
       <Tailwind config={config}>
         <Body className="font-sans">
-          <Container className="bg-card text-card-foreground rounded-lg">
+          <Container className="bg-card text-card-foreground rounded-lg max-w-150">
             <Section className="bg-primary text-primary-foreground px-8 py-5 rounded-t-lg">
               <Button href={ORIGIN}>
                 <Row>
                   <Column>
                     <Img
-                      src="https://aztpfuxscxacuoikmdsg.supabase.co/storage/v1/object/public/email_assets/unnamed.png"
+                      src="https://aztpfuxscxacuoikmdsg.supabase.co/storage/v1/object/public/email_assets/logo.png"
                       alt="Kodal - Siempre vuelven a casa"
                       width={64}
                       height={64}
