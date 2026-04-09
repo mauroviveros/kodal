@@ -18,5 +18,8 @@
     "titleBar.inactiveBackground": "#e4621299",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#e46212"
+  "peacock.color": "#e46212",
+  "conventionalCommits.scopes": [
+    "email"
+  ]
 }
