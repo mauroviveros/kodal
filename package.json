@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "dev:email": "email dev"
+    "dev:email": "email dev --dir ./src/emails"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,8 @@
 import { Resend } from 'resend';
 import type { Tables } from "@/interfaces";
 import { SEND_VERIFICATION_EMAIL } from '@/constants';
+import VerifyIdentityToken from '@/emails/verifyIdentityToken';
+import { createElement } from 'react';
 
 interface SendVerificationCodeEmailProps {
   medal_id: Tables<'owners'>['medal_id']
@@ -17,13 +19,10 @@ export const sendVerificationCodeEmail = async (
     from: SEND_VERIFICATION_EMAIL.from,
     to: [owner_email],
     subject: `Verificación de Identidad para ${pet_name}`,
-    template: {
-      id: SEND_VERIFICATION_EMAIL.template_id,
-      variables: {
-        EDIT_PATH: `medal/${medal_id}/edit?token=${token_code}`,
-        ORIGIN: origin
-      },
-    },
+    react: createElement(VerifyIdentityToken, {
+      EDIT_PATH: `medal/${medal_id}/edit?token=${token_code}`,
+      ORIGIN: origin
+    })
   })
 
   if(error) {
