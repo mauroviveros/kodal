@@ -52,7 +52,7 @@
     "@iconify-json/devicon": "^1.2.62",
     "@iconify-json/lucide": "^1.2.101",
     "@iconify/react": "^6.0.2",
-    "@react-email/components": "1.0.11",
+    "@react-email/components": "1.0.12",
     "@types/lodash": "^4.17.24",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
