@@ -1,0 +1,31 @@
+---
+import { Dropdown, DropdownContent, DropdownItem, DropdownLabel, DropdownSeparator, DropdownTrigger } from "@/components/starwind/dropdown";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/starwind/sidebar";
+import { Icon } from "astro-icon/components";
+import AccountData from "./AccountData.astro";
+---
+
+<SidebarMenu>
+  <SidebarMenuItem>
+    <Dropdown>
+      <DropdownTrigger asChild>
+        <SidebarMenuButton size="lg">
+          <AccountData />
+          <Icon name="lucide:chevrons-up-down" />
+        </SidebarMenuButton>
+      </DropdownTrigger>
+      <DropdownContent side="top">
+        <DropdownLabel class="p-0 font-normal flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+          <AccountData />
+        </DropdownLabel>
+
+        <DropdownSeparator />
+
+        <DropdownItem variant="destructive">
+          <Icon name="lucide:log-out" />
+          Cerrar sesión
+        </DropdownItem>
+      </DropdownContent>
+    </Dropdown>
+  </SidebarMenuItem>
+</SidebarMenu>

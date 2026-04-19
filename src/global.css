@@ -42,6 +42,15 @@
   --color-input: oklch(0.9 0.01 85);
   --color-ring: oklch(0.65 0.18 45);
   --color-destructive: oklch(0.58 0.24 27.32);
+
+  --color-sidebar: oklch(0.9885 0.0098 87.47);
+  /* --color-sidebar-foreground: oklch(0.35 0 0); */
+  /* --color-sidebar-primary: oklch(0.65 0.18 45); */
+  /* --color-sidebar-primary-foreground: oklch(1 0 0); */
+  --color-sidebar-accent: var(--color-muted);
+  --color-sidebar-accent-foreground: var(--color-muted-foreground);
+  --color-sidebar-border: var(--color-border);
+  /* --color-sidebar-outline: oklch(0.65 0.18 45); */
 }
 
 html[data-theme="dark"] {

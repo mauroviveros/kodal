@@ -1,0 +1,15 @@
+---
+import { SidebarProvider } from "@/components/starwind/sidebar";
+import Body from "./Body.astro";
+import Sidebar from "./sections/sidebar/Sidebar.astro";
+---
+
+<Body>
+  <SidebarProvider>
+    <Sidebar />
+    <main>
+      <!-- <SidebarTrigger /> -->
+      <slot />
+    </main>
+  </SidebarProvider>
+</Body>

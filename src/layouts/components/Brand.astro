@@ -1,12 +1,32 @@
 ---
 import { Icon } from 'astro-icon/components';
+
+
+
+const sizes = {
+  default: {
+    icon: "w-16 h-16",
+    h2: "text-3xl md:text-3xl leading-6",
+    p: "text-xs md:text-sm leading-3"
+  },
+  sm: {
+    icon: "w-14 h-14",
+    h2: "text-lg md:text-xl leading-4",
+    p: "text-xs md:text-sm leading-3"
+  }
+}
+
+interface Props {
+  size?: 'default' | 'sm';
+}
+const { size = "default" } = Astro.props;
 ---
 
-<a href="/" class="hover:text-primary/80 select-none flex items-center">
-  <Icon name="isotipo" class="h-16 w-16 py-2" />
+<div class="select-none flex items-center hover:text-primary/80">
+  <Icon name="isotipo" class:list={["py-2", sizes[size].icon]} />
 
   <hgroup>
-    <h2 class="text-3xl leading-6 font-bold md:text-3xl">Kodal</h2>
-    <p class="text-primary text-xs leading-3 font-semibold md:text-sm">Siempre vuelven a casa</p>
+    <h2 class:list={["font-bold", sizes[size].h2]}>Kodal</h2>
+    <p class:list={["text-primary font-semibold", sizes[size].p]}>Siempre vuelven a casa</p>
   </hgroup>
-</a>
+</div>

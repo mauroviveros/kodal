@@ -1,0 +1,24 @@
+---
+import { Sidebar as DefaultSidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator } from "@/components/starwind/sidebar";
+import AccountMenu from "./AccountMenu.astro";
+import NavigationGroup from "./NavigationGroup.astro";
+import SidebarLogo from "./SidebarLogo.astro";
+---
+
+<DefaultSidebar>
+  <SidebarHeader>
+    <SidebarLogo />
+  </SidebarHeader>
+
+  <SidebarSeparator />
+
+  <SidebarContent>
+    <NavigationGroup />
+  </SidebarContent>
+
+  <SidebarSeparator />
+
+  <SidebarFooter>
+    <AccountMenu />
+  </SidebarFooter>
+</DefaultSidebar>
