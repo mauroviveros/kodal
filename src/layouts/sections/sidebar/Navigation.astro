@@ -1,0 +1,39 @@
+---
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/starwind/sidebar";
+import { Icon } from "astro-icon/components";
+
+const MENU = [
+  {
+    icon: "lucide:layout-dashboard",
+    label: "inicio",
+    href: "/dashboard",
+  },
+  {
+    icon: "lucide:award",
+    label: "Medallas",
+    href: "/dashboard/medals",
+  }
+]
+---
+
+<SidebarGroup>
+  <SidebarGroupContent>
+    <SidebarMenu>
+      {MENU.map(({ icon, label, href }) => (
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            href={href}
+            isActive={Astro.url.pathname === href}
+            class:list={[
+              "data-active:bg-primary-accent! data-active:text-primary-foreground!",
+              "data-active:[&>svg]:text-primary-foreground!"
+            ]}
+          >
+            <Icon name={icon} class="text-primary" />
+            <span>{label}</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  </SidebarGroupContent>
+</SidebarGroup>

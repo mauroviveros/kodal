@@ -2,7 +2,14 @@
 import { Dropdown, DropdownContent, DropdownItem, DropdownLabel, DropdownSeparator, DropdownTrigger } from "@/components/starwind/dropdown";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/starwind/sidebar";
 import { Icon } from "astro-icon/components";
-import AccountData from "./AccountData.astro";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/starwind/avatar";
+
+const { user } = Astro.locals;
+const initials = user?.user_metadata.name
+  .split(" ")
+  .map((n: string) => n[0])
+  .join("")
+  .toUpperCase();
 ---
 
 <SidebarMenu>
@@ -10,13 +17,30 @@ import AccountData from "./AccountData.astro";
     <Dropdown>
       <DropdownTrigger asChild>
         <SidebarMenuButton size="lg">
-          <AccountData />
+          <Avatar class="size-10 shrink-0">
+            <AvatarImage src={user?.user_metadata.avatar_url} alt={user?.user_metadata.name}/>
+            <AvatarFallback>{initials}</AvatarFallback>
+          </Avatar>
+
+          <div class="text-sm text-left flex-1 grid leading-tight">
+            <span class="truncate font-semibold">{user?.user_metadata.name}</span>
+            <span class="text-sidebar-foreground/70 truncate text-xs">{user?.email}</span>
+          </div>
+
           <Icon name="lucide:chevrons-up-down" />
         </SidebarMenuButton>
       </DropdownTrigger>
       <DropdownContent side="top">
         <DropdownLabel class="p-0 font-normal flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-          <AccountData />
+          <Avatar class="size-8">
+            <AvatarImage src={user?.user_metadata.avatar_url} alt={user?.user_metadata.name}/>
+            <AvatarFallback>{initials}</AvatarFallback>
+          </Avatar>
+
+          <div class="text-sm text-left flex-1 grid leading-tight">
+            <span class="truncate font-semibold">{user?.user_metadata.name}</span>
+            <span class="text-muted-foreground truncate text-xs">{user?.email}</span>
+          </div>
         </DropdownLabel>
 
         <DropdownSeparator />

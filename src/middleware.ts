@@ -1,7 +1,7 @@
 import { defineMiddleware } from "astro:middleware";
 import { createClient } from "./supabase/client";
 
-const REGEX_PROTECTED_PATHS = [/^\/admin.*/];
+const REGEX_PROTECTED_PATHS = [/^\/dashboard.*/];
 const REDIRECT_PATH = "/signin";
 
 const shouldSkipAuth = (path: string) => {

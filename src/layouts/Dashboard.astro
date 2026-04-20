@@ -1,15 +1,32 @@
 ---
-import { SidebarProvider } from "@/components/starwind/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/starwind/sidebar";
 import Body from "./Body.astro";
 import Sidebar from "./sections/sidebar/Sidebar.astro";
+
+interface Props {
+  title: string;
+  subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
 ---
 
-<Body>
+<Body class="overflow-hidden">
   <SidebarProvider>
     <Sidebar />
-    <main>
-      <!-- <SidebarTrigger /> -->
-      <slot />
-    </main>
+    <div class="bg-background flex flex-1 flex-col h-dvh">
+      <header class="bg-sidebar text-sidebar-foreground flex h-12 shrink-0 items-center gap-2 border-b px-4">
+        <SidebarTrigger />
+      </header>
+      <main class="flex-1 p-6 overflow-auto">
+        <hgroup class="mb-8">
+          <h1 class="text-3xl font-bold text-foreground">{title}</h1>
+          <p class="text-sm text-muted-foreground mt-1">{subtitle}</p>
+        </hgroup>
+
+        <!-- <SidebarTrigger /> -->
+        <slot />
+      </main>
+    </div>
   </SidebarProvider>
 </Body>
