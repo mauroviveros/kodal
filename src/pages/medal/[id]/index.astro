@@ -9,6 +9,9 @@ import { OWNER_RELATION_LABELS, PET_GENDER_LABELS, PET_SPECIES_LABELS } from "@/
 import Layout from "@/layouts/Layout.astro";
 import { medal_details } from "@/repositories";
 import { email_mask } from "@/utils";
+export const config = {
+  isr: { expiration: false },
+};
 
 const { id } = Astro.params as { id: string };
 const medal = await medal_details({ medal_id: id });

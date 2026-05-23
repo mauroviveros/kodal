@@ -16,5 +16,11 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   integrations: [icon(), react()],
-  adapter: vercel()
+  adapter: vercel({
+    isr: {
+      expiration: false,
+      bypassToken: process.env.VERCEL_BYPASS_TOKEN,
+      exclude: [/^(?!\/(?:medal\/[^\/]+\/?|m\/[^\/]+)$).+/],
+    },
+  })
 });

@@ -2,6 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { formDataToObject } from "@/utils";
 import { MedalSchema, type MedalInput } from "@/schemas";
 import { medal_active, owner_create, pet_create, pet_update_avatar } from "@/repositories";
+import { revalidateMedal } from "@/utils/revalidate";
 
 export default defineAction({
   accept: "form",
@@ -35,6 +36,8 @@ export default defineAction({
         throw new ActionError({ code: 'INTERNAL_SERVER_ERROR', message: 'Error al actualizar el avatar de la mascota' });
       }
     }
+
+    revalidateMedal(medal_id).catch(console.error);
 
     return medal_id;
   }

@@ -1,5 +1,8 @@
 import { supabase } from '@/supabase/client';
 import type { APIRoute } from 'astro';
+export const config = {
+  isr: { expiration: false },
+};
 
 export const GET: APIRoute = async ({ params, redirect }) => {
   const { alias } = params as { alias: string };
