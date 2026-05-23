@@ -2,3 +2,5 @@ allowBuilds:
   esbuild: true
   msw: true
   sharp: true
+minimumReleaseAgeExclude:
+  - react-hook-form@7.76.1
