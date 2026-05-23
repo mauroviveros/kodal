@@ -1,4 +1,20 @@
-import { Body, Container, Head, Html, Img, Preview, Section, Button, Text, Column, Row, Tailwind, type TailwindConfig, pixelBasedPreset, Heading, Hr } from "@react-email/components";
+import {
+  Body,
+  Container,
+  Head,
+  Html,
+  Img,
+  Preview,
+  Section,
+  Button,
+  Text,
+  Column,
+  Row,
+  Tailwind,
+  Heading,
+  Hr,
+  type TailwindConfig
+} from "@react-email/components";
 
 type VerifyIdentityTokenProps = {
   ORIGIN: string;
