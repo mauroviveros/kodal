@@ -153,3 +153,27 @@ export const FEATURES: { title: string; description: string; icon: string }[] = 
     icon: 'lucide:map-pin',
   },
 ];
+
+export const STEPS: { step: number; icon: string; title: string; description: string }[] = [
+  {
+    step: 1,
+    icon: "lucide:qr-code",
+    title: "Escanea el código QR",
+    description:
+      "Escaneá el código QR de la medalla Kodal y accedé al formulario de registro de tu mascota.",
+  },
+  {
+    step: 2,
+    icon: "lucide:file-text",
+    title: "Completá los datos",
+    description:
+      "Ingresá la información de tu mascota y tus datos de contacto. Solo te llevará un par de minutos.",
+  },
+  {
+    step: 3,
+    icon: "lucide:shield-check",
+    title: "Protegé al instante",
+    description:
+      "¡Listo! Si tu mascota se pierde, cualquiera que escanee la medalla va a poder contactarte al instante.",
+  },
+];

@@ -3,7 +3,7 @@ import Mockup from "@/components/Mockup.astro";
 import Badge from "@/components/starwind/badge";
 import Button from "@/components/starwind/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/starwind/card";
-import { FEATURES, PURCHASE_LINK } from "@/constants";
+import { STEPS, FEATURES, PURCHASE_LINK } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 export const prerender = true;
@@ -43,6 +43,47 @@ export const prerender = true;
   </section>
 
   <section class="py-20 bg-muted/30">
+    <div class="container mx-auto px-4">
+      <hgroup class="text-center mb-16 timeline-view animate-blurred-fade-in animate-duration-slower animate-range-[entry_5%_contain_20%]">
+        <h2 class="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          Registrar tu mascota nunca fue tan fácil
+        </h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          En 3 simples pasos cualquier dueño puede proteger a su mascota con
+          Kodal.
+        </p>
+      </hgroup>
+
+      <div class="flex flex-col md:flex-row items-center justify-center max-w-5xl mx-auto">
+      {
+        STEPS.map(({ step, icon, title, description }, i) => [
+          <article class="relative flex flex-col items-center text-center p-6 md:p-8 rounded-xl border bg-card w-full max-w-sm timeline-view animate-zoom-in animate-duration-slower animate-range-[entry_5%_contain_20%]">
+            <span class="absolute -top-3 -left-3 size-10 rounded-full bg-primary text-primary-foreground text-lg font-bold flex items-center justify-center">
+              {step}
+            </span>
+            <span class="size-16 rounded-full bg-primary/10 flex items-center justify-center mb-5">
+              <Icon name={icon} class="size-8 text-primary" />
+            </span>
+            <h3 class="font-semibold text-lg mb-3">{title}</h3>
+            <p class="text-muted-foreground">{description}</p>
+          </article>,
+          i < STEPS.length - 1 && (
+            <>
+              <div class="hidden md:flex items-center justify-center size-12 shrink-0">
+                <Icon name="lucide:arrow-right" class="size-7 text-primary/40" />
+              </div>
+              <div class="flex md:hidden items-center justify-center py-2">
+                <Icon name="lucide:chevron-down" class="size-7 text-primary/40" />
+              </div>
+            </>
+          ),
+        ])
+      }
+    </div>
+    </div>
+  </section>
+
+  <section class="py-20">
     <div class="container mx-auto px-4">
       <hgroup class="text-center mb-16 timeline-view animate-blurred-fade-in animate-duration-slower animate-range-[entry_5%_contain_20%]">
         <h2 class="text-3xl lg:text-4xl font-bold text-foreground mb-4">¿Por qué elegir Kodal?</h2>
