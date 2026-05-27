@@ -3,7 +3,7 @@ import MedalsTable from "@/components/dashboard/medals";
 import Dashboard from "@/layouts/Dashboard.astro";
 import { root } from "@/supabase/server";
 
-const { data, error } = await root.from('medals').select('*');
+const { data, error } = await root.from('medals').select('*, pet:pets(*), owner:owners(*)');
 if(error) return null;
 ---
 
