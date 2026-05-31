@@ -22,5 +22,11 @@ export default defineConfig({
       bypassToken: process.env.VERCEL_BYPASS_TOKEN,
       exclude: [/^(?!\/(?:medal\/[^\/]+\/?|m\/[^\/]+)$).+/],
     },
-  })
+  }),
+  redirects: {
+    "/shop": {
+      status: 302,
+      destination: "https://listado.mercadolibre.com.ar/_CustId_455206574"
+    }
+  }
 });
