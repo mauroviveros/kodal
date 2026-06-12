@@ -12,7 +12,7 @@ export const OwnerForm = () => {
   const { register, control } = useFormContext<MedalInput>();
   const { errors: { owner: errors } } = useFormState({control, name: ['owner.address', 'owner.email', 'owner.full_name', 'owner.phone', 'owner.relation_type']});
   return (
-    <Card>
+    <Card className="overflow-visible">
       <CardHeader className="flex items-center gap-2">
         <Icon icon="lucide:contact" className="size-5 text-primary" />
         <CardTitle>Información del Dueño</CardTitle>
