@@ -2,7 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { MedalEditSchema, type MedalEditInput } from "@/schemas";
 import { owner_update, pet_update, pet_update_avatar, token_revoke, token_validate } from "@/repositories";
 import { formDataToObject } from "@/utils";
-import { revalidateMedal } from "@/utils/revalidate";
+// import { revalidateMedal } from "@/utils/revalidate";
 
 
 export default defineAction({
@@ -47,7 +47,7 @@ export default defineAction({
       console.error("Failed to revoke token:", { error, medal_id, token_code });
     }
 
-    revalidateMedal(medal_id).catch(console.error);
+    // revalidateMedal(medal_id).catch(console.error);
 
     return medal_id;
   }

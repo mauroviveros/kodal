@@ -17,11 +17,11 @@ export default defineConfig({
   },
   integrations: [icon(), react()],
   adapter: vercel({
-    isr: {
-      expiration: false,
-      bypassToken: process.env.VERCEL_BYPASS_TOKEN,
-      exclude: [/^(?!\/(?:medal\/[^\/]+\/?|m\/[^\/]+)$).+/],
-    },
+    // isr: {
+    //   expiration: 60, // 5 minutes
+    //   bypassToken: process.env.VERCEL_BYPASS_TOKEN,
+    //   exclude: [/^(?!\/(?:medal\/[^\/]+\/?|m\/[^\/]+)$).+/],
+    // },
   }),
   redirects: {
     "/shop": {
