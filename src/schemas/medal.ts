@@ -49,7 +49,7 @@ const owner = z.object({
     .nullable(),
   address: z
     .string()
-    .max(100, { message: "La direccion no puede superar los 100 caracteres." })
+    .max(255, { message: "La direccion no puede superar los 255 caracteres." })
     .optional()
     .nullable(),
   relation_type: z
