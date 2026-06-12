@@ -1,6 +1,7 @@
 ---
 import EmergencyCard from "@/components/medal/detail/EmergencyCard.astro";
 import HeroCard from "@/components/medal/detail/HeroCard.astro";
+import MapCard from "@/components/medal/detail/MapCard.astro";
 import NotesCard from "@/components/medal/detail/NotesCard.astro";
 import OwnerCard from "@/components/medal/detail/OwnerCard.astro";
 import PromoCard from "@/components/medal/detail/PromoCard.astro";
@@ -53,7 +54,10 @@ const description = `Hola! ${pet_description} una mascota registrada en Kodal. S
     email={medal.owner.email}
     relation_type={medal.owner.relation_type}
     phone={medal.owner.phone}
+    address={medal.owner.address}
   />
+
+  {medal.owner.address && <MapCard address={medal.owner.address} />}
 
   <PromoCard />
 </Layout>

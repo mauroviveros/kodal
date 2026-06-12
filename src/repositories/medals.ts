@@ -24,7 +24,7 @@ export const medal_details = async (
   .select(`
     id,
     pet:pets(name, breed, birth_date, avatar_path, gender, species, notes),
-    owner:owners(phone, email, full_name, relation_type)
+    owner:owners(phone, email, full_name, relation_type, address)
   `)
   .eq("id", medal_id)
   .single();

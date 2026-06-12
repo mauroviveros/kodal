@@ -1,0 +1,46 @@
+---
+import { Icon } from "astro-icon/components";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/starwind/card";
+
+type Props = { address: string };
+const { address } = Astro.props;
+
+let lat: number | null = null;
+let lon: number | null = null;
+
+if (address) {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`,
+      { headers: { "User-Agent": "KodalApp/1.0", "Accept-Language": "es" } },
+    );
+    const data: { lat: string; lon: string }[] = await res.json();
+    if (data[0]) {
+      lat = parseFloat(data[0].lat);
+      lon = parseFloat(data[0].lon);
+    }
+  } catch (e) {
+    console.error("Failed to geocode address for map:", e);
+  }
+}
+---
+{lat && lon && (
+  <Card class="animate-fade-in-up overflow-hidden ring-0">
+    <CardHeader class="flex items-center gap-2">
+      <Icon name="lucide:map-pin" class="size-6 text-primary shrink-0" />
+      <hgroup class="truncate">
+        <CardTitle class="truncate">Ubicación</CardTitle>
+        <CardDescription class="truncate">{address}</CardDescription>
+      </hgroup>
+    </CardHeader>
+    <iframe
+      src={`https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.005},${lat - 0.005},${lon + 0.005},${lat + 0.005}&marker=${lat},${lon}&layer=mapnik`}
+      width="100%"
+      height="500"
+      style="border: none; display: block; width: 100%;"
+      title="Mapa de ubicación"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+    />
+  </Card>
+)}
