@@ -45,10 +45,17 @@ const initials = user?.user_metadata.name
 
         <DropdownSeparator />
 
-        <DropdownItem variant="destructive">
-          <Icon name="lucide:log-out" />
-          Cerrar sesión
-        </DropdownItem>
+        <form method="POST" action="/api/auth/signout" class="contents">
+          <DropdownItem
+            as="button"
+            type="submit"
+            variant="destructive"
+            class="w-full"
+          >
+            <Icon name="lucide:log-out" />
+            Cerrar sesión
+          </DropdownItem>
+        </form>
       </DropdownContent>
     </Dropdown>
   </SidebarMenuItem>
