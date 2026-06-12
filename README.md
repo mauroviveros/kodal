@@ -25,7 +25,7 @@ Scan the QR, access the digital profile, and reach the owner in seconds.
 ## 📦 Requirements
 
 - [NodeJS](https://nodejs.org/) _v24.13.0_
-- [PNPM](https://pnpm.io/) _v10.32.1_
+- [PNPM](https://pnpm.io/) _v11.6.0_
 
 ## ⚙️ Environments
 

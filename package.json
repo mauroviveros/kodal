@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/tryubbe/kodal.git"
   },
-  "packageManager": "pnpm@11.2.2",
+  "packageManager": "pnpm@11.6.0",
   "dependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/react": "^5.0.7",

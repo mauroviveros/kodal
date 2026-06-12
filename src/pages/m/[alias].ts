@@ -6,12 +6,22 @@ export const config = {
 
 export const GET: APIRoute = async ({ params, redirect }) => {
   const { alias } = params as { alias: string };
-  const { data } = await supabase
+
+  const { data: aliasMatch } = await supabase
     .from('medals')
     .select('id')
-    .or(`alias.eq.${alias},legacy_code.eq.${alias}`)
-    .single();
+    .eq('alias', alias)
+    .maybeSingle();
 
-  if(!data) return redirect('/404');
-  return redirect(`/medal/${data.id}`, 307)
+  if (aliasMatch) return redirect(`/medal/${aliasMatch.id}`, 307);
+
+  const { data: legacyMatch } = await supabase
+    .from('medals')
+    .select('id')
+    .eq('legacy_code', alias)
+    .maybeSingle();
+
+  if (legacyMatch) return redirect(`/medal/${legacyMatch.id}`, 307);
+
+  return redirect('/404');
 };
