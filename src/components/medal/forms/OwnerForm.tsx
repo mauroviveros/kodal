@@ -6,6 +6,7 @@ import { OWNER_RELATION_LABELS } from "@/constants"
 import { Input } from "@/components/shadcn/input"
 import type { MedalInput } from "@/schemas";
 import { Field } from "@/components/Field";
+import { AddressAutocomplete } from "./AddressAutocomplete";
 
 export const OwnerForm = () => {
   const { register, control } = useFormContext<MedalInput>();
@@ -112,13 +113,7 @@ export const OwnerForm = () => {
           error={errors?.address?.message}
           description="Opcional. Ayuda a identificar la ubicación de la mascota en caso de pérdida."
         >
-          <Input
-            type="text"
-            id="owner.address"
-            placeholder="Ej: Av. Siempre Viva 123"
-            aria-invalid={!!errors?.address}
-            {...register('owner.address', { value: '' })}
-          />
+          <AddressAutocomplete />
         </Field>
       </CardContent>
     </Card>
