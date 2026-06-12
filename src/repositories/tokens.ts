@@ -53,6 +53,27 @@ export const token_exists = async (
   return !!data;
 }
 
+// Rate limiting: evita spam de códigos bloqueando si ya se creó cualquier token en los últimos minutos
+// (haya expirado o no) — distinto de token_exists que solo chequea tokens activos.
+export const token_cooldown = async (
+  { medal_id, minutes = 5 }: { medal_id: string; minutes?: number }
+): Promise<boolean> => {
+  const since = new Date(Date.now() - minutes * 60 * 1000).toISOString();
+  const { data, error } = await root
+    .from('tokens')
+    .select('id')
+    .eq('medal_id', medal_id)
+    .gt('created_at', since)
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error checking cooldown:", error);
+    return false; // fail open
+  }
+  return !!data;
+}
+
 export const token_insert = async (
   {
     medal_id,

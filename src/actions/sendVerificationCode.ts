@@ -1,5 +1,5 @@
 import { sendVerificationCodeEmail } from "@/libs";
-import { owner_exists, token_exists, token_insert } from "@/repositories";
+import { owner_exists, token_cooldown, token_exists, token_insert } from "@/repositories";
 import { ActionError, defineAction } from "astro:actions";
 import z from "zod";
 
@@ -22,12 +22,16 @@ export default defineAction({
     const isTokenExists = await token_exists({ medal_id });
     if(isTokenExists) throw new ActionError({ code: 'CONFLICT', message: 'Ya existe un token activo para esta medalla. Por favor, inténtelo de nuevo más tarde.' });
 
+    // 3. Rate limiting: evita que se spammee el email pidiendo códigos post-expiración
+    const isCooldown = await token_cooldown({ medal_id });
+    if(isCooldown) throw new ActionError({ code: 'TOO_MANY_REQUESTS', message: 'Esperá 5 minutos antes de solicitar otro código.' });
+
     try{
-      // 3. Generar un nuevo token de acceso y asociarlo a la medalla
+      // 4. Generar un nuevo token de acceso y asociarlo a la medalla
       token_code = await token_insert({ medal_id });
       console.log(`Token de verificación generado: ${token_code} para la medalla ${medal_id}`);
 
-      // 4. Enviar email con el código de verificación utilizando Resend
+      // 5. Enviar email con el código de verificación utilizando Resend
       if (import.meta.env.PROD){
         const resend_id = await sendVerificationCodeEmail({ medal_id, owner_email: email, pet_name, token_code, origin: url.origin });
         console.log(`Email enviado con Resend. ID de Resend: ${resend_id}`);
