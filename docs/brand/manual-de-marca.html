@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kodal — Manual de Marca v1.0</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Identidad — isotipo */
+  --navy:#001A41; --navy-deep:#000C29; --navy-mid:#000F33;
+  --blue:#0F94EA; --orange:#FFA701; --orange-deep:#FF8205; --orange-soft:#FFA433;
+  /* Interfaz — producto */
+  --primary:#E46212; --primary-accent:#F47F46;
+  --secondary:#EC785B; --secondary-accent:#FF987E;
+  --bg:#FEFBF4; --card:#FFF8EA; --popover:#FFFBF4;
+  --fg:#3A3A3A; --muted:#F5F1EA; --muted-fg:#555555; --border:#E1DED7;
+  --destructive:#E50017;
+  --ok:#0E9F6E; --no:#E02424;
+  --shadow:0 1px 2px rgba(0,26,65,.04),0 8px 24px -12px rgba(0,26,65,.14);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{color:var(--navy);line-height:1.15;letter-spacing:-.02em;margin:0}
+a{color:var(--primary)}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.82em}
+
+/* ---------- layout ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;background:rgba(254,251,244,.86);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+}
+.topbar-in{max-width:1180px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.tb-brand{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--navy);font-size:18px;letter-spacing:-.02em}
+.tb-brand img{width:30px;height:30px}
+.tb-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.tb-nav a{
+  font-size:13px;font-weight:600;color:var(--muted-fg);text-decoration:none;
+  padding:6px 11px;border-radius:99px;transition:.15s;white-space:nowrap;
+}
+.tb-nav a:hover{background:var(--card);color:var(--primary)}
+main{max-width:1180px;margin:0 auto;padding:0 28px 120px}
+section{padding:72px 0;border-top:1px solid var(--border)}
+section:first-of-type{border-top:0}
+.eyebrow{
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:10px;
+}
+.lead{font-size:19px;color:var(--muted-fg);max-width:70ch;margin:14px 0 0}
+h2{font-size:clamp(28px,3.6vw,40px);font-weight:800}
+h3{font-size:20px;font-weight:700;margin:44px 0 14px}
+h4{font-size:15px;font-weight:700;margin:0 0 6px}
+p{margin:12px 0}
+.small{font-size:14px;color:var(--muted-fg)}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}
+.card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;box-shadow:var(--shadow);
+}
+.card.cream{background:var(--card)}
+.card.navy{background:var(--navy);color:#EAF1FB;border-color:var(--navy)}
+.card.navy h3,.card.navy h4{color:#fff}
+
+/* ---------- hero ---------- */
+.hero{padding:84px 0 64px;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(40px,6vw,68px);font-weight:800}
+.hero .tag{color:var(--primary);font-weight:700;font-size:22px;margin-top:6px}
+.hero-logo{
+  background:var(--card);border:1px solid var(--border);border-radius:24px;
+  padding:40px;display:grid;place-items:center;box-shadow:var(--shadow);
+}
+.hero-logo img{width:100%;max-width:210px}
+.meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:32px;font-size:13px;color:var(--muted-fg)}
+.meta b{display:block;color:var(--navy);font-size:14px}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+
+/* ---------- color ---------- */
+.sw{
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;
+  cursor:pointer;transition:.18s;box-shadow:var(--shadow);
+}
+.sw:hover{transform:translateY(-3px)}
+.sw .chip{height:88px}
+.sw .meta-c{padding:12px 14px}
+.sw .nm{font-weight:700;font-size:13.5px;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:6px}
+.sw .hx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-fg);margin-top:3px}
+.sw .tok{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#8A857C;margin-top:2px;word-break:break-all}
+.copied{color:var(--ok);font-size:10px;font-weight:700;opacity:0;transition:.2s}
+.sw.on .copied{opacity:1}
+
+/* ---------- do / dont ---------- */
+.dd{border-radius:14px;border:1px solid var(--border);overflow:hidden;background:#fff}
+.dd .box{height:132px;display:grid;place-items:center;background:var(--muted);position:relative}
+.dd .lb{
+  padding:11px 14px;font-size:13.5px;font-weight:600;display:flex;gap:8px;align-items:flex-start;
+  border-top:1px solid var(--border);
+}
+.dd .lb::before{font-weight:800;flex:none}
+.dd.yes .lb::before{content:"✓";color:var(--ok)}
+.dd.no .lb::before{content:"✕";color:var(--no)}
+.dd .box img{max-height:74px;max-width:78%}
+
+/* ---------- type ---------- */
+.tr{
+  display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:baseline;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.tr .spec{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted-fg);line-height:1.5}
+@media(max-width:640px){.tr{grid-template-columns:1fr;gap:4px}}
+
+/* ---------- voice table ---------- */
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:14px}
+th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-fg);font-weight:800}
+td.y{color:#0B7355}td.n{color:#A32020}
+tbody tr:hover{background:var(--card)}
+
+/* ---------- misc ---------- */
+.pill{
+  display:inline-block;padding:4px 11px;border-radius:99px;font-size:11.5px;font-weight:700;
+  background:var(--card);color:var(--primary);border:1px solid var(--border);
+}
+.note{
+  border-left:3px solid var(--primary);background:var(--card);
+  padding:16px 20px;border-radius:0 12px 12px 0;margin:22px 0;font-size:14.5px;
+}
+.note b{color:var(--navy)}
+.warn{border-left-color:var(--destructive)}
+.clear{
+  position:relative;background:
+    repeating-linear-gradient(45deg,#F0EBE1 0 8px,transparent 8px 16px);
+  border:1px dashed var(--primary);border-radius:12px;padding:34px;display:grid;place-items:center;
+}
+.clear img{width:110px;background:#fff;padding:6px;border-radius:8px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:16px 0}
+.steps li{counter-increment:s;padding:10px 0 10px 44px;position:relative;border-bottom:1px solid var(--border)}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;
+  background:var(--primary);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center;
+}
+.post{
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow);
+}
+.post .top{padding:9px 13px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--navy)}
+.post .body{padding:16px}
+.post .copy{font-size:14px;white-space:pre-line}
+.ratio{background:var(--muted);border-radius:10px;display:grid;place-items:center;color:var(--muted-fg);font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+footer{border-top:1px solid var(--border);padding:34px 0;font-size:13px;color:var(--muted-fg);text-align:center}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="topbar-in">
+  <div class="tb-brand"><img src="assets/favicon.svg" alt="Kodal"><span>Kodal</span></div>
+  <nav class="tb-nav">
+    <a href="#esencia">Esencia</a>
+    <a href="#logo">Logo</a>
+    <a href="#color">Color</a>
+    <a href="#tipografia">Tipografía</a>
+    <a href="#voz">Voz y tono</a>
+    <a href="#producto">Producto</a>
+    <a href="#social">Redes</a>
+    <a href="#checklist">Checklist</a>
+  </nav>
+</div></div>
+
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="eyebrow">Manual de marca · v1.0 · Julio 2026</div>
+    <h1>Kodal</h1>
+    <div class="tag">Siempre vuelven a casa</div>
+    <p class="lead">Guía única de identidad, color, tipografía, voz y aplicación. Todo lo que hay acá está derivado del producto real: <code>src/global.css</code>, el isotipo de <code>public/favicon.svg</code> y el copy de kodal.pet.</p>
+    <div class="meta">
+      <div><b>Producto</b>Medalla inteligente con QR + perfil digital</div>
+      <div><b>Mercado</b>Argentina · es-AR</div>
+      <div><b>Dominio</b>kodal.pet</div>
+    </div>
+  </div>
+  <div class="hero-logo"><img src="assets/favicon.svg" alt="Isotipo Kodal"></div>
+</div>
+
+<!-- ESENCIA -->
+<section id="esencia">
+  <div class="eyebrow">01</div>
+  <h2>Esencia de marca</h2>
+  <p class="lead">Antes del color y la tipografía: qué es Kodal y por qué existe. Toda pieza debe poder rastrearse hasta acá.</p>
+
+  <div class="grid g2" style="margin-top:32px">
+    <div class="card cream">
+      <h4>Propósito</h4>
+      <p class="small" style="margin:0">Que ninguna mascota se pierda por falta de información. Convertir un objeto simple —una medalla— en el puente más rápido entre quien encuentra y quien busca.</p>
+    </div>
+    <div class="card cream">
+      <h4>Promesa</h4>
+      <p class="small" style="margin:0">Un escaneo, cero fricción, contacto inmediato. Sin apps que descargar, sin baterías, sin trámites.</p>
+    </div>
+    <div class="card cream">
+      <h4>Posicionamiento</h4>
+      <p class="small" style="margin:0">La medalla de identificación pensada para el momento crítico: los primeros minutos después de que la mascota se escapa.</p>
+    </div>
+    <div class="card cream">
+      <h4>Enemigo</h4>
+      <p class="small" style="margin:0">La chapita grabada que quedó desactualizada. El teléfono viejo, la dirección anterior, la letra borrada.</p>
+    </div>
+  </div>
+
+  <h3>Personalidad</h3>
+  <div class="grid g4">
+    <div class="card"><h4>Cercana</h4><p class="small" style="margin:0">Hablamos de vos y de tu mascota por su nombre, no de "usuarios" y "activos".</p></div>
+    <div class="card"><h4>Confiable</h4><p class="small" style="margin:0">Datos sensibles tratados con seriedad. Nunca prometemos de más.</p></div>
+    <div class="card"><h4>Simple</h4><p class="small" style="margin:0">Tres pasos, no diez. Si necesita explicación larga, está mal diseñado.</p></div>
+    <div class="card"><h4>Cálida</h4><p class="small" style="margin:0">Crema, naranja, animales redondeados. Tecnología que no se siente fría.</p></div>
+  </div>
+
+  <h3>Audiencias</h3>
+  <div class="grid g3">
+    <div class="card"><span class="pill">Primaria</span><h4 style="margin-top:12px">El dueño</h4><p class="small" style="margin:0">Compra, registra y actualiza. Le vendemos tranquilidad, no tecnología.</p></div>
+    <div class="card"><span class="pill">Secundaria</span><h4 style="margin-top:12px">Quien encuentra</h4><p class="small" style="margin:0">No conoce Kodal. Escanea y debe entender qué hacer en menos de 5 segundos.</p></div>
+    <div class="card"><span class="pill">Terciaria</span><h4 style="margin-top:12px">Veterinarias y pet shops</h4><p class="small" style="margin:0">Canal de distribución. Les hablamos de servicio al cliente, no de márgenes.</p></div>
+  </div>
+</section>
+
+<!-- LOGO -->
+<section id="logo">
+  <div class="eyebrow">02</div>
+  <h2>Logo</h2>
+  <p class="lead">La marca se compone de <b>isotipo</b> (perro + gato con medallas QR) y <b>logotipo</b> ("Kodal" + bajada). El lockup horizontal es la versión principal.</p>
+
+  <h3>Construcción del lockup</h3>
+  <div class="card" style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:38px">
+    <img src="assets/favicon.svg" alt="Isotipo" style="width:104px;height:104px">
+    <div>
+      <div style="font-size:44px;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.03em">Kodal</div>
+      <div style="font-size:16px;font-weight:600;color:var(--primary);margin-top:4px">Siempre vuelven a casa</div>
+    </div>
+  </div>
+  <p class="small">Proporciones reales del componente <code>Brand.astro</code>: isotipo <code>w-16 h-16</code>, título <code>text-3xl font-bold</code>, bajada <code>text-sm font-semibold text-primary</code>. El isotipo mantiene su viewBox <code>439 × 408</code> — nunca lo deformes para forzar un cuadrado.</p>
+
+  <h3>Variantes autorizadas</h3>
+  <div class="grid g4">
+    <div class="dd yes"><div class="box"><img src="assets/favicon.svg" alt=""></div><div class="lb">Isotipo solo — favicon, app icon, reverso de medalla, avatar de redes</div></div>
+    <div class="dd yes"><div class="box"><div style="font-size:30px;font-weight:800;color:var(--navy)">Kodal</div></div><div class="lb">Logotipo solo — cuando el isotipo ya aparece en la misma pieza</div></div>
+    <div class="dd yes"><div class="box" style="background:var(--navy)"><div style="text-align:center"><div style="font-size:26px;font-weight:800;color:#fff">Kodal</div><div style="font-size:11px;color:var(--orange);font-weight:600">Siempre vuelven a casa</div></div></div><div class="lb">Lockup invertido — sobre navy o fotografía oscura</div></div>
+    <div class="dd yes"><div class="box" style="background:#fff"><div style="text-align:center"><div style="font-size:26px;font-weight:800;color:var(--navy)">Kodal</div><div style="font-size:11px;color:var(--primary);font-weight:600">Siempre vuelven a casa</div></div></div><div class="lb">Lockup vertical — formatos cuadrados y angostos</div></div>
+  </div>
+
+  <h3>Área de resguardo y tamaño mínimo</h3>
+  <div class="grid g2">
+    <div>
+      <div class="clear"><img src="assets/favicon.svg" alt=""></div>
+      <p class="small">El margen libre alrededor del lockup equivale a <b>la altura de la oreja del perro</b> (≈ 25 % de la altura del isotipo). Nada entra en esa zona: ni texto, ni bordes, ni otro logo.</p>
+    </div>
+    <div class="card cream">
+      <h4>Tamaños mínimos</h4>
+      <table style="margin-top:6px">
+        <tr><td>Isotipo digital</td><td class="mono">24 × 22 px</td></tr>
+        <tr><td>Isotipo impreso</td><td class="mono">8 mm de ancho</td></tr>
+        <tr><td>Lockup horizontal digital</td><td class="mono">120 px de ancho</td></tr>
+        <tr><td>Lockup horizontal impreso</td><td class="mono">30 mm de ancho</td></tr>
+        <tr><td>Medalla física (Ø 30 mm)</td><td style="border:0"><span class="mono">solo isotipo o wordmark</span> — nunca el lockup completo</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>Usos incorrectos</h3>
+  <div class="grid g4">
+    <div class="dd no"><div class="box"><img src="assets/favicon.svg" style="transform:scaleX(1.7);max-height:66px" alt=""></div><div class="lb">Deformar o cambiar la proporción</div></div>
+    <div class="dd no"><div class="box"><img src="assets/favicon.svg" style="filter:hue-rotate(120deg) saturate(1.6);max-height:74px" alt=""></div><div class="lb">Recolorear el isotipo fuera de la paleta</div></div>
+    <div class="dd no"><div class="box" style="background:linear-gradient(45deg,#E46212,#0F94EA)"><img src="assets/favicon.svg" style="max-height:74px" alt=""></div><div class="lb">Fondos saturados o degradados que roban contraste</div></div>
+    <div class="dd no"><div class="box"><div style="text-align:center"><div style="font-family:Georgia,serif;font-size:28px;color:var(--navy)">Kodal</div><div style="font-size:10px;color:var(--primary)">Siempre vuelven a casa</div></div></div><div class="lb">Reemplazar la tipografía del logotipo</div></div>
+    <div class="dd no"><div class="box"><img src="assets/favicon.svg" style="max-height:74px;box-shadow:6px 6px 0 rgba(0,0,0,.35)" alt=""></div><div class="lb">Sombras, contornos, biselados o efectos</div></div>
+    <div class="dd no"><div class="box"><img src="assets/favicon.svg" style="max-height:74px;transform:rotate(-18deg)" alt=""></div><div class="lb">Rotar o inclinar el isotipo</div></div>
+    <div class="dd no"><div class="box"><div style="display:flex;align-items:center;gap:3px"><img src="assets/favicon.svg" style="height:52px" alt=""><span style="font-size:24px;font-weight:800;color:var(--navy)">Kodal</span></div></div><div class="lb">Comprimir el espacio entre isotipo y logotipo</div></div>
+    <div class="dd no"><div class="box" style="background:var(--orange)"><img src="assets/favicon.svg" style="max-height:74px" alt=""></div><div class="lb">Isotipo full-color sobre naranja de marca</div></div>
+  </div>
+  <div class="note"><b>Regla de oro:</b> si tenés que preguntar si un uso está permitido, usá el lockup horizontal sobre fondo crema <code>#FEFBF4</code>. Siempre funciona.</div>
+</section>
+
+<!-- COLOR -->
+<section id="color">
+  <div class="eyebrow">03</div>
+  <h2>Color</h2>
+  <p class="lead">Kodal maneja <b>dos sistemas complementarios</b>: los colores del <b>isotipo</b> (identidad, saturados, expresivos) y los colores de <b>interfaz</b> (producto, cálidos, sostenibles en pantalla). No se mezclan libremente — cada uno tiene su lugar. Hacé clic en cualquier swatch para copiar el hex.</p>
+
+  <h3>Paleta de identidad — isotipo</h3>
+  <p class="small">Extraídos directamente de <code>public/favicon.svg</code>. Se usan en el isotipo, ilustración de marca y acentos gráficos. <b>No</b> son los colores de la interfaz.</p>
+  <div class="grid g4" id="pal-id"></div>
+
+  <h3>Paleta de interfaz — producto</h3>
+  <p class="small">Tokens reales de <code>src/global.css</code> (definidos en OKLCH, convertidos a HEX para diseño). Son la base de la web, el dashboard y el perfil digital.</p>
+  <div class="grid g4" id="pal-ui"></div>
+
+  <h3>Neutros y superficies</h3>
+  <div class="grid g4" id="pal-neu"></div>
+
+  <h3>Colores semánticos</h3>
+  <p class="small">Estados de medalla y mascota, tomados de <code>src/constants/labels.ts</code>. Nunca uses el naranja de marca para comunicar error o éxito.</p>
+  <div class="grid g4" id="pal-sem"></div>
+
+  <h3>Modo oscuro</h3>
+  <div class="grid g4" id="pal-dark"></div>
+
+  <h3>Reglas de uso</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h4>Proporción 60 / 30 / 10</h4>
+      <div style="display:flex;height:44px;border-radius:10px;overflow:hidden;margin:12px 0;font-size:11px;font-weight:800;color:#fff">
+        <div style="flex:6;background:var(--bg);color:var(--muted-fg);display:grid;place-items:center;border:1px solid var(--border)">60% crema</div>
+        <div style="flex:3;background:var(--navy);display:grid;place-items:center">30% navy</div>
+        <div style="flex:1;background:var(--primary);display:grid;place-items:center">10%</div>
+      </div>
+      <p class="small" style="margin:0">Crema domina el fondo, navy carga el texto y las estructuras, naranja se reserva para lo accionable. Si todo es naranja, nada llama la atención.</p>
+    </div>
+    <div class="card">
+      <h4>Contraste y accesibilidad</h4>
+      <table style="margin-top:4px">
+        <tr><td>Navy <span class="mono">#001A41</span> sobre crema</td><td class="mono" style="color:#0B7355">16.6:1 ✓ AAA</td></tr>
+        <tr><td>Texto <span class="mono">#3A3A3A</span> sobre crema</td><td class="mono" style="color:#0B7355">11.0:1 ✓ AAA</td></tr>
+        <tr><td>Naranja <span class="mono">#E46212</span> sobre crema</td><td class="mono" style="color:#8A6A00">3.36:1 — solo texto ≥24px bold o iconos</td></tr>
+        <tr><td>Blanco sobre naranja <span class="mono">#E46212</span></td><td class="mono" style="color:#8A6A00">3.47:1 — pasa AA solo en ≥18.5px bold</td></tr>
+        <tr style="border:0"><td>Amarillo <span class="mono">#FFA701</span> sobre crema</td><td class="mono" style="color:#A32020">1.88:1 ✕ nunca para texto</td></tr>
+      </table>
+      <p class="small" style="margin:10px 0 0"><b>Hallazgo:</b> blanco sobre <code>#E46212</code> da 3.47:1 — el texto de los botones primarios no pasa AA a 15 px. Solución: usar el naranja a partir de 18.5 px bold, u oscurecerlo a <span class="mono">#C4500A</span> (4.6:1) para botones chicos.</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <b>Inconsistencia detectada.</b> El flyer de identidad previo declara <span class="mono">Tech Blue #365548E</span> (hex inválido, 7 dígitos) y <span class="mono">Kodal Orange #F99C38</span>. Ninguno coincide con el producto real: el azul del isotipo es <span class="mono">#0F94EA</span>, el naranja de marca <span class="mono">#FFA701</span> y el naranja de interfaz <span class="mono">#E46212</span>. Este manual toma el código como fuente de verdad. Si preferís el naranja más suave del flyer, hay que cambiar <code>--color-primary</code> en <code>global.css</code>, no el manual.
+  </div>
+</section>
+
+<!-- TIPOGRAFIA -->
+<section id="tipografia">
+  <div class="eyebrow">04</div>
+  <h2>Tipografía</h2>
+  <p class="lead">Una sola familia: <b>Inter Variable</b>. Ya está instalada en el proyecto (<code>@fontsource-variable/inter</code>) y cubre display, UI y texto largo sin necesidad de una segunda tipografía.</p>
+
+  <div class="grid g2" style="margin-top:26px">
+    <div class="card">
+      <h4>Inter Variable</h4>
+      <div style="font-size:52px;font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1.1">Aa</div>
+      <p class="mono small" style="margin:10px 0 0">ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 ¿? ¡! áéíóú @ # $ %</p>
+      <p class="small" style="margin-top:12px">Pesos en uso: 400 Regular · 600 SemiBold · 700 Bold · 800 ExtraBold. Licencia SIL Open Font — libre para impresión y web.</p>
+    </div>
+    <div class="card cream">
+      <h4>Sustitutos</h4>
+      <table style="margin-top:4px">
+        <tr><td>Sistema / email</td><td class="mono">-apple-system, Segoe UI, Roboto</td></tr>
+        <tr><td>Google Docs / Office</td><td class="mono">Arial o Helvetica</td></tr>
+        <tr style="border:0"><td>Grabado en metal</td><td class="mono">Inter Bold 700 (trazo grueso)</td></tr>
+      </table>
+      <p class="small" style="margin-top:14px"><b>Sobre Poppins:</b> el flyer previo la declara como tipografía de marca, pero el producto entero corre en Inter. Mantener dos familias duplica el trabajo y desalinea la web con las piezas gráficas. Recomendación: consolidar en Inter. Su ancho más compacto también rinde mejor en la medalla física.</p>
+    </div>
+  </div>
+
+  <h3>Escala tipográfica</h3>
+  <div>
+    <div class="tr"><div class="spec">Display<br>48–68px / 800<br>tracking −0.03em</div><div style="font-size:44px;font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1.1">Siempre vuelven a casa</div></div>
+    <div class="tr"><div class="spec">H1<br>36px / 800<br>tracking −0.02em</div><div style="font-size:34px;font-weight:800;color:var(--navy);letter-spacing:-.02em">Mantené a tu mascota segura</div></div>
+    <div class="tr"><div class="spec">H2<br>28px / 700</div><div style="font-size:26px;font-weight:700;color:var(--navy)">¿Por qué elegir Kodal?</div></div>
+    <div class="tr"><div class="spec">H3<br>20px / 700</div><div style="font-size:20px;font-weight:700;color:var(--navy)">Escaneá el código QR</div></div>
+    <div class="tr"><div class="spec">Lead<br>19px / 400<br>color muted</div><div style="font-size:19px;color:var(--muted-fg)">Tecnología pensada específicamente para la seguridad de tu mascota.</div></div>
+    <div class="tr"><div class="spec">Body<br>16px / 400<br>line-height 1.65</div><div style="font-size:16px">Ingresá la información de tu mascota y tus datos de contacto. Solo te lleva un par de minutos.</div></div>
+    <div class="tr"><div class="spec">Small<br>14px / 400</div><div style="font-size:14px;color:var(--muted-fg)">Los cambios se reflejan inmediatamente en el perfil digital.</div></div>
+    <div class="tr"><div class="spec">Botón<br>15px / 600</div><div><span style="display:inline-block;background:var(--primary);color:#fff;font-weight:600;font-size:15px;padding:11px 22px;border-radius:10px">Conseguí tu medalla</span></div></div>
+    <div class="tr" style="border:0"><div class="spec">Overline<br>11px / 800<br>tracking 0.16em</div><div style="font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)">Perderlos no debería ser una opción</div></div>
+  </div>
+
+  <h3>Reglas</h3>
+  <div class="grid g3">
+    <div class="card"><h4>Alineación</h4><p class="small" style="margin:0">Siempre a la izquierda. Centrado solo en hero, CTA final y piezas cuadradas de redes.</p></div>
+    <div class="card"><h4>Ancho de línea</h4><p class="small" style="margin:0">Máximo 70 caracteres en texto corrido. Los párrafos anchos no se leen.</p></div>
+    <div class="card"><h4>Mayúsculas</h4><p class="small" style="margin:0">Solo en overlines y badges, con tracking amplio. Nunca titulares enteros en mayúsculas.</p></div>
+  </div>
+</section>
+
+<!-- VOZ -->
+<section id="voz">
+  <div class="eyebrow">05</div>
+  <h2>Voz y tono</h2>
+  <p class="lead">Kodal habla como un vecino que sabe de tecnología: en <b>voseo rioplatense</b>, claro, sin tecnicismos y sin dramatizar la pérdida. La voz es constante; el tono cambia según el momento.</p>
+
+  <h3>Los cuatro principios</h3>
+  <div class="grid g2">
+    <div class="card"><h4>1. Voseo, siempre</h4><p class="small" style="margin:0">"Escaneá", "registrá", "protegé". Nunca "escanea/registra" ni "usted".<br><span class="small" style="color:var(--destructive)">⚠ Hoy la web mezcla ambos: el hero usa "Escaneé" y "Modifica", los pasos usan "Escaneá". Unificar en voseo.</span></p></div>
+    <div class="card"><h4>2. El nombre de la mascota, primero</h4><p class="small" style="margin:0">"¿Encontraste a Brownie?" pega infinitamente más que "Encontraste esta mascota". Personalizá siempre que haya dato.</p></div>
+    <div class="card"><h4>3. Prometemos lo que cumplimos</h4><p class="small" style="margin:0">Kodal <b>facilita el contacto</b>. No garantiza que la mascota aparezca, no es GPS, no rastrea. Decirlo de más rompe la confianza justo cuando más importa.</p></div>
+    <div class="card"><h4>4. Corto gana</h4><p class="small" style="margin:0">Quien escanea está en la calle, apurado, con una mano ocupada. Cada palabra de más es una fracción de segundo perdida.</p></div>
+  </div>
+
+  <h3>Decimos / no decimos</h3>
+  <table>
+    <thead><tr><th style="width:36%">Contexto</th><th style="width:32%">✓ Decimos</th><th style="width:32%">✕ No decimos</th></tr></thead>
+    <tbody>
+      <tr><td>El producto</td><td class="y">Medalla inteligente Kodal</td><td class="n">Tag, chapita, placa, dispositivo, gadget</td></tr>
+      <tr><td>La persona</td><td class="y">Vos, tu mascota, el dueño</td><td class="n">Usuario, cliente, propietario, titular</td></tr>
+      <tr><td>El animal</td><td class="y">Tu mascota, Brownie, tu perro</td><td class="n">El animal, el espécimen, la unidad</td></tr>
+      <tr><td>La acción principal</td><td class="y">Escaneá el QR</td><td class="n">Proceda a escanear el código de respuesta rápida</td></tr>
+      <tr><td>El beneficio</td><td class="y">Te contactan al instante</td><td class="n">Solución integral de identificación mascotil</td></tr>
+      <tr><td>La tecnología</td><td class="y">Un escaneo y listo</td><td class="n">Plataforma cloud-native con backend serverless</td></tr>
+      <tr><td>La pérdida</td><td class="y">Si se te escapa</td><td class="n">En caso de extravío / si lo perdés para siempre</td></tr>
+      <tr><td>El CTA</td><td class="y">Conseguí tu medalla</td><td class="n">Adquiera ahora / ¡COMPRÁ YA!</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note warn"><b>Nomenclatura:</b> las piezas gráficas dicen "tag inteligente", la web y el producto dicen "medalla". Dos nombres para lo mismo diluyen el reconocimiento y ensucian el SEO. Este manual fija <b>"medalla Kodal"</b> — es el término que el público argentino usa naturalmente y ya está en toda la plataforma.</div>
+
+  <h3>Tono según el momento</h3>
+  <table>
+    <thead><tr><th>Momento</th><th>Tono</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td><b>Marketing</b><br><span class="small">landing, redes, packaging</span></td><td>Cálido, aspiracional</td><td>Perderlos no debería ser una opción.</td></tr>
+      <tr><td><b>Onboarding</b><br><span class="small">registro de la mascota</span></td><td>Guía paso a paso, alentador</td><td>Listo. Brownie ya está protegido. 🐾</td></tr>
+      <tr><td><b>Perfil escaneado</b><br><span class="small">quien encuentra</span></td><td>Directo, urgente, sin adorno</td><td>¿Encontraste a Brownie? Tocá para llamar al dueño ahora.</td></tr>
+      <tr><td><b>Errores</b></td><td>Responsable, con salida</td><td>No pudimos guardar los cambios. Probá de nuevo o escribinos a soporte.</td></tr>
+      <tr><td><b>Soporte</b></td><td>Humano, concreto, con plazo</td><td>Te respondemos dentro de las 24 horas. Lunes a viernes de 8 a 18.</td></tr>
+      <tr><td><b>Legales</b></td><td>Claro, sin letra chica</td><td>Tus datos solo se ven cuando alguien escanea la medalla.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Emoji</h3>
+  <p class="small">Permitidos con moderación en redes y confirmaciones: 🐾 🐶 🐱 🏠 ❤️. Nunca en legales, errores ni en el perfil escaneado — ahí hay una persona resolviendo una urgencia. Máximo uno por pieza.</p>
+</section>
+
+<!-- PRODUCTO -->
+<section id="producto">
+  <div class="eyebrow">06</div>
+  <h2>Aplicación en producto</h2>
+  <p class="lead">La marca vive en tres soportes con reglas distintas: la medalla física, el packaging y el perfil digital.</p>
+
+  <h3>Medalla física</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h4>Anverso — cara visible</h4>
+      <ul class="small" style="margin:8px 0 0;padding-left:18px">
+        <li>Diseño personalizable (color liso, huella, número, patrón).</li>
+        <li>Resina epoxi de alta calidad sobre base circular.</li>
+        <li>Si lleva texto: <b>"MI INFORMACIÓN ESTÁ ATRÁS"</b> en Inter Bold, navy.</li>
+        <li>El isotipo completo <b>no</b> entra a Ø30 mm: usá solo el wordmark "Kodal".</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Reverso — cara funcional</h4>
+      <ul class="small" style="margin:8px 0 0;padding-left:18px">
+        <li>QR en navy <span class="mono">#001A41</span> sobre blanco. <b>Nunca</b> QR naranja o de bajo contraste.</li>
+        <li>Zona de silencio de 2 mm alrededor del QR — nada la invade.</li>
+        <li>"escaneame" curvado a ambos lados, minúscula, Inter SemiBold.</li>
+        <li>Wordmark "Kodal" al pie.</li>
+        <li>Corrección de error del QR: nivel H (30 %) — sobrevive rayones y desgaste.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>Test obligatorio antes de producir un lote:</b> escanear la medalla real con un teléfono de gama baja, a 30 cm, con luz de interior. Si falla, subí el contraste o agrandá el módulo del QR.</div>
+
+  <h3>Packaging / blíster</h3>
+  <div class="grid g3">
+    <div class="card cream"><h4>Frente</h4><p class="small" style="margin:0">Fondo blanco o crema · lockup vertical arriba · medalla visible · "MI INFORMACIÓN ESTÁ ATRÁS" al pie. Sin ruido gráfico.</p></div>
+    <div class="card cream"><h4>Dorso</h4><p class="small" style="margin:0">Los 3 pasos (escaneá → completá → protegé), <span class="mono">kodal.pet</span>, datos de soporte y QR de ayuda.</p></div>
+    <div class="card cream"><h4>Materiales</h4><p class="small" style="margin:0">Cartulina mate 300 g. Nunca brillo: compite con el brillo de la resina de la medalla.</p></div>
+  </div>
+
+  <h3>Perfil digital — la pieza más importante</h3>
+  <p class="small">Es lo que ve un desconocido en la calle. Jerarquía innegociable, de arriba hacia abajo:</p>
+  <ol class="steps">
+    <li><b>Foto y nombre de la mascota</b> — reconocimiento inmediato.</li>
+    <li><b>Botón de llamada</b> — naranja <span class="mono">#E46212</span>, ancho completo, mínimo 48 px de alto. El elemento más grande de la pantalla.</li>
+    <li><b>WhatsApp</b> — acción secundaria, con mensaje pre-cargado.</li>
+    <li><b>Datos médicos de emergencia</b> — alergias, medicación, condiciones.</li>
+    <li><b>Ubicación y notas</b> — contexto adicional.</li>
+    <li><b>Marca Kodal</b> — al pie, discreta. Acá no vendemos.</li>
+  </ol>
+
+  <h3>Componentes de interfaz</h3>
+  <div class="grid g3">
+    <div class="card">
+      <h4>Botones</h4>
+      <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
+        <span style="background:var(--primary);color:#fff;font-weight:600;padding:11px;border-radius:10px;text-align:center;font-size:14px">Primario</span>
+        <span style="background:#fff;color:var(--navy);border:1px solid var(--border);font-weight:600;padding:11px;border-radius:10px;text-align:center;font-size:14px">Secundario</span>
+        <span style="background:var(--destructive);color:#fff;font-weight:600;padding:11px;border-radius:10px;text-align:center;font-size:14px">Destructivo</span>
+      </div>
+      <p class="small" style="margin:12px 0 0">Radio 10 px · un solo botón primario por pantalla.</p>
+    </div>
+    <div class="card">
+      <h4>Badges de estado</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;font-size:12px;font-weight:600">
+        <span style="background:#F3F4F6;color:#374151;padding:4px 10px;border-radius:99px">Creada</span>
+        <span style="background:#DBEAFE;color:#1D4ED8;padding:4px 10px;border-radius:99px">Fabricada</span>
+        <span style="background:#D1FAE5;color:#047857;padding:4px 10px;border-radius:99px">En uso</span>
+        <span style="background:#FEE2E2;color:#B91C1C;padding:4px 10px;border-radius:99px">Perdida</span>
+      </div>
+      <p class="small" style="margin:12px 0 0">Definidos en <code>labels.ts</code>. Nunca cambies el color asignado a un estado.</p>
+    </div>
+    <div class="card">
+      <h4>Tarjetas y radios</h4>
+      <p class="small" style="margin:8px 0 0">Superficie <span class="mono">#FFF8EA</span> · borde <span class="mono">#E1DED7</span> · radio 16 px · sombra sutil. La geometría redondeada es parte de la calidez de la marca: nada con esquinas vivas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="social">
+  <div class="eyebrow">07</div>
+  <h2>Redes sociales</h2>
+  <p class="lead">Instagram y Facebook, mercado argentino. La marca se reconoce por el fondo crema, el navy de los títulos y el naranja de un solo CTA por pieza.</p>
+
+  <h3>Formatos</h3>
+  <div class="grid g4">
+    <div><div class="ratio" style="aspect-ratio:1/1">1:1<br>1080×1080</div><p class="small" style="margin-top:8px"><b>Feed</b> — educativo, testimonios, producto</p></div>
+    <div><div class="ratio" style="aspect-ratio:4/5">4:5<br>1080×1350</div><p class="small" style="margin-top:8px"><b>Feed vertical</b> — máximo alcance orgánico</p></div>
+    <div><div class="ratio" style="aspect-ratio:9/16">9:16<br>1080×1920</div><p class="small" style="margin-top:8px"><b>Stories / Reels</b> — margen seguro de 250 px arriba y abajo</p></div>
+    <div><div class="ratio" style="aspect-ratio:1.91/1">1.91:1<br>1200×630</div><p class="small" style="margin-top:8px"><b>OG / link preview</b> — ya existe <code>og-image.png</code></p></div>
+  </div>
+
+  <h3>Anatomía de un post</h3>
+  <div class="grid g3">
+    <div class="card cream"><h4>1. Fondo</h4><p class="small" style="margin:0">Crema <span class="mono">#FEFBF4</span> o foto real de mascota. Nada de stock genérico ni degradados.</p></div>
+    <div class="card cream"><h4>2. Titular</h4><p class="small" style="margin:0">Inter ExtraBold, navy, máximo 8 palabras. Una sola palabra en naranja para el énfasis.</p></div>
+    <div class="card cream"><h4>3. Firma</h4><p class="small" style="margin:0">Lockup o isotipo en una esquina fija + <span class="mono">kodal.pet</span>. Siempre la misma esquina en toda la grilla.</p></div>
+  </div>
+
+  <h3>Pilares de contenido</h3>
+  <table>
+    <thead><tr><th>Pilar</th><th>Peso</th><th>Ejemplo de pieza</th></tr></thead>
+    <tbody>
+      <tr><td><b>Educativo</b></td><td>40 %</td><td>"Qué hacer en los primeros 30 minutos si se te escapa"</td></tr>
+      <tr><td><b>Producto</b></td><td>25 %</td><td>Cómo funciona el escaneo, diseños disponibles, unboxing</td></tr>
+      <tr><td><b>Historias reales</b></td><td>25 %</td><td>Reencuentros, testimonios de dueños, mascotas con su medalla</td></tr>
+      <tr><td><b>Comunidad</b></td><td>10 %</td><td>Veterinarias aliadas, fechas del calendario animalista</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Plantillas de copy</h3>
+  <div class="grid g3">
+    <div class="post"><div class="top">Educativo</div><div class="body"><div class="copy">Se te escapó. ¿Y ahora?
+
+Los primeros 30 minutos son los que más importan. Guardá estos 5 pasos antes de necesitarlos 👇
+
+🐾 Kodal — Siempre vuelven a casa
+kodal.pet</div></div></div>
+    <div class="post"><div class="top">Producto</div><div class="body"><div class="copy">Un escaneo. Eso es todo.
+
+Quien encuentre a tu mascota apunta la cámara y ve tu teléfono al instante. Sin apps, sin batería, sin vueltas.
+
+Conseguí la tuya en kodal.pet 🐾</div></div></div>
+    <div class="post"><div class="top">Historia real</div><div class="body"><div class="copy">Brownie volvió a casa en 40 minutos.
+
+Una vecina lo encontró a tres cuadras, escaneó la medalla y llamó. Nada más.
+
+Por eso hacemos esto. ❤️
+kodal.pet</div></div></div>
+  </div>
+
+  <h3>Qué evitar en redes</h3>
+  <div class="grid g2">
+    <div class="card"><p class="small" style="margin:0"><b style="color:var(--destructive)">✕</b> Imágenes de mascotas perdidas o carteles de búsqueda como recurso emocional. Kodal previene, no explota el miedo.</p></div>
+    <div class="card"><p class="small" style="margin:0"><b style="color:var(--destructive)">✕</b> Más de un CTA por pieza, texto sobre texto, o el QR de una medalla real de un cliente (es un dato personal escaneable).</p></div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="eyebrow">08</div>
+  <h2>Checklist y pendientes</h2>
+
+  <h3>Antes de publicar cualquier pieza</h3>
+  <div class="card cream">
+    <ul class="small" style="margin:0;padding-left:18px;line-height:2">
+      <li>El logo respeta el área de resguardo y está por encima del tamaño mínimo.</li>
+      <li>Los colores salen de la paleta de este manual, no de una captura de pantalla.</li>
+      <li>Todo el texto está en Inter y en voseo rioplatense.</li>
+      <li>Decimos "medalla", no "tag".</li>
+      <li>Hay un solo CTA y es naranja.</li>
+      <li>El contraste de texto sobre fondo pasa AA.</li>
+      <li>No prometemos rastreo, GPS ni recuperación garantizada.</li>
+      <li>Si hay QR, se escaneó con un teléfono real antes de publicar.</li>
+    </ul>
+  </div>
+
+  <h3>Pendientes para cerrar la identidad</h3>
+  <table>
+    <thead><tr><th style="width:34%">Tema</th><th>Decisión a tomar</th></tr></thead>
+    <tbody>
+      <tr><td><b>Tipografía</b></td><td>Confirmar Inter como única familia y retirar Poppins de las piezas gráficas existentes.</td></tr>
+      <tr><td><b>Naranja de marca</b></td><td>Definir si el naranja oficial es <span class="mono">#E46212</span> (interfaz) o <span class="mono">#FFA701</span> (isotipo). Recomendación: <span class="mono">#E46212</span> para acción, <span class="mono">#FFA701</span> solo dentro de la ilustración.</td></tr>
+      <tr><td><b>Nomenclatura</b></td><td>Adoptar "medalla Kodal" en todos los canales y actualizar las piezas que dicen "tag".</td></tr>
+      <tr><td><b>Voseo</b></td><td>Auditar la landing: hoy conviven "Escaneé/Modifica" con "Escaneá/Completá".</td></tr>
+      <tr><td><b>Isotipo vectorial</b></td><td>El SVG actual es un trazado automático de 68 KB con cientos de nodos. Conviene redibujarlo limpio: pesará ~5 KB, escalará mejor y permitirá versión monocromática para grabado.</td></tr>
+      <tr><td><b>Versión monocromática</b></td><td>Falta una variante de un solo color del isotipo para grabado láser, sellos y fondos complejos.</td></tr>
+      <tr><td style="border:0"><b>Paleta de la landing</b></td><td style="border:0">El azul <span class="mono">#0F94EA</span> del isotipo no aparece en la interfaz. O se incorpora como acento secundario, o el isotipo queda visualmente desconectado del producto.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <b>Kodal — Manual de Marca v1.0</b> · Julio 2026<br>
+  Derivado de <code>src/global.css</code>, <code>public/favicon.svg</code>, <code>src/constants/</code> y kodal.pet<br>
+  Kodal · Siempre vuelven a casa · kodal.pet
+</footer>
+
+</main>
+
+<script>
+const palettes = {
+  'pal-id':[
+    ['Kodal Navy','#001A41','Contorno del isotipo · titulares · QR'],
+    ['Kodal Blue','#0F94EA','Perro del isotipo · acento frío'],
+    ['Kodal Yellow','#FFA701','Gato del isotipo · acento cálido'],
+    ['Kodal Orange Deep','#FF8205','Collar del perro · sombras del isotipo'],
+    ['Navy Deep','#000C29','Trazo interno del vector'],
+    ['Navy Mid','#000F33','Trazo interno del vector'],
+    ['Orange Soft','#FFA433','Luces del gato'],
+    ['Blanco','#FFFFFF','Medallas QR del isotipo · fondo puro']
+  ],
+  'pal-ui':[
+    ['Primary','#E46212','--color-primary · botones, links, CTA'],
+    ['Primary Accent','#F47F46','--color-primary-accent · hover'],
+    ['Secondary','#EC785B','--color-secondary · acentos secundarios'],
+    ['Secondary Accent','#FF987E','--color-secondary-accent · hover secundario']
+  ],
+  'pal-neu':[
+    ['Sidebar / Fondo','#FEFBF4','--color-sidebar · theme-color del sitio'],
+    ['Card','#FFF8EA','--color-card · superficies elevadas'],
+    ['Popover','#FFFBF4','--color-popover · menús y diálogos'],
+    ['Muted','#F5F1EA','--color-muted · fondos sutiles'],
+    ['Border / Input','#E1DED7','--color-border · bordes y campos'],
+    ['Foreground','#3A3A3A','--color-foreground · texto principal'],
+    ['Muted Foreground','#555555','--color-muted-foreground · texto secundario'],
+    ['Background','#FFFFFF','--color-background · base']
+  ],
+  'pal-sem':[
+    ['Éxito · En uso','#047857','Medalla activa · confirmaciones'],
+    ['Info · Fabricada','#1D4ED8','Estados informativos'],
+    ['Alerta','#B45309','Advertencias no bloqueantes'],
+    ['Error · Perdida','#E50017','--color-destructive · mascota perdida']
+  ],
+  'pal-dark':[
+    ['Background','#181611','Fondo modo oscuro'],
+    ['Card','#26241F','Superficies'],
+    ['Primary','#F0834E','CTA en oscuro'],
+    ['Secondary','#D77B64','Acento secundario'],
+    ['Muted','#302D28','Fondos sutiles'],
+    ['Border','#3D3A35','Bordes'],
+    ['Foreground','#F1EEE7','Texto principal'],
+    ['Sidebar','#1E293B','Navegación lateral']
+  ]
+};
+for(const [id,list] of Object.entries(palettes)){
+  const el=document.getElementById(id); if(!el) continue;
+  el.innerHTML=list.map(([n,h,t])=>`
+    <div class="sw" data-hex="${h}">
+      <div class="chip" style="background:${h}"></div>
+      <div class="meta-c">
+        <div class="nm"><span>${n}</span><span class="copied">copiado</span></div>
+        <div class="hx">${h}</div>
+        <div class="tok">${t}</div>
+      </div>
+    </div>`).join('');
+}
+document.addEventListener('click',e=>{
+  const sw=e.target.closest('.sw'); if(!sw) return;
+  navigator.clipboard?.writeText(sw.dataset.hex);
+  sw.classList.add('on');
+  setTimeout(()=>sw.classList.remove('on'),1200);
+});
+</script>
+</body>
+</html>
